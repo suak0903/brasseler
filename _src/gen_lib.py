@@ -3,7 +3,7 @@
 Bestandsseite in Sektionen), JSON-LD, Seitenrahmen. Alles statisch, kein Laufzeit-Include.
 Autor: Marketing Operations (Vega), 02.10.2026, Demonstrator Brasseler. VERSION bei CSS- oder JS-Änderung erhöhen."""
 import os, re, json, html
-VERSION = "27"
+VERSION = "29"
 # Bilder der Kartenreihen: im Bestand Hintergründe der Divi-CTA-Module (liegen in et-cache-CSS, nicht im HTML); hier die
 # bekannten Zuordnungen nach Stichwort im Kartentitel. Fehlt ein Stichwort, bleibt die Karte ohne Bild.
 KARTEN_BILDER = {"management": "https://www.brasseler.de/uploads/Brasseler-Hero-2024_GBL-Luftbild_sun-web.jpg",
@@ -153,7 +153,7 @@ def bloecke_html(bl, r, pfade, lang, lightbox=True):
                 teile = []
                 for k, (h, p) in enumerate(paare):
                     vorname = re.split(r"[,\s]", h["x"].strip())[0].lower()
-                    bild = next((u for u in hg if vorname[:5] in u.lower()), hg[k % len(hg)] if hg else "")
+                    bild = next((u for u in hg if vorname[:5] in u.lower()), "")  # nur das eigene Foto; ohne Treffer lieber keins als das einer anderen Person (Faber v27)
                     teile.append(f'<section class="bericht rv{" bericht--rechts" if k % 2 else ""}">{picture(bild, "", r, klasse="bericht__bg", sizes="100vw") if bild else ""}<div class="bericht__karte"><h3>{inline_html(h["x"])}</h3><p>{inline_html(p["x"])}</p></div></section>')
                 out.append('<div class="berichte">' + "".join(teile) + "</div>"); continue
         # Ländergesellschaften: Karte (Bild mit „map“ im Namen), fetter Name, Text → zweispaltige Karten auf Blau
@@ -171,10 +171,11 @@ def bloecke_html(bl, r, pfade, lang, lightbox=True):
             if len(berufe) >= 3:
                 i = j; hg = [u for u in KONTEXT.get("hg", []) if media_basis.get(u)]
                 def beruf_bild(name):
+                    # ganzes Wort im Dateinamen, nicht die ersten acht Buchstaben („industri…“ traf Industriekaufmann für Industriemechaniker, Faber v27)
                     w = [t for t in re.split(r"[^a-zäöü]+", name.lower()) if len(t) > 5]
                     for t in w:
                         for u in hg:
-                            if t[:8] in u.lower().replace("-", "").replace("_", ""): return u
+                            if t in u.lower().replace("-", "").replace("_", ""): return u
                     return ""
                 karten = []
                 for name in berufe:
@@ -250,6 +251,9 @@ def video_html(b, r, lang):
         n = video_map[mp4]
         return (f'<figure class="vid vid--auto"><video class="vid__v" autoplay muted loop playsinline preload="none" poster="{r}media/{n}-poster.jpg" {video_quellen(n, r)} aria-hidden="true"></video></figure>')
     poster = b.get("poster") or ""
+    if not poster:  # Standbild aus den Divi-Hintergründen der Seite, Dateiname wie das Video (Komet_Medical_Imagefilm → …_thumbnail; Faber 7.1, Codex 15)
+        stamm = re.sub(r"[_-]?\d{3,4}p.*$", "", mp4.split("/")[-1].rsplit(".", 1)[0]).lower()[:16]
+        poster = next((u for u in KONTEXT.get("hg", []) if stamm and stamm in u.lower() and media_basis.get(u)), next((u for u in KONTEXT.get("hg", []) if "thumbnail" in u.lower() and media_basis.get(u)), ""))
     pb = media_basis.get(poster)
     ph = f'poster="{r}media/{pb}-1200.jpg"' if pb else f'poster="{r}media/video-poster.jpg"'
     quellen = "".join(f'<source src="{e(s)}" type="video/{"webm" if s.endswith(".webm") else "mp4"}">' for s in b["src"])

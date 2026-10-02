@@ -220,7 +220,7 @@ def news_uebersicht(d):
     if j is not None:
         pb = [b for b in bl[max(0, j - 1):] if b["t"] in ("p", "img")]
         presse = f'<section class="sektion sektion--grau"><div class="wrap schmal prosa">{bloecke_html(pb, r, PFADE, lang)}</div></section>'
-    innen = hero_html(d, r, lang, titel, k, False, None, None) + f'<section class="sektion"><div class="wrap"><p class="hinweis">{len(posts)} {"Beiträge" if lang == "de" else "articles"}</p><div class="news">{karten}</div></div></section>' + presse
+    innen = hero_html(d, r, lang, titel, k, False, None, LUFTBILD if media_basis.get(LUFTBILD) else None) + f'<section class="sektion"><div class="wrap"><p class="hinweis">{len(posts)} {"Beiträge" if lang == "de" else "articles"}</p><div class="news">{karten}</div></div></section>' + presse
     desc = beschreibung(d)
     return rahmen(d["pfad"], lang, f"{titel} | Brasseler", desc, d["partner"], ld_seite(d, lang, titel, desc, k, r), innen, r)
 

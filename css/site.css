@@ -154,7 +154,8 @@ blockquote{margin:1.5em 0;padding:.4em 0 .4em 1.2em;border-left:3px solid var(--
 .subhero__bg,.subhero__v{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .subhero__v{opacity:0;transition:opacity .8s}.subhero__v.an{opacity:1}
 /* oben leichter Schleier für die Kopfleiste (Faber F6: Navigation lag auf dem Globus), unten weniger Aufhellung als vorher */
-.subhero--medium::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.72) 0,rgba(255,255,255,0) 24%,rgba(255,255,255,0) 52%,rgba(255,255,255,.9) 82%,#fff)}
+.subhero--medium::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.88) 0,rgba(255,255,255,.4) 14%,rgba(255,255,255,0) 30%,rgba(255,255,255,0) 52%,rgba(255,255,255,.9) 82%,#fff)}  /* oben stärker, Navigation auf dem Globus (Faber v27) */
+@media(max-width:700px){.subhero--medium::after{background:linear-gradient(180deg,rgba(255,255,255,.72) 0,rgba(255,255,255,0) 22%,rgba(255,255,255,0) 40%,rgba(255,255,255,.94) 68%,#fff)}}  /* Handy: Titel und Brotkrumen auf Weiß, nicht auf dem Motiv (Codex 18) */
 .subhero__in{position:relative;z-index:2;width:100%;max-width:var(--wrap);margin:0 auto;padding:clamp(28px,5vw,56px) var(--pad) 8px}
 .subhero--text .subhero__in{padding-bottom:clamp(28px,5vw,56px)}
 .subhero__badge{position:absolute;right:var(--pad);top:calc(var(--nav) + 16px);z-index:2;width:clamp(72px,10vw,140px)}
@@ -294,6 +295,8 @@ h1.hero__h::before{display:none}
 @media(max-width:700px){.banner{grid-template-columns:1fr}}
 /* Blaues Band mit Knopf, wie das CTA-Band des Bestands */
 .band{background:linear-gradient(135deg,#0062c4,#007fff 70%,#2b94ff);color:#fff;border-radius:18px;padding:clamp(22px,3vw,36px) clamp(22px,4vw,48px);display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:16px 32px;text-align:center;margin:2em 0}
+.prosa .band{width:min(100vw - 2*var(--pad),var(--wrap) - 2*var(--pad));margin-left:50%;transform:translateX(-50%);border-radius:18px}  /* im Textfluss über die Seitenbreite, wie das Band im Bestand (Faber 4.3) */
+.has-js .prosa .band.rv{transform:translate(-50%,28px)}.has-js .prosa .band.rv.in{transform:translateX(-50%)}
 .band p{margin:0;font-size:1.1rem;font-weight:500;max-width:60ch}
 .band strong{color:#fff}
 .btn--hell{background:#fff;color:var(--blau-d)}
@@ -301,7 +304,8 @@ h1.hero__h::before{display:none}
 /* ---- Muster der Unterseiten-Runde (Faber F6, Suat 02.10. spät) ---- */
 .berichte{margin:2em 0}
 .bericht{position:relative;min-height:min(70vh,560px);display:flex;align-items:center;margin:0 0 18px;border-radius:22px;overflow:hidden;background:var(--grau)}
-.bericht__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 30%}
+.bericht__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 12%}  /* Gesichter oben im Bild (Faber v27: Stirn abgeschnitten) */
+.bericht:not(.bericht--rechts) .bericht__bg{object-position:72% 12%}.bericht--rechts .bericht__bg{object-position:28% 12%}  /* Gesicht neben der Karte, nicht darunter */
 .bericht__karte{position:relative;z-index:1;margin:clamp(20px,4vw,56px);max-width:min(560px,90%);background:rgba(255,255,255,.94);backdrop-filter:blur(6px);border-radius:18px;padding:clamp(22px,3vw,40px);box-shadow:0 30px 60px -30px rgba(33,37,41,.4)}
 .bericht--rechts{justify-content:flex-end}
 .bericht__karte h3{margin:0 0 .5em}.bericht__karte p{margin:0;font-size:1.05rem}
@@ -317,7 +321,7 @@ h1.hero__h::before{display:none}
 .beruf:hover .beruf__bild{transform:scale(1.05)}
 .beruf::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,40,90,0) 35%,rgba(0,40,90,.82))}
 .beruf__t{position:absolute;left:18px;right:18px;bottom:16px;z-index:1;display:flex;flex-direction:column;gap:2px;line-height:1.25}
-.beruf__t strong{font-size:1.05rem;font-weight:600}.beruf__t span{font-size:.8rem;opacity:.85}
+.beruf__t strong{font-size:1.05rem;font-weight:600;color:#fff}.beruf__t span{font-size:.8rem;opacity:.85}  /* strong erbt sonst Anthrazit aus .prosa (Codex 26: „schwarzer Kleinsttext auf Blau“) */
 @media(max-width:860px){.berufe{grid-template-columns:1fr 1fr}}@media(max-width:480px){.berufe{grid-template-columns:1fr}}
 .kapitel{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin:1em 0 2.5em}
 .kapitel__i{display:flex;align-items:flex-end;min-height:140px;padding:18px;border-radius:16px;color:#fff;text-decoration:none;font-weight:500;font-size:1.05rem;line-height:1.25;background:linear-gradient(160deg,#007fff,#0062c4 60%,#004f9e);transition:filter .3s}
