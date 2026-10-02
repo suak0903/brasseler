@@ -1,5 +1,5 @@
 {
  "datum": "02.10.2026",
  "alt": {"perf": "12", "lcp": "10,6 s", "tbt": "4.470 ms", "cls": "0,53", "bytes": "5 bis 8 MB", "req": "81", "quelle": "Lighthouse 12 mobil, lokal gegen www.brasseler.de, 02.10.2026; Datenmenge je Lauf 4,6 bis 7,5 MB, weil das Autoplay-Video unterschiedlich weit lädt (Quality, Faber) (PageSpeed Insights am selben Tag: mobil 32, Desktop 45)"},
- "neu": {"perf": "92", "lcp": "2,4 s", "tbt": "260 ms", "cls": "0", "bytes": "1,6 MB", "req": "22", "quelle": "Lighthouse 12 mobil, live gegen suak0903.github.io/brasseler, 02.10.2026 (Desktop: 99, LCP 0,7 s)"}
+ "neu": {"perf": "85", "lcp": "2,7 s", "tbt": "350 ms", "cls": "0", "bytes": "1,6 MB", "req": "24", "quelle": "Lighthouse 12 mobil, live gegen suak0903.github.io/brasseler, 03.10.2026 nach dem Umbau der Startseite, Mittelwert aus drei Läufen (77 bis 94; Desktop 99)"}
 }
