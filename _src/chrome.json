@@ -1,0 +1,192 @@
+{
+ "de": {
+  "nav": [
+   {
+    "tiefe": 0,
+    "text": "Start",
+    "pfad": "/"
+   },
+   {
+    "tiefe": 0,
+    "text": "Über Brasseler",
+    "pfad": "/unternehmen/"
+   },
+   {
+    "tiefe": 1,
+    "text": "Unser Gesellschafterkreis",
+    "pfad": "/unternehmen/gesellschafterkreis/"
+   },
+   {
+    "tiefe": 1,
+    "text": "Unser Management",
+    "pfad": "/unternehmen/management/"
+   },
+   {
+    "tiefe": 1,
+    "text": "Unsere Werte",
+    "pfad": "/unternehmen/unsere-werte/"
+   },
+   {
+    "tiefe": 1,
+    "text": "Unsere Verantwortung",
+    "pfad": "/unternehmen/unsere-verantwortung/"
+   },
+   {
+    "tiefe": 1,
+    "text": "Unsere Meilensteine",
+    "pfad": "/unternehmen/unsere-meilensteine/"
+   },
+   {
+    "tiefe": 1,
+    "text": "Unser Jubiläum",
+    "pfad": "/unternehmen/brasseler-100-years/"
+   },
+   {
+    "tiefe": 0,
+    "text": "Geschäftsbereiche",
+    "pfad": "/geschaeftsbereiche/"
+   },
+   {
+    "tiefe": 0,
+    "text": "International",
+    "pfad": "/international/"
+   },
+   {
+    "tiefe": 0,
+    "text": "Karriere",
+    "pfad": "/karriere/"
+   },
+   {
+    "tiefe": 1,
+    "text": "Ausbildung",
+    "pfad": "/karriere/ausbildung/"
+   },
+   {
+    "tiefe": 1,
+    "text": "Studierende",
+    "pfad": "/karriere/studierende/"
+   },
+   {
+    "tiefe": 0,
+    "text": "News",
+    "pfad": "/news/"
+   }
+  ],
+  "fuss": [
+   {
+    "text": "Impressum",
+    "pfad": "/impressum/"
+   },
+   {
+    "text": "Datenschutz",
+    "pfad": "/datenschutz/"
+   },
+   {
+    "text": "AGB",
+    "pfad": "/agb/"
+   },
+   {
+    "text": "Verhaltenskodex",
+    "pfad": "/verhaltenskodex/"
+   },
+   {
+    "text": "Zertifikate",
+    "pfad": "/zertifikate/"
+   }
+  ],
+  "social": []
+ },
+ "en": {
+  "nav": [
+   {
+    "tiefe": 0,
+    "text": "Home",
+    "pfad": "/en/"
+   },
+   {
+    "tiefe": 0,
+    "text": "Company",
+    "pfad": "/en/company/"
+   },
+   {
+    "tiefe": 1,
+    "text": "Our shareholders",
+    "pfad": "/en/company/shareholders/"
+   },
+   {
+    "tiefe": 1,
+    "text": "Our management",
+    "pfad": "/en/company/management/"
+   },
+   {
+    "tiefe": 1,
+    "text": "Our values",
+    "pfad": "/en/company/our-values/"
+   },
+   {
+    "tiefe": 1,
+    "text": "Our responsibility",
+    "pfad": "/en/company/our-responsibility/"
+   },
+   {
+    "tiefe": 1,
+    "text": "Our Milestones",
+    "pfad": "/en/company/our-milestones/"
+   },
+   {
+    "tiefe": 1,
+    "text": "Our aniversary",
+    "pfad": "/en/company/brasseler-100-years/"
+   },
+   {
+    "tiefe": 0,
+    "text": "Business areas",
+    "pfad": "/en/business-areas/"
+   },
+   {
+    "tiefe": 0,
+    "text": "International",
+    "pfad": "/en/international/"
+   },
+   {
+    "tiefe": 0,
+    "text": "Careers",
+    "pfad": "/careers/"
+   },
+   {
+    "tiefe": 1,
+    "text": "University students",
+    "pfad": "/en/careers/university-students/"
+   },
+   {
+    "tiefe": 0,
+    "text": "News",
+    "pfad": "/en/news/"
+   }
+  ],
+  "fuss": [
+   {
+    "text": "Legal Notice",
+    "pfad": "/en/legal-notice/"
+   },
+   {
+    "text": "Data protection",
+    "pfad": "/en/data-protection/"
+   },
+   {
+    "text": "GTCs",
+    "pfad": "/gtcs/"
+   },
+   {
+    "text": "Code of Conduct",
+    "pfad": "/en/code-of-conduct/"
+   },
+   {
+    "text": "Certificates",
+    "pfad": "/en/certificates/"
+   }
+  ],
+  "social": []
+ },
+ "zahlen_roh": []
+}

@@ -1,0 +1,6 @@
+# Rohdaten und Originalmedien bleiben lokal (Quelle: brasseler.de), nur das Ergebnis wird versioniert
+_src/raw/
+_src/assets/
+_src/__pycache__/
+_src/*.log
+*.err

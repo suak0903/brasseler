@@ -1,0 +1,830 @@
+{
+ "https://www.brasseler.de/": {
+  "sitemap": "page",
+  "datei": "index.html"
+ },
+ "https://www.brasseler.de/en/": {
+  "sitemap": "page",
+  "datei": "en.html"
+ },
+ "https://www.brasseler.de/unternehmen/unsere-verantwortung/": {
+  "sitemap": "page",
+  "datei": "unternehmen__unsere-verantwortung.html"
+ },
+ "https://www.brasseler.de/en/company/our-responsibility/": {
+  "sitemap": "page",
+  "datei": "en__company__our-responsibility.html"
+ },
+ "https://www.brasseler.de/en/careers/university-students/": {
+  "sitemap": "page",
+  "datei": "en__careers__university-students.html"
+ },
+ "https://www.brasseler.de/gtcs/": {
+  "sitemap": "page",
+  "datei": "gtcs.html"
+ },
+ "https://www.brasseler.de/unternehmen/unsere-werte/": {
+  "sitemap": "page",
+  "datei": "unternehmen__unsere-werte.html"
+ },
+ "https://www.brasseler.de/en/company/our-values/": {
+  "sitemap": "page",
+  "datei": "en__company__our-values.html"
+ },
+ "https://www.brasseler.de/karriere/": {
+  "sitemap": "page",
+  "datei": "karriere.html"
+ },
+ "https://www.brasseler.de/unternehmen/gesellschafterkreis/": {
+  "sitemap": "page",
+  "datei": "unternehmen__gesellschafterkreis.html"
+ },
+ "https://www.brasseler.de/en/company/shareholders/": {
+  "sitemap": "page",
+  "datei": "en__company__shareholders.html"
+ },
+ "https://www.brasseler.de/careers/": {
+  "sitemap": "page",
+  "datei": "careers.html"
+ },
+ "https://www.brasseler.de/en/careers/": {
+  "sitemap": "page",
+  "datei": "en__careers.html"
+ },
+ "https://www.brasseler.de/thesis-projects/": {
+  "sitemap": "page",
+  "datei": "thesis-projects.html"
+ },
+ "https://www.brasseler.de/verhaltenskodex/": {
+  "sitemap": "page",
+  "datei": "verhaltenskodex.html"
+ },
+ "https://www.brasseler.de/en/code-of-conduct/": {
+  "sitemap": "page",
+  "datei": "en__code-of-conduct.html"
+ },
+ "https://www.brasseler.de/datenschutz/": {
+  "sitemap": "page",
+  "datei": "datenschutz.html"
+ },
+ "https://www.brasseler.de/en/data-protection/": {
+  "sitemap": "page",
+  "datei": "en__data-protection.html"
+ },
+ "https://www.brasseler.de/karriere/ausbildung/": {
+  "sitemap": "page",
+  "datei": "karriere__ausbildung.html"
+ },
+ "https://www.brasseler.de/karriere/studierende/abschlussarbeiten/": {
+  "sitemap": "page",
+  "datei": "karriere__studierende__abschlussarbeiten.html"
+ },
+ "https://www.brasseler.de/karriere/studierende/": {
+  "sitemap": "page",
+  "datei": "karriere__studierende.html"
+ },
+ "https://www.brasseler.de/en/careers/university-students/thesis-projects/": {
+  "sitemap": "page",
+  "datei": "en__careers__university-students__thesis-projects.html"
+ },
+ "https://www.brasseler.de/certificates/": {
+  "sitemap": "page",
+  "datei": "certificates.html"
+ },
+ "https://www.brasseler.de/agb/": {
+  "sitemap": "page",
+  "datei": "agb.html"
+ },
+ "https://www.brasseler.de/en/gtcs/": {
+  "sitemap": "page",
+  "datei": "en__gtcs.html"
+ },
+ "https://www.brasseler.de/news/": {
+  "sitemap": "page",
+  "datei": "news.html"
+ },
+ "https://www.brasseler.de/en/news/": {
+  "sitemap": "page",
+  "datei": "en__news.html"
+ },
+ "https://www.brasseler.de/unternehmen/brasseler-100-years/": {
+  "sitemap": "page",
+  "datei": "unternehmen__brasseler-100-years.html"
+ },
+ "https://www.brasseler.de/en/company/brasseler-100-years/": {
+  "sitemap": "page",
+  "datei": "en__company__brasseler-100-years.html"
+ },
+ "https://www.brasseler.de/unternehmen/unsere-meilensteine/": {
+  "sitemap": "page",
+  "datei": "unternehmen__unsere-meilensteine.html"
+ },
+ "https://www.brasseler.de/en/company/our-milestones/": {
+  "sitemap": "page",
+  "datei": "en__company__our-milestones.html"
+ },
+ "https://www.brasseler.de/en/company/management/": {
+  "sitemap": "page",
+  "datei": "en__company__management.html"
+ },
+ "https://www.brasseler.de/unternehmen/management/": {
+  "sitemap": "page",
+  "datei": "unternehmen__management.html"
+ },
+ "https://www.brasseler.de/en/company/": {
+  "sitemap": "page",
+  "datei": "en__company.html"
+ },
+ "https://www.brasseler.de/en/business-areas/": {
+  "sitemap": "page",
+  "datei": "en__business-areas.html"
+ },
+ "https://www.brasseler.de/unternehmen/": {
+  "sitemap": "page",
+  "datei": "unternehmen.html"
+ },
+ "https://www.brasseler.de/geschaeftsbereiche/": {
+  "sitemap": "page",
+  "datei": "geschaeftsbereiche.html"
+ },
+ "https://www.brasseler.de/international/": {
+  "sitemap": "page",
+  "datei": "international.html"
+ },
+ "https://www.brasseler.de/en/international/": {
+  "sitemap": "page",
+  "datei": "en__international.html"
+ },
+ "https://www.brasseler.de/zertifikate/": {
+  "sitemap": "page",
+  "datei": "zertifikate.html"
+ },
+ "https://www.brasseler.de/en/certificates/": {
+  "sitemap": "page",
+  "datei": "en__certificates.html"
+ },
+ "https://www.brasseler.de/100000-euros-in-emergency-aid-for-victims-of-earthquake-disaster/": {
+  "sitemap": "post",
+  "datei": "100000-euros-in-emergency-aid-for-victims-of-earthquake-disaster.html"
+ },
+ "https://www.brasseler.de/teilnahme-an-der-messe-myjob/": {
+  "sitemap": "post",
+  "datei": "teilnahme-an-der-messe-myjob.html"
+ },
+ "https://www.brasseler.de/medizintechnische-gebr-brasseler-gruppe-veroeffentlicht-vorlaeufige-ergebnisse-des-geschaeftsjahres-2023/": {
+  "sitemap": "post",
+  "datei": "medizintechnische-gebr-brasseler-gruppe-veroeffentlicht-vorlaeufige-ergebnisse-des-geschaeftsjahres-2023.html"
+ },
+ "https://www.brasseler.de/regierungspraesidentin-und-wirtschaftsjunioren-zu-besuch-bei-brasseler/": {
+  "sitemap": "post",
+  "datei": "regierungspraesidentin-und-wirtschaftsjunioren-zu-besuch-bei-brasseler.html"
+ },
+ "https://www.brasseler.de/brasseler-rollt-mitarbeiter-und-fuehrungskraefteleitlinien-aus/": {
+  "sitemap": "post",
+  "datei": "brasseler-rollt-mitarbeiter-und-fuehrungskraefteleitlinien-aus.html"
+ },
+ "https://www.brasseler.de/internationalisierung-apac-dealer-meeting/": {
+  "sitemap": "post",
+  "datei": "internationalisierung-apac-dealer-meeting.html"
+ },
+ "https://www.brasseler.de/werte-sind-unser-fundament/": {
+  "sitemap": "post",
+  "datei": "werte-sind-unser-fundament.html"
+ },
+ "https://www.brasseler.de/reorganisation-und-fuehrungswechsel/": {
+  "sitemap": "post",
+  "datei": "reorganisation-und-fuehrungswechsel.html"
+ },
+ "https://www.brasseler.de/national-sales-meeting-komet-usa/": {
+  "sitemap": "post",
+  "datei": "national-sales-meeting-komet-usa.html"
+ },
+ "https://www.brasseler.de/schoene-feiertage/": {
+  "sitemap": "post",
+  "datei": "schoene-feiertage.html"
+ },
+ "https://www.brasseler.de/leaders-talk-stephan-koehler-iminterview-mit-wir-wirtschaft-regional/": {
+  "sitemap": "post",
+  "datei": "leaders-talk-stephan-koehler-iminterview-mit-wir-wirtschaft-regional.html"
+ },
+ "https://www.brasseler.de/gemeinsam-in-lemgo-und-der-region/": {
+  "sitemap": "post",
+  "datei": "gemeinsam-in-lemgo-und-der-region.html"
+ },
+ "https://www.brasseler.de/richtfest-fuer-neubau-in-lemgo/": {
+  "sitemap": "post",
+  "datei": "richtfest-fuer-neubau-in-lemgo.html"
+ },
+ "https://www.brasseler.de/bei-brasseler-macht-der-mensch-den-unterschied/": {
+  "sitemap": "post",
+  "datei": "bei-brasseler-macht-der-mensch-den-unterschied.html"
+ },
+ "https://www.brasseler.de/besuch-bei-komet-italia/": {
+  "sitemap": "post",
+  "datei": "besuch-bei-komet-italia.html"
+ },
+ "https://www.brasseler.de/brasseler-startet-content-kampagne-insights-brasseler/": {
+  "sitemap": "post",
+  "datei": "brasseler-startet-content-kampagne-insights-brasseler.html"
+ },
+ "https://www.brasseler.de/eventfilm-100-years/": {
+  "sitemap": "post",
+  "datei": "eventfilm-100-years.html"
+ },
+ "https://www.brasseler.de/halbjahres-ergebnisse-2023-und-investitionsplane-fur-lemgo/": {
+  "sitemap": "post",
+  "datei": "halbjahres-ergebnisse-2023-und-investitionsplane-fur-lemgo.html"
+ },
+ "https://www.brasseler.de/top-100-preisverleihung-brasseler-nimmt-auszeichnung-entgegen/": {
+  "sitemap": "post",
+  "datei": "top-100-preisverleihung-brasseler-nimmt-auszeichnung-entgegen.html"
+ },
+ "https://www.brasseler.de/brasseler-begeistert-jugendliche-bei-infotag-ueber-ausbildungsberufe/": {
+  "sitemap": "post",
+  "datei": "brasseler-begeistert-jugendliche-bei-infotag-ueber-ausbildungsberufe.html"
+ },
+ "https://www.brasseler.de/erweiterter-fuehrungskreis-legt-grundstein-fuer-weiteres-gesundes-wachstum-bis-2026/": {
+  "sitemap": "post",
+  "datei": "erweiterter-fuehrungskreis-legt-grundstein-fuer-weiteres-gesundes-wachstum-bis-2026.html"
+ },
+ "https://www.brasseler.de/en/participation-in-the-myjob-fair/": {
+  "sitemap": "post",
+  "datei": "en__participation-in-the-myjob-fair.html"
+ },
+ "https://www.brasseler.de/en/the-medical-technology-group-gebr-brasseler-publishes-its-preliminary-results-for-the-financial-year-2023/": {
+  "sitemap": "post",
+  "datei": "en__the-medical-technology-group-gebr-brasseler-publishes-its-preliminary-results-for-the-financial-year-2023.html"
+ },
+ "https://www.brasseler.de/en/district-president-and-business-juniors-visit-brasseler/": {
+  "sitemap": "post",
+  "datei": "en__district-president-and-business-juniors-visit-brasseler.html"
+ },
+ "https://www.brasseler.de/en/internationalization-apac-dealer-meeting/": {
+  "sitemap": "post",
+  "datei": "en__internationalization-apac-dealer-meeting.html"
+ },
+ "https://www.brasseler.de/en/ceremonial-laying-of-the-foundation-stone-expansion-of-the-brasseler-headquarters-in-lemgo/": {
+  "sitemap": "post",
+  "datei": "en__ceremonial-laying-of-the-foundation-stone-expansion-of-the-brasseler-headquarters-in-lemgo.html"
+ },
+ "https://www.brasseler.de/en/big-anniversary-brasseler-celebrates-100-years/": {
+  "sitemap": "post",
+  "datei": "en__big-anniversary-brasseler-celebrates-100-years.html"
+ },
+ "https://www.brasseler.de/en/brasseler-again-receives-award-for-innovation-work/": {
+  "sitemap": "post",
+  "datei": "en__brasseler-again-receives-award-for-innovation-work.html"
+ },
+ "https://www.brasseler.de/en/brasseler-releases-new-image-film/": {
+  "sitemap": "post",
+  "datei": "en__brasseler-releases-new-image-film.html"
+ },
+ "https://www.brasseler.de/en/extended-management-team-lays-foundation-for-further-healthy-growth-until-2026/": {
+  "sitemap": "post",
+  "datei": "en__extended-management-team-lays-foundation-for-further-healthy-growth-until-2026.html"
+ },
+ "https://www.brasseler.de/en/brasseler-inspires-young-people-at-information-day-about-apprenticeships/": {
+  "sitemap": "post",
+  "datei": "en__brasseler-inspires-young-people-at-information-day-about-apprenticeships.html"
+ },
+ "https://www.brasseler.de/en/top-100-award-ceremony-brasseler-accepts-award/": {
+  "sitemap": "post",
+  "datei": "en__top-100-award-ceremony-brasseler-accepts-award.html"
+ },
+ "https://www.brasseler.de/en/half-year-results-2023-and-investment-plans-for-lemgo/": {
+  "sitemap": "post",
+  "datei": "en__half-year-results-2023-and-investment-plans-for-lemgo.html"
+ },
+ "https://www.brasseler.de/en/eventfilm-100-years/": {
+  "sitemap": "post",
+  "datei": "en__eventfilm-100-years.html"
+ },
+ "https://www.brasseler.de/en/topping-out-ceremony-for-new-building-in-lemgo/": {
+  "sitemap": "post",
+  "datei": "en__topping-out-ceremony-for-new-building-in-lemgo.html"
+ },
+ "https://www.brasseler.de/en/together-in-lemgo-and-the-region/": {
+  "sitemap": "post",
+  "datei": "en__together-in-lemgo-and-the-region.html"
+ },
+ "https://www.brasseler.de/en/happy-festive-season/": {
+  "sitemap": "post",
+  "datei": "en__happy-festive-season.html"
+ },
+ "https://www.brasseler.de/en/reorganization-and-change-of-leadership/": {
+  "sitemap": "post",
+  "datei": "en__reorganization-and-change-of-leadership.html"
+ },
+ "https://www.brasseler.de/erfolg-strategie-und-fuehrungsexzellenz/": {
+  "sitemap": "post",
+  "datei": "erfolg-strategie-und-fuehrungsexzellenz.html"
+ },
+ "https://www.brasseler.de/en/success-strategy-and-leadership-excellence/": {
+  "sitemap": "post",
+  "datei": "en__success-strategy-and-leadership-excellence.html"
+ },
+ "https://www.brasseler.de/en/brasseler-hosts-popup-campus-of-the-digital-business-university/": {
+  "sitemap": "post",
+  "datei": "en__brasseler-hosts-popup-campus-of-the-digital-business-university.html"
+ },
+ "https://www.brasseler.de/azubi-infotag/": {
+  "sitemap": "post",
+  "datei": "azubi-infotag.html"
+ },
+ "https://www.brasseler.de/podcast-dentale-familienunternehmen/": {
+  "sitemap": "post",
+  "datei": "podcast-dentale-familienunternehmen.html"
+ },
+ "https://www.brasseler.de/en/podcast-dental-family-businesses/": {
+  "sitemap": "post",
+  "datei": "en__podcast-dental-family-businesses.html"
+ },
+ "https://www.brasseler.de/europawahl-es-geht-uns-alle-an-2/": {
+  "sitemap": "post",
+  "datei": "europawahl-es-geht-uns-alle-an-2.html"
+ },
+ "https://www.brasseler.de/en/successful-trade-fair-for-komet-medical/": {
+  "sitemap": "post",
+  "datei": "en__successful-trade-fair-for-komet-medical.html"
+ },
+ "https://www.brasseler.de/brasseler-baut-engagement-beim-tbv-lemgo-lippe-deutlich-aus/": {
+  "sitemap": "post",
+  "datei": "brasseler-baut-engagement-beim-tbv-lemgo-lippe-deutlich-aus.html"
+ },
+ "https://www.brasseler.de/erfolgreiche-messe-fuer-komet-medical/": {
+  "sitemap": "post",
+  "datei": "erfolgreiche-messe-fuer-komet-medical.html"
+ },
+ "https://www.brasseler.de/en/brasseler-significantly-expands-engagement-with-tbv-lemgo-lippe/": {
+  "sitemap": "post",
+  "datei": "en__brasseler-significantly-expands-engagement-with-tbv-lemgo-lippe.html"
+ },
+ "https://www.brasseler.de/en/european-elections-together-for-a-strong-europe/": {
+  "sitemap": "post",
+  "datei": "en__european-elections-together-for-a-strong-europe.html"
+ },
+ "https://www.brasseler.de/europawahl-gemeinsam-fuer-ein-starkes-europa/": {
+  "sitemap": "post",
+  "datei": "europawahl-gemeinsam-fuer-ein-starkes-europa.html"
+ },
+ "https://www.brasseler.de/paneldiskussion-beyond-bloodlines/": {
+  "sitemap": "post",
+  "datei": "paneldiskussion-beyond-bloodlines.html"
+ },
+ "https://www.brasseler.de/podcast-dentale-familienunternehmen-brasseler-komet-eine-reise-durch-die-unternehmensgeschichte/": {
+  "sitemap": "post",
+  "datei": "podcast-dentale-familienunternehmen-brasseler-komet-eine-reise-durch-die-unternehmensgeschichte.html"
+ },
+ "https://www.brasseler.de/brasseler-spendet-dental-instrumente-nach-suedafrika/": {
+  "sitemap": "post",
+  "datei": "brasseler-spendet-dental-instrumente-nach-suedafrika.html"
+ },
+ "https://www.brasseler.de/en/brasseler-donates-dental-instruments-to-south-africa/": {
+  "sitemap": "post",
+  "datei": "en__brasseler-donates-dental-instruments-to-south-africa.html"
+ },
+ "https://www.brasseler.de/en/podcast-dental-family-businesses-brasseler-komet-a-journey-through-our-corporate-history/": {
+  "sitemap": "post",
+  "datei": "en__podcast-dental-family-businesses-brasseler-komet-a-journey-through-our-corporate-history.html"
+ },
+ "https://www.brasseler.de/en/panel-discussion-beyond-bloodlines/": {
+  "sitemap": "post",
+  "datei": "en__panel-discussion-beyond-bloodlines.html"
+ },
+ "https://www.brasseler.de/en/europawahl-it-affects-us-all/": {
+  "sitemap": "post",
+  "datei": "en__europawahl-it-affects-us-all.html"
+ },
+ "https://www.brasseler.de/medizintechnische-gebr-brasseler-gruppe-ernennt-neuen-geschaeftsfuehrer/": {
+  "sitemap": "post",
+  "datei": "medizintechnische-gebr-brasseler-gruppe-ernennt-neuen-geschaeftsfuehrer.html"
+ },
+ "https://www.brasseler.de/medizintechnische-gebr-brasseler-gruppe-veroeffentlicht-halbjahres-ergebnisse-2024/": {
+  "sitemap": "post",
+  "datei": "medizintechnische-gebr-brasseler-gruppe-veroeffentlicht-halbjahres-ergebnisse-2024.html"
+ },
+ "https://www.brasseler.de/en/the-medical-technology-group-gebr-brasseler-publishes-half-year-results-2024/": {
+  "sitemap": "post",
+  "datei": "en__the-medical-technology-group-gebr-brasseler-publishes-half-year-results-2024.html"
+ },
+ "https://www.brasseler.de/startschuss-fuer-naechste-generation-ausbildungsjahr-bei-brasseler-beginnt-neu/": {
+  "sitemap": "post",
+  "datei": "startschuss-fuer-naechste-generation-ausbildungsjahr-bei-brasseler-beginnt-neu.html"
+ },
+ "https://www.brasseler.de/en/green-light-for-the-next-generation-of-trainees-who-are-now-starting-their-vocational-training-at-brasseler/": {
+  "sitemap": "post",
+  "datei": "en__green-light-for-the-next-generation-of-trainees-who-are-now-starting-their-vocational-training-at-brasseler.html"
+ },
+ "https://www.brasseler.de/gemeinsam-in-die-zukunft-brasseler-feiert-familientage-2024/": {
+  "sitemap": "post",
+  "datei": "gemeinsam-in-die-zukunft-brasseler-feiert-familientage-2024.html"
+ },
+ "https://www.brasseler.de/schluesseluebergabe-fuer-neues-gebaeude/": {
+  "sitemap": "post",
+  "datei": "schluesseluebergabe-fuer-neues-gebaeude.html"
+ },
+ "https://www.brasseler.de/en/100000-euros-in-emergency-aid-for-victims-of-earthquake-disaster/": {
+  "sitemap": "post",
+  "datei": "en__100000-euros-in-emergency-aid-for-victims-of-earthquake-disaster.html"
+ },
+ "https://www.brasseler.de/en/brasseler-launches-content-campaign-insights-brasseler/": {
+  "sitemap": "post",
+  "datei": "en__brasseler-launches-content-campaign-insights-brasseler.html"
+ },
+ "https://www.brasseler.de/en/at-brasseler-people-make-the-difference/": {
+  "sitemap": "post",
+  "datei": "en__at-brasseler-people-make-the-difference.html"
+ },
+ "https://www.brasseler.de/en/values-are-our-foundation/": {
+  "sitemap": "post",
+  "datei": "en__values-are-our-foundation.html"
+ },
+ "https://www.brasseler.de/en/national-sales-meeting-komet-usa/": {
+  "sitemap": "post",
+  "datei": "en__national-sales-meeting-komet-usa.html"
+ },
+ "https://www.brasseler.de/en/our-path-to-a-world-market-leader-in-the-dental-industry/": {
+  "sitemap": "post",
+  "datei": "en__our-path-to-a-world-market-leader-in-the-dental-industry.html"
+ },
+ "https://www.brasseler.de/en/visit-to-komet-italia/": {
+  "sitemap": "post",
+  "datei": "en__visit-to-komet-italia.html"
+ },
+ "https://www.brasseler.de/was-bedeutet-unser-wert-verbunden/": {
+  "sitemap": "post",
+  "datei": "was-bedeutet-unser-wert-verbunden.html"
+ },
+ "https://www.brasseler.de/en/what-does-our-value-connected-mean/": {
+  "sitemap": "post",
+  "datei": "en__what-does-our-value-connected-mean.html"
+ },
+ "https://www.brasseler.de/en/brasseler-rolls-out-employee-and-management-guidelines/": {
+  "sitemap": "post",
+  "datei": "en__brasseler-rolls-out-employee-and-management-guidelines.html"
+ },
+ "https://www.brasseler.de/brasseler-sponsert-haupt-act-nico-santos-bei-lippe-open-air/": {
+  "sitemap": "post",
+  "datei": "brasseler-sponsert-haupt-act-nico-santos-bei-lippe-open-air.html"
+ },
+ "https://www.brasseler.de/wir-handeln-mit-weitblick/": {
+  "sitemap": "post",
+  "datei": "wir-handeln-mit-weitblick.html"
+ },
+ "https://www.brasseler.de/en/brasseler-sponsors-main-act-nico-santos-at-lippe-open-air/": {
+  "sitemap": "post",
+  "datei": "en__brasseler-sponsors-main-act-nico-santos-at-lippe-open-air.html"
+ },
+ "https://www.brasseler.de/en/we-act-with-foresight/": {
+  "sitemap": "post",
+  "datei": "en__we-act-with-foresight.html"
+ },
+ "https://www.brasseler.de/en/handing-over-the-key-to-the-new-building/": {
+  "sitemap": "post",
+  "datei": "en__handing-over-the-key-to-the-new-building.html"
+ },
+ "https://www.brasseler.de/en/the-medical-technology-group-gebr-brasseler-lemgo-appoints-a-new-managing-director/": {
+  "sitemap": "post",
+  "datei": "en__the-medical-technology-group-gebr-brasseler-lemgo-appoints-a-new-managing-director.html"
+ },
+ "https://www.brasseler.de/ein-fantastisches-wochenende-beim-lippe-open-air/": {
+  "sitemap": "post",
+  "datei": "ein-fantastisches-wochenende-beim-lippe-open-air.html"
+ },
+ "https://www.brasseler.de/en/a-fantastic-weekend-at-lippe-open-air/": {
+  "sitemap": "post",
+  "datei": "en__a-fantastic-weekend-at-lippe-open-air.html"
+ },
+ "https://www.brasseler.de/unser-weg-zum-weltmarktfuehrer-in-der-dentalindustrie/": {
+  "sitemap": "post",
+  "datei": "unser-weg-zum-weltmarktfuehrer-in-der-dentalindustrie.html"
+ },
+ "https://www.brasseler.de/brasseler-veroeffentlicht-neuen-imagefilm/": {
+  "sitemap": "post",
+  "datei": "brasseler-veroeffentlicht-neuen-imagefilm.html"
+ },
+ "https://www.brasseler.de/grosses-jubilaeum-brasseler-feiert-100-jahre/": {
+  "sitemap": "post",
+  "datei": "grosses-jubilaeum-brasseler-feiert-100-jahre.html"
+ },
+ "https://www.brasseler.de/brasseler-erhaelt-erneut-auszeichnung-fuer-innovationsarbeit/": {
+  "sitemap": "post",
+  "datei": "brasseler-erhaelt-erneut-auszeichnung-fuer-innovationsarbeit.html"
+ },
+ "https://www.brasseler.de/feierliche-grundsteinlegung-ausbau-des-brasseler-firmensitzes-in-lemgo/": {
+  "sitemap": "post",
+  "datei": "feierliche-grundsteinlegung-ausbau-des-brasseler-firmensitzes-in-lemgo.html"
+ },
+ "https://www.brasseler.de/foerderung-digitaler-kompetenzen-brasseler-richtet-popup-campus-der-digital-business-university-aus/": {
+  "sitemap": "post",
+  "datei": "foerderung-digitaler-kompetenzen-brasseler-richtet-popup-campus-der-digital-business-university-aus.html"
+ },
+ "https://www.brasseler.de/spendenaktion-fuer-tuerkei-und-syrien/": {
+  "sitemap": "post",
+  "datei": "spendenaktion-fuer-tuerkei-und-syrien.html"
+ },
+ "https://www.brasseler.de/en/together-into-the-future-brasseler-celebrates-family-days-2024/": {
+  "sitemap": "post",
+  "datei": "en__together-into-the-future-brasseler-celebrates-family-days-2024.html"
+ },
+ "https://www.brasseler.de/spenden-statt-geschenke-brasseler-wuenscht-frohe-weihnachten/": {
+  "sitemap": "post",
+  "datei": "spenden-statt-geschenke-brasseler-wuenscht-frohe-weihnachten.html"
+ },
+ "https://www.brasseler.de/neues-aus-und-weiterbildungszentrum-entsteht-bei-brasseler-in-lemgo/": {
+  "sitemap": "post",
+  "datei": "neues-aus-und-weiterbildungszentrum-entsteht-bei-brasseler-in-lemgo.html"
+ },
+ "https://www.brasseler.de/en/new-training-and-further-education-center-to-be-built-at-brasseler-in-lemgo/": {
+  "sitemap": "post",
+  "datei": "en__new-training-and-further-education-center-to-be-built-at-brasseler-in-lemgo.html"
+ },
+ "https://www.brasseler.de/en/donations-instead-of-presents-brasseler-wishes-you-a-merry-christmas/": {
+  "sitemap": "post",
+  "datei": "en__donations-instead-of-presents-brasseler-wishes-you-a-merry-christmas.html"
+ },
+ "https://www.brasseler.de/geschaeftsfuehrer-vddi-besucht-brasseler/": {
+  "sitemap": "post",
+  "datei": "geschaeftsfuehrer-vddi-besucht-brasseler.html"
+ },
+ "https://www.brasseler.de/en/dr-markus-heibach-managing-director-of-the-vddi-e-v-visits-brasseler/": {
+  "sitemap": "post",
+  "datei": "en__dr-markus-heibach-managing-director-of-the-vddi-e-v-visits-brasseler.html"
+ },
+ "https://www.brasseler.de/brasseler-staerkt-internationale-praesenz-neue-meilensteine-im-dentalbereich/": {
+  "sitemap": "post",
+  "datei": "brasseler-staerkt-internationale-praesenz-neue-meilensteine-im-dentalbereich.html"
+ },
+ "https://www.brasseler.de/en/brasseler-strengthens-its-international-presence-new-milestones-in-the-dental-sector/": {
+  "sitemap": "post",
+  "datei": "en__brasseler-strengthens-its-international-presence-new-milestones-in-the-dental-sector.html"
+ },
+ "https://www.brasseler.de/brasseler-ist-neuer-hauptsponsor-von-lemgo-marketing/": {
+  "sitemap": "post",
+  "datei": "brasseler-ist-neuer-hauptsponsor-von-lemgo-marketing.html"
+ },
+ "https://www.brasseler.de/en/brasseler-becomes-one-of-the-new-main-sponsors-of-lemgo-marketing/": {
+  "sitemap": "post",
+  "datei": "en__brasseler-becomes-one-of-the-new-main-sponsors-of-lemgo-marketing.html"
+ },
+ "https://www.brasseler.de/brasseler-auf-der-my-job-owl/": {
+  "sitemap": "post",
+  "datei": "brasseler-auf-der-my-job-owl.html"
+ },
+ "https://www.brasseler.de/en/brasseler-at-my-job-owl-perspectives-for-the-future/": {
+  "sitemap": "post",
+  "datei": "en__brasseler-at-my-job-owl-perspectives-for-the-future.html"
+ },
+ "https://www.brasseler.de/brasseler-veroeffentlicht-vorlaeufige-ergebnisse-2024/": {
+  "sitemap": "post",
+  "datei": "brasseler-veroeffentlicht-vorlaeufige-ergebnisse-2024.html"
+ },
+ "https://www.brasseler.de/en/the-medical-technology-group-brasseler-publishes-preliminary-results-for-the-financial-year-2024/": {
+  "sitemap": "post",
+  "datei": "en__the-medical-technology-group-brasseler-publishes-preliminary-results-for-the-financial-year-2024.html"
+ },
+ "https://www.brasseler.de/en/inauguration-of-the-brasseler-academy-in-lemgo-promoting-talent-shaping-the-future/": {
+  "sitemap": "post",
+  "datei": "en__inauguration-of-the-brasseler-academy-in-lemgo-promoting-talent-shaping-the-future.html"
+ },
+ "https://www.brasseler.de/kinderdorf-spende/": {
+  "sitemap": "post",
+  "datei": "kinderdorf-spende.html"
+ },
+ "https://www.brasseler.de/tag-der-ausbildung-2025/": {
+  "sitemap": "post",
+  "datei": "tag-der-ausbildung-2025.html"
+ },
+ "https://www.brasseler.de/brasseler-erhaelt-top-100-auszeichnung-in-heidelberg/": {
+  "sitemap": "post",
+  "datei": "brasseler-erhaelt-top-100-auszeichnung-in-heidelberg.html"
+ },
+ "https://www.brasseler.de/en/brasseler-receives-top-100-award-in-heidelberg/": {
+  "sitemap": "post",
+  "datei": "en__brasseler-receives-top-100-award-in-heidelberg.html"
+ },
+ "https://www.brasseler.de/brasseler-veroeffentlicht-vorlaeufige-ergebnisse-des-geschaeftsjahres-2025/": {
+  "sitemap": "post",
+  "datei": "brasseler-veroeffentlicht-vorlaeufige-ergebnisse-des-geschaeftsjahres-2025.html"
+ },
+ "https://www.brasseler.de/en/medical-technology-group-brasseler-releases-preliminary-results-for-fiscal-year-2025/": {
+  "sitemap": "post",
+  "datei": "en__medical-technology-group-brasseler-releases-preliminary-results-for-fiscal-year-2025.html"
+ },
+ "https://www.brasseler.de/brasseler-erhaelt-zum-dritten-mal-das-top-100-innovations-siegel/": {
+  "sitemap": "post",
+  "datei": "brasseler-erhaelt-zum-dritten-mal-das-top-100-innovations-siegel.html"
+ },
+ "https://www.brasseler.de/en/brasseler-has-been-awarded-the-top-100-innovation-seal-for-the-third-time/": {
+  "sitemap": "post",
+  "datei": "en__brasseler-has-been-awarded-the-top-100-innovation-seal-for-the-third-time.html"
+ },
+ "https://www.brasseler.de/en/121-christmas-parcels-a-hand-puppet-and-a-e3000-donation-for-the-westfaelisches-kinderdorf-e-v-in-barntrup/": {
+  "sitemap": "post",
+  "datei": "en__121-christmas-parcels-a-hand-puppet-and-a-e3000-donation-for-the-westfaelisches-kinderdorf-e-v-in-barntrup.html"
+ },
+ "https://www.brasseler.de/121-weihnachtspaeckchen-eine-handpuppe-und-3-000-euro-spende-fuer-das-westfaelische-kinderdorf-barntrup/": {
+  "sitemap": "post",
+  "datei": "121-weihnachtspaeckchen-eine-handpuppe-und-3-000-euro-spende-fuer-das-westfaelische-kinderdorf-barntrup.html"
+ },
+ "https://www.brasseler.de/vom-ersten-arbeitstag-bis-heute/": {
+  "sitemap": "post",
+  "datei": "vom-ersten-arbeitstag-bis-heute.html"
+ },
+ "https://www.brasseler.de/en/from-his-first-day-at-work-to-today/": {
+  "sitemap": "post",
+  "datei": "en__from-his-first-day-at-work-to-today.html"
+ },
+ "https://www.brasseler.de/brasseler-gewinnt-red-dot-design-award-2025/": {
+  "sitemap": "post",
+  "datei": "brasseler-gewinnt-red-dot-design-award-2025.html"
+ },
+ "https://www.brasseler.de/en/brasseler-wins-the-red-dot-design-award-2025/": {
+  "sitemap": "post",
+  "datei": "en__brasseler-wins-the-red-dot-design-award-2025.html"
+ },
+ "https://www.brasseler.de/ankommen-mitgestalten-wachsen-ausbildungsstart-bei-brasseler/": {
+  "sitemap": "post",
+  "datei": "ankommen-mitgestalten-wachsen-ausbildungsstart-bei-brasseler.html"
+ },
+ "https://www.brasseler.de/en/a-warm-welcome-to-this-years-new-trainees-come-and-join-us-get-involved-and-grow/": {
+  "sitemap": "post",
+  "datei": "en__a-warm-welcome-to-this-years-new-trainees-come-and-join-us-get-involved-and-grow.html"
+ },
+ "https://www.brasseler.de/en/childrens-village-donation/": {
+  "sitemap": "post",
+  "datei": "en__childrens-village-donation.html"
+ },
+ "https://www.brasseler.de/brasseler-akademie-in-lemgo-eingeweiht-talente-foerdern-zukunft-formen/": {
+  "sitemap": "post",
+  "datei": "brasseler-akademie-in-lemgo-eingeweiht-talente-foerdern-zukunft-formen.html"
+ },
+ "https://www.brasseler.de/timeline-eintrag/ein-startup-in-duesseldorf/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "timeline-eintrag__ein-startup-in-duesseldorf.html"
+ },
+ "https://www.brasseler.de/timeline-eintrag/der-blick-nach-vorn/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "timeline-eintrag__der-blick-nach-vorn.html"
+ },
+ "https://www.brasseler.de/timeline-eintrag/wachstum-mit-weitblick/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "timeline-eintrag__wachstum-mit-weitblick.html"
+ },
+ "https://www.brasseler.de/timeline-eintrag/diamanten-und-der-trophagener-weg/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "timeline-eintrag__diamanten-und-der-trophagener-weg.html"
+ },
+ "https://www.brasseler.de/timeline-eintrag/hello-lombard/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "timeline-eintrag__hello-lombard.html"
+ },
+ "https://www.brasseler.de/timeline-eintrag/wir-koennen-auch-anders/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "timeline-eintrag__wir-koennen-auch-anders.html"
+ },
+ "https://www.brasseler.de/timeline-eintrag/welcome-back-in-usa/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "timeline-eintrag__welcome-back-in-usa.html"
+ },
+ "https://www.brasseler.de/timeline-eintrag/100-mio-euro-umsatz-gemeinsam-geschafft/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "timeline-eintrag__100-mio-euro-umsatz-gemeinsam-geschafft.html"
+ },
+ "https://www.brasseler.de/timeline-eintrag/der-digitale-zwilling/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "timeline-eintrag__der-digitale-zwilling.html"
+ },
+ "https://www.brasseler.de/timeline-eintrag/autonome-fertigung-top-100-award/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "timeline-eintrag__autonome-fertigung-top-100-award.html"
+ },
+ "https://www.brasseler.de/timeline-eintrag/strategie-und-digitalisierung/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "timeline-eintrag__strategie-und-digitalisierung.html"
+ },
+ "https://www.brasseler.de/timeline-eintrag/gesellschaftliche-verantwortung/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "timeline-eintrag__gesellschaftliche-verantwortung.html"
+ },
+ "https://www.brasseler.de/timeline-eintrag/dentything-neuheit-fuer-zahnarztpraxen/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "timeline-eintrag__dentything-neuheit-fuer-zahnarztpraxen.html"
+ },
+ "https://www.brasseler.de/timeline-eintrag/die-wirtschaftswunderjahre-eine-neue-zeit-ein-neuer-werkstoff/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "timeline-eintrag__die-wirtschaftswunderjahre-eine-neue-zeit-ein-neuer-werkstoff.html"
+ },
+ "https://www.brasseler.de/timeline-eintrag/weitere-grundsteine-werden-gelegt/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "timeline-eintrag__weitere-grundsteine-werden-gelegt.html"
+ },
+ "https://www.brasseler.de/timeline-eintrag/ein-besonderes-jahrzehnt-beginnt/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "timeline-eintrag__ein-besonderes-jahrzehnt-beginnt.html"
+ },
+ "https://www.brasseler.de/timeline-eintrag/das-wichtigste-ist-dass-man-als-erster-eine-idee-hat-und-sie-mit-leidenschaft-umsetzt-luciano-benetton/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "timeline-eintrag__das-wichtigste-ist-dass-man-als-erster-eine-idee-hat-und-sie-mit-leidenschaft-umsetzt-luciano-benetton.html"
+ },
+ "https://www.brasseler.de/en/timeline-eintrag/a-new-start-in-lemgo/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "en__timeline-eintrag__a-new-start-in-lemgo.html"
+ },
+ "https://www.brasseler.de/en/timeline-eintrag/vocational-training/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "en__timeline-eintrag__vocational-training.html"
+ },
+ "https://www.brasseler.de/en/timeline-eintrag/tungsten-carbide-and-diamond/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "en__timeline-eintrag__tungsten-carbide-and-diamond.html"
+ },
+ "https://www.brasseler.de/en/timeline-eintrag/brasseler-campus/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "en__timeline-eintrag__brasseler-campus.html"
+ },
+ "https://www.brasseler.de/en/timeline-eintrag/root-canal-treatment-endodontics/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "en__timeline-eintrag__root-canal-treatment-endodontics.html"
+ },
+ "https://www.brasseler.de/en/timeline-eintrag/komet-medical/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "en__timeline-eintrag__komet-medical.html"
+ },
+ "https://www.brasseler.de/en/timeline-eintrag/growth-driven-by-innovations/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "en__timeline-eintrag__growth-driven-by-innovations.html"
+ },
+ "https://www.brasseler.de/en/timeline-eintrag/world-premiere-ceramic-instruments/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "en__timeline-eintrag__world-premiere-ceramic-instruments.html"
+ },
+ "https://www.brasseler.de/en/timeline-eintrag/universal-toothing-cutter-made-by-brasseler/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "en__timeline-eintrag__universal-toothing-cutter-made-by-brasseler.html"
+ },
+ "https://www.brasseler.de/en/timeline-eintrag/cad-cam-alliance-computer-aided-design-and-manufacturing/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "en__timeline-eintrag__cad-cam-alliance-computer-aided-design-and-manufacturing.html"
+ },
+ "https://www.brasseler.de/en/timeline-eintrag/breakdown-into-business-units/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "en__timeline-eintrag__breakdown-into-business-units.html"
+ },
+ "https://www.brasseler.de/en/timeline-eintrag/strategy-and-digitization/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "en__timeline-eintrag__strategy-and-digitization.html"
+ },
+ "https://www.brasseler.de/en/timeline-eintrag/dentything-innovation-for-dental-practices/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "en__timeline-eintrag__dentything-innovation-for-dental-practices.html"
+ },
+ "https://www.brasseler.de/en/timeline-eintrag/autonomous-production-top-100-award/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "en__timeline-eintrag__autonomous-production-top-100-award.html"
+ },
+ "https://www.brasseler.de/timeline-eintrag/s-diamanten/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "timeline-eintrag__s-diamanten.html"
+ },
+ "https://www.brasseler.de/timeline-eintrag/q-finierer/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "timeline-eintrag__q-finierer.html"
+ },
+ "https://www.brasseler.de/timeline-eintrag/dentinpost/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "timeline-eintrag__dentinpost.html"
+ },
+ "https://www.brasseler.de/en/timeline-eintrag/s-diamonds/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "en__timeline-eintrag__s-diamonds.html"
+ },
+ "https://www.brasseler.de/en/timeline-eintrag/q-finishers/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "en__timeline-eintrag__q-finishers.html"
+ },
+ "https://www.brasseler.de/en/timeline-eintrag/dentinpost/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "en__timeline-eintrag__dentinpost.html"
+ },
+ "https://www.brasseler.de/en/timeline-eintrag/social-responsibility/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "en__timeline-eintrag__social-responsibility.html"
+ },
+ "https://www.brasseler.de/en/timeline-eintrag/internationalization/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "en__timeline-eintrag__internationalization.html"
+ },
+ "https://www.brasseler.de/en/timeline-eintrag/company-foundation/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "en__timeline-eintrag__company-foundation.html"
+ },
+ "https://www.brasseler.de/timeline-eintrag/gemeinsam-sind-wir-stark/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "timeline-eintrag__gemeinsam-sind-wir-stark.html"
+ },
+ "https://www.brasseler.de/en/timeline-eintrag/certification-medical-device-regulation-mdr/": {
+  "sitemap": "timeline-eintrag",
+  "datei": "en__timeline-eintrag__certification-medical-device-regulation-mdr.html"
+ }
+}
