@@ -3,7 +3,7 @@
 Bestandsseite in Sektionen), JSON-LD, Seitenrahmen. Alles statisch, kein Laufzeit-Include.
 Autor: Marketing Operations (Vega), 02.10.2026, Demonstrator Brasseler. VERSION bei CSS- oder JS-Änderung erhöhen."""
 import os, re, json, html
-VERSION = "25"
+VERSION = "26"
 # Bilder der Kartenreihen: im Bestand Hintergründe der Divi-CTA-Module (liegen in et-cache-CSS, nicht im HTML); hier die
 # bekannten Zuordnungen nach Stichwort im Kartentitel. Fehlt ein Stichwort, bleibt die Karte ohne Bild.
 KARTEN_BILDER = {"management": "https://www.brasseler.de/uploads/Brasseler-Hero-2024_GBL-Luftbild_sun-web.jpg",
@@ -92,6 +92,7 @@ def link_lokal(href, r, pfade):
 def bloecke_html(bl, r, pfade, lang, lightbox=True):
     """Rendert die extrahierten Blöcke als Sektionen. Erkennt Kicker plus Leitzeile, Bildgruppen (Galerie), Icon-Raster,
     Bild-mit-Knopf-Kacheln, Personenkarten (Bild, Name, Rolle) und Jahresmarken der Chronik."""
+    bl = [b for b in bl if not (b["t"] == "img" and "/wp-content/themes/" in b["src"])]  # Theme-Grafiken (Karussell-Pfeile btt.svg) sind Bedienung, kein Inhalt (Faber F6: „zwei riesige blaue Pfeil-Kreise“)
     out = []; i = 0; n = len(bl); galerie_index = 0; hstapel = []  # Überschriften ohne Sprung: der Bestand hat h6 nach h2 (Faber F4); Stapel aus (Original, vergeben)
     KONTEXT["r"], KONTEXT["pfade"] = r, pfade
     def p_html(b): return f'<p>{inline_html(b["x"])}</p>'

@@ -11,6 +11,10 @@ urls = set(["https://www.brasseler.de/uploads/logo.svg", "https://www.brasseler.
 for x in d:
     urls.update(x["bilder"]);
     if x["og"]: urls.add(x["og"])
+# Hintergrundbilder der Divi-Abschnitte (divi_hintergruende.py), seit 02.10.2026 abends: Hero-Bilder der Unterseiten
+hg = os.path.join(HERE, "hintergruende.json")
+if os.path.exists(hg):
+    for v in json.load(open(hg, encoding="utf-8")).values(): urls.update(v)
 def name(u): return re.sub(r"[^A-Za-z0-9._-]", "_", u.split("/")[-1].split("?")[0])
 def hole(u):
     z = os.path.join(ZIEL, name(u))

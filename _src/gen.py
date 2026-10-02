@@ -12,6 +12,9 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 daten = json.load(open(os.path.join(HERE, "data.json"), encoding="utf-8"))
 by = {d["pfad"]: d for d in daten}
 HEUTE = datetime.date.today().isoformat()
+HINTERGRUENDE = json.load(open(os.path.join(HERE, "hintergruende.json"), encoding="utf-8")) if os.path.exists(os.path.join(HERE, "hintergruende.json")) else {}
+LUFTBILD = "https://www.brasseler.de/uploads/Brasseler-Hero-2024_GBL-Luftbild_sun-web.jpg"
+RECHT = {"/impressum/", "/datenschutz/", "/agb/", "/verhaltenskodex/", "/zertifikate/", "/en/legal-notice/", "/en/data-protection/", "/en/gtcs/", "/en/code-of-conduct/", "/en/certificates/"}
 MESSUNG = json.load(open(os.path.join(HERE, "messung.json"), encoding="utf-8")) if os.path.exists(os.path.join(HERE, "messung.json")) else {}
 
 # Hierarchie aus dem Menü: Elternseite je Pfad
@@ -108,7 +111,15 @@ def seite_generisch(d):
     if bild:
         for i, b in enumerate(bl):
             if b["t"] == "img" and b["src"] == bild: del bl[i]; break
-    innen = hero_html(d, r, lang, titel, k, hat_badge, video, bild if d["typ"] == "post" else None)
+    # Hero-Bild für jede Seite (Suat 02.10.: „die ganzen Hero-Bereiche haben bei uns gar keine Bilder“): Hintergrund des
+    # Divi-Abschnitts aus dem Bestand (hintergruende.json), sonst das des Elternpfads, sonst das Luftbild; Rechtstexte bleiben ohne
+    hero_bild = bild if d["typ"] == "post" else None
+    if not video and not hero_bild:
+        kand = HINTERGRUENDE.get(d["pfad"]) or HINTERGRUENDE.get("/".join(d["pfad"].rstrip("/").split("/")[:-1]) + "/") or []
+        kand = [u for u in kand if media_basis.get(u) and "hover" not in u.lower()]
+        if kand: hero_bild = kand[0]
+        elif d["typ"] == "page" and d["pfad"] not in RECHT: hero_bild = LUFTBILD if media_basis.get(LUFTBILD) else None
+    innen = hero_html(d, r, lang, titel, k, hat_badge, video, hero_bild)
     datum = f'<p class="datum">{I.UI[lang]["datum"]} {datum_fmt(d["published"], lang)}</p>' if d["typ"] == "post" and d["published"] else ""
     klasse = "chronik" if d["pfad"] in CHRONIK.values() else ""
     lang_hinweis = f'<p class="hinweis">{I.UI[lang]["nur_de"]}</p>' if lang == "de" and not d["partner"] and d["typ"] == "page" else ""
