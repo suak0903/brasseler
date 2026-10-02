@@ -25,6 +25,8 @@ def head(seite, r, lang, titel, desc, canonical_pfad, partner_pfad, ld, og_bild=
     t = T[lang]
     alt = f'<link rel="alternate" hreflang="{"en" if lang == "de" else "de"}" href="{DEMO}{partner_pfad.strip("/")}{"/" if partner_pfad.strip("/") else ""}">' if partner_pfad else ""
     og = f'<meta property="og:image" content="{e(og_bild)}">' if og_bild else ""
+    # Die 404-Seite liegt nicht unter /404/, also kein canonical und kein hreflang auf eine Adresse, die 404 gibt (Faber F4)
+    kp = canonical_pfad.strip("/"); kanon = "" if kp == "404" else f'<link rel="canonical" href="{DEMO}{kp}{"/" if kp else ""}">\n<link rel="alternate" hreflang="{lang}" href="{DEMO}{kp}{"/" if kp else ""}">\n{alt}'
     return f'''<!DOCTYPE html>
 <html lang="{lang}" class="no-js">
 <head>
@@ -34,9 +36,7 @@ def head(seite, r, lang, titel, desc, canonical_pfad, partner_pfad, ld, og_bild=
 <title>{e(titel)}</title>
 <meta name="description" content="{e(desc)}">
 <meta name="robots" content="noindex, nofollow">
-<link rel="canonical" href="{DEMO}{canonical_pfad.strip("/")}{"/" if canonical_pfad.strip("/") else ""}">
-<link rel="alternate" hreflang="{lang}" href="{DEMO}{canonical_pfad.strip("/")}{"/" if canonical_pfad.strip("/") else ""}">
-{alt}
+{kanon}
 <meta property="og:type" content="website">
 <meta property="og:title" content="{e(titel)}">
 <meta property="og:description" content="{e(desc)}">

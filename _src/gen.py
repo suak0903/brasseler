@@ -256,12 +256,12 @@ def hinweisseite():
         ("Sitemap zeigt auf den falschen Server", "Die Seiten- und Chronik-Sitemap von brasseler.de nennt als Adresse brasselerhomepageprod.azurewebsites.net, einen Azure-Host, statt www.brasseler.de. Suchmaschinen bekommen so die falschen Adressen gemeldet."),
         ("Die Seite existiert zweimal", "Der Azure-Host ist öffentlich erreichbar und liefert dieselben Seiten. Dazu liegen vier englische Seiten zusätzlich unter deutschem Pfad (zum Beispiel /careers/ und /en/careers/). Für Suchmaschinen ist das doppelter Inhalt."),
         ("Kein Sprachwechsel je Seite", "Der Umschalter Deutsch/Englisch führt immer zur Startseite der anderen Sprache, und hreflang-Angaben fehlen. Dieser Entwurf verbindet 94 Seitenpaare direkt miteinander."),
-        ("Bilder vom Entwicklungs-Server", "129 Bilder der Chronik werden von einem Azure-Entwicklungs-Slot geladen, nicht von brasseler.de."),
+        ("Bilder vom Entwicklungs-Server", "Rund 70 Bilder (326 Verweise samt Größenvarianten auf 61 Seiten, vor allem der Chronik) werden von einem Azure-Entwicklungs-Slot geladen, nicht von brasseler.de."),
         ("PHP ohne Sicherheitsupdates", "Der Server meldet PHP 7.4.30. Diese Version bekommt seit November 2022 keine Sicherheitsupdates mehr."),
         ("Ladeleistung", "Ein Startseiten-Video mit 10 MB im Autoplay, Bilder in Originalgröße, Cookie-Banner und Tag Manager mit rund 400 KB Skripten und der Divi-Baukasten. Mobil Leistung 12 von 100, das Hauptbild erscheint nach über 10 Sekunden."),
         ("Strukturierte Daten", "Das Schema nennt nur Seite, Website und Organisation ohne Anschrift, Kontakt, Gründungsjahr oder Marke; kein FAQ, keine Artikel, das Logo in der E-Mail-Variante. KI-Suchen finden so wenig zum Zitieren."),
     ]
-    anders = [("Technik", "WordPress mit Divi-Baukasten, 25 Skripte, 7,5 MB", "Statisches HTML, ein Stylesheet, ein Skript, Bilder als WebP in drei Größen"),
+    anders = [("Technik", "WordPress mit Divi-Baukasten, 25 Skripte, 5 bis 8 MB je Lauf", "Statisches HTML, ein Stylesheet, ein Skript, Bilder als WebP in drei Größen"),
               ("Video", "10 MB Autoplay", "Dieselbe Szene, 1,5 MB, lädt erst, wenn sie im Bild ist"),
               ("Sprachen", "Umschalter führt zur Startseite", "Jede Seite kennt ihr Gegenstück, hreflang gesetzt"),
               ("Auffindbarkeit", "Schema ohne Anschrift, Marke, FAQ", "Organisation vollständig, Breadcrumbs, News als Artikel, FAQ, Geschäftsbereiche als Leistungen, llms.txt"),
@@ -272,7 +272,7 @@ def hinweisseite():
 <p class="lead" style="max-width:none">{I.HINWEIS_INTRO}</p>
 <div class="kasten"><p><strong>Bitte beachten.</strong> {I.HINWEIS_BITTE}</p></div>
 <h2 class="t-h2">Was dieser Entwurf ist</h2>
-<p>Dieselben Inhalte wie brasseler.de, neu gebaut: alle 41 Seiten in Deutsch und Englisch, alle 124 News, die Chronik mit 42 Einträgen, Videos, Bilder. Nichts ist weggelassen, nichts dazuerfunden. Die <a href="{r}sitemap/">Sitemap</a> zeigt jede Seite mit Link auf den Entwurf und auf das Original.</p>
+<p>Dieselben Inhalte wie brasseler.de, neu gebaut: alle 41 Seiten des Bestands, wo vorhanden in beiden Sprachen, alle 124 News, die Chronik mit 42 Einträgen, Videos, Bilder. Nichts ist weggelassen, nichts dazuerfunden. Die <a href="{r}sitemap/">Sitemap</a> zeigt jede Seite mit Link auf den Entwurf und auf das Original.</p>
 {mess}
 <h2 class="t-h2">Was ist anders</h2>
 <table class="cmp"><thead><tr><th>Merkmal</th><th>Bestandsseite</th><th>Dieser Entwurf</th></tr></thead><tbody>{"".join(f'<tr><td data-l="Merkmal"><strong>{a}</strong></td><td data-l="Bestand">{b}</td><td data-l="Entwurf">{c}</td></tr>' for a, b, c in anders)}</tbody></table>

@@ -43,7 +43,7 @@ git add -A && git commit && git push      (Pages liefert aus main, Ordner /)
 - Startseiten-Video läuft automatisch wie im Bestand, aber verkleinert (10 MB auf 1,5 MB) und erst geladen, wenn sichtbar. Klickvideos (bis 164 MB) bleiben beim Original und laden erst beim Abspielen.
 - Schrift: Fira Sans statt Corporate S OT, auf der Hinweisseite benannt.
 - Hinweisseite kompakt, ohne Referenz-Riege, nur „Über mich“ mit Link auf akyol.de. Befunde zum Bestand dort als „gemessen, nicht geschätzt“.
-- Logo und Fotos übernommen („alles im öffentlichen Raum“). Pages mit noindex und robots Disallow.
+- Logo und Fotos übernommen („alles im öffentlichen Raum“). Pages per noindex auf jeder Seite gesperrt. Die `robots.txt` im Projekt wirkt auf Pages nicht (Crawler lesen nur `suak0903.github.io/robots.txt`, Faber F4 03.10.2026); Bilder und Videos bleiben damit über die Bildersuche auffindbar, eine Host-robots ginge nur über ein Repo `suak0903.github.io`.
 - Vier Prüfschritte durch Quality (Faber) statt einer Abnahme am Ende: F1 Quelle, F2 Gerüst, F3 Seiten, F4 live.
 
 ## Stolperfallen aus diesem Projekt

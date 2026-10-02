@@ -3,7 +3,7 @@
 Bestandsseite in Sektionen), JSON-LD, Seitenrahmen. Alles statisch, kein Laufzeit-Include.
 Autor: Marketing Operations (Vega), 02.10.2026, Demonstrator Brasseler. VERSION bei CSS- oder JS-Änderung erhöhen."""
 import os, re, json, html
-VERSION = "7"
+VERSION = "8"
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.abspath(os.path.join(HERE, ".."))
 BASE = "https://www.brasseler.de"
 DEMO = "https://suak0903.github.io/brasseler/"
@@ -87,7 +87,7 @@ def link_lokal(href, r, pfade):
 def bloecke_html(bl, r, pfade, lang, lightbox=True):
     """Rendert die extrahierten Blöcke als Sektionen. Erkennt Kicker plus Leitzeile, Bildgruppen (Galerie), Icon-Raster,
     Bild-mit-Knopf-Kacheln, Personenkarten (Bild, Name, Rolle) und Jahresmarken der Chronik."""
-    out = []; i = 0; n = len(bl); galerie_index = 0
+    out = []; i = 0; n = len(bl); galerie_index = 0; hstapel = []  # Überschriften ohne Sprung: der Bestand hat h6 nach h2 (Faber F4); Stapel aus (Original, vergeben)
     KONTEXT["r"], KONTEXT["pfade"] = r, pfade
     def p_html(b): return f'<p>{inline_html(b["x"])}</p>'
     while i < n:
@@ -134,8 +134,10 @@ def bloecke_html(bl, r, pfade, lang, lightbox=True):
         if b["t"] == "h3" and i + 1 < n and bl[i + 1]["t"] == "p" and re.fullmatch(r"(19|20)\d\d(\s*[-–/]\s*(19|20)?\d\d)?", bl[i + 1]["x"].strip()):
             out.append(f'<div class="jahr"><span class="jahr__z">{e(bl[i + 1]["x"].strip())}</span><h3 class="jahr__h">{e(b["x"])}</h3></div>'); i += 2; continue
         if b["t"] in ("h1", "h2", "h3", "h4", "h5", "h6"):
-            tag = "h2" if b["t"] == "h1" else b["t"]
-            out.append(f'<{tag} class="t-{b["t"]}">{inline_html(b["x"])}</{tag}>')
+            orig = int(b["t"][1])
+            while hstapel and hstapel[-1][0] >= orig: hstapel.pop()
+            ebene = min(max(orig, 2), (hstapel[-1][1] + 1) if hstapel else 2); hstapel.append((orig, ebene))
+            out.append(f'<h{ebene} class="t-{b["t"]}">{inline_html(b["x"])}</h{ebene}>')
         elif b["t"] == "p": out.append(p_html(b))
         elif b["t"] in ("ul", "ol"): out.append(f'<{b["t"]}>' + "".join(f"<li>{inline_html(x)}</li>" for x in b["items"]) + f'</{b["t"]}>')
         elif b["t"] == "zitat": out.append(f'<blockquote>{inline_html(b["x"])}</blockquote>')
