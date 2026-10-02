@@ -147,10 +147,14 @@ def startseite(d):
             i += 2; continue
         if b["t"] == "h2" and i + 1 < len(bl) and bl[i + 1]["t"] == "button": karten2.append((b["x"], bl[i + 1])); i += 2; continue
         i += 1
+    # Feste Ziele der drei Kacheln (Suat 02.10.2026: „Das Unternehmen“ führte auf die Startseite zurück, weil der
+    # Menütext „Über Brasseler“ heißt und die Suche über den Menütext nichts fand)
+    KACHEL_ZIELE = {"de": {"unternehmen": "/unternehmen/", "karriere": "/karriere/", "geschäftsbereiche": "/geschaeftsbereiche/"},
+                    "en": {"company": "/en/company/", "careers": "/en/careers/", "business": "/en/business-areas/"}}
     ziel = {}
     for kick, lead, src in teaser:
-        for n in chrome[lang]["nav"]:
-            if n["tiefe"] == 0 and (n["text"].split()[-1].lower()[:5] in kick.lower()): ziel[kick] = n["pfad"]
+        for wort, pfad in KACHEL_ZIELE[lang].items():
+            if wort in kick.lower() and pfad in PFADE: ziel[kick] = pfad
     def pf(p): return r + p.strip("/") + ("/" if p.strip("/") else "")
     # Startseite, zweite Fassung (Suat 02.10.2026: „alle Inhalte bleiben, sonst freie Hand“): Hero mit Titel im Bild,
     # Intro als Editorial-Split, Film auf Dunkel, drei Kacheln mit Bild oben (Unterkanten bündig), Zahlen als blaues Band,
