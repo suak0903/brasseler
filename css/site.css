@@ -410,11 +410,12 @@ h1.hero__h::before{display:none}
 .hin__i ul{padding-left:1.1em}
 .kasten{background:var(--blau-h);border-radius:var(--r-s);padding:16px 20px;margin:1.4em 0}
 /* Werte-Kreise wie im Bestand (Suat 03.10.): weiße Kreise mit farbigem Zeichen auf blaugrauem Grund */
-.werte{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;padding:clamp(28px,4vw,56px);background:#aebcc6;border-radius:var(--r);margin:2em 0}
-.wert{background:#fff;border-radius:50%;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12% 11%}
-.wert__z{width:56px;height:56px;border-radius:50%;background:var(--c);color:#fff;display:grid;place-items:center;font-size:1.6rem;font-weight:600;margin-bottom:10px}
-.wert h3{color:var(--c);margin:0 0 .4em;font-size:1.3rem;font-weight:600}.wert h3::before{display:none}
-.wert p{margin:0;font-size:.86rem;line-height:1.45;color:var(--text)}
+/* Werte: die fünf Original-Grafiken (Inline-SVG des Bestands), drei oben, zwei unten, wie auf brasseler.de (Suat 03.10.) */
+.werte{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(16px,3vw,40px);padding:clamp(24px,4vw,56px) clamp(16px,3vw,40px);margin:1.5em 0 2.5em;background:var(--grau);border-radius:var(--r)}
+.wert{flex:0 1 clamp(220px,28vw,300px);max-width:100%}
+.wert-svg{display:block;width:100%;height:auto;overflow:visible}
+.werte .gh,.werte .gt{font-family:inherit}.werte .gt{font-size:9.1px}
+@media (max-width:600px){.wert{flex-basis:min(78vw,300px)}}
 /* Komet-Bereiche als drei Karten auf Grau (Suat 13) */
 .dreier{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:1.5em 0 2em}
 .dreier__i{background:var(--grau);border-radius:var(--r);padding:22px 22px 20px}.dreier__i p{margin:0;font-size:.95rem}

@@ -62,7 +62,14 @@ KRUMEN = json.load(open(os.path.join(HERE, "krumen.json"), encoding="utf-8")) if
 WERTE = json.load(open(os.path.join(HERE, "werte.json"), encoding="utf-8")) if os.path.exists(os.path.join(HERE, "werte.json")) else {}
 def krumen_kurz(d):
     """Kurzname der Seite für Breadcrumb und Sitemap: wie im Bestand („Unternehmen“, „Unsere Verantwortung“), nie der volle Titel (Suat 03.10.)."""
-    k = KRUMEN.get(d["pfad"]); return k["last"] if k and k.get("last") else seitentitel(d)
+    return krumen_name(d["pfad"]) or seitentitel(d)
+KURZ = {"/unternehmen/brasseler-100-years/": "Jubiläum", "/en/company/brasseler-100-years/": "Anniversary"}  # Suat 03.10.: „nur Jubiläum“
+def krumen_name(p):
+    """Kurzname eines Pfads: Suats Festlegung, sonst Yoast-Breadcrumb des Bestands, sonst Menütext (Suat 03.10.: „nur Ausbildung“)."""
+    if p in KURZ: return KURZ[p]
+    k = KRUMEN.get(p)
+    if k and k.get("last"): return k["last"]
+    return NAVTEXT.get(p)
 def krumen(d, lang):
     p = d["pfad"]; k = [(T[lang]["skip"] and I.UI[lang]["start"], START[lang])]
     q = KRUMEN.get(p)
@@ -72,7 +79,7 @@ def krumen(d, lang):
     elif d["typ"] == "timeline-eintrag": k += [(NAVTEXT.get("/unternehmen/" if lang == "de" else "/en/company/", ""), "/unternehmen/" if lang == "de" else "/en/company/"), (I.UI[lang]["chronik"], CHRONIK[lang])]
     else:
         kette = []; e = eltern.get(p)
-        while e and e not in START.values(): kette.insert(0, (NAVTEXT.get(e, e), e)); e = eltern.get(e)
+        while e and e not in START.values(): kette.insert(0, (krumen_name(e) or e, e)); e = eltern.get(e)  # „Unternehmen“, nicht „Über Brasseler“ (Suat 03.10.)
         k += kette
     return k
 def krumen_html(k, titel, r):
@@ -94,6 +101,8 @@ def rahmen(d_pfad, lang, titel, desc, partner, ld, innen, r, og="", hell=False, 
     return (head(None, r, lang, titel, desc, d_pfad, partner, ld, og) + "\n<body>\n" + kopfleiste(r, lang, d_pfad, partner, hell) + "\n<main id=\"inhalt\">\n" + innen + "\n</main>\n" + fuss(r, lang) + "\n" + (demobar(r, lang) if mit_demobar else '<script>document.body.classList.add("demobar-zu")</script>') + "\n" + (lightbox(lang) if mit_lb else "") + ende(r))
 
 def schreiben(pfad, inhalt_html):
+    # EN-Claim überall „Medtech made in Lemgo“ (Suat 03.10.: „Medical technology“ ist zu lang, schob am Handy den Burger nach rechts)
+    for alt in ("Medical technology made in Lemgo", "medical technology made in Lemgo", "Medical Technology made in Lemgo"): inhalt_html = inhalt_html.replace(alt, "Medtech made in Lemgo")
     z = ausgabe_pfad(pfad); os.makedirs(os.path.dirname(z), exist_ok=True); open(z, "w", encoding="utf-8").write(inhalt_html)
 
 def hero_html(d, r, lang, titel, k, hat_badge, video, bild):
@@ -156,9 +165,8 @@ def seite_generisch(d):
     klasse = "chronik" if d["pfad"] in CHRONIK.values() else ""
     lang_hinweis = f'<p class="hinweis">{I.UI[lang]["nur_de"]}</p>' if lang == "de" and not d["partner"] and d["typ"] == "page" else ""
     werte = ""
-    if d["pfad"] in WERTE:  # die fünf Werte-Kreise des Bestands (standen dort als SVG-Text, Suat 03.10.)
-        farben = ["#d63a62", "#2b7fd1", "#2e9c6a", "#e08a2b", "#7a4fb3"]
-        werte = '<div class="werte">' + "".join(f'<div class="wert rv" style="--c:{farben[i % 5]}"><span class="wert__z" aria-hidden="true">{t[:1].upper()}</span><h3>{e(t)}</h3><p>{e(x)}</p></div>' for i, (t, x) in enumerate(WERTE[d["pfad"]])) + "</div>"
+    if d["pfad"] in WERTE:  # die fünf Werte-Grafiken des Bestands, unverändert als Inline-SVG (Suat 03.10.: „einfach deren Bild nehmen“)
+        werte = '<div class="werte">' + "".join(f'<div class="wert rv">{svg}</div>' for svg in WERTE[d["pfad"]]) + "</div>"
     faq = ""
     if d["pfad"] in I.FAQ:
         faq = '<section class="sektion sektion--grau faq"><div class="wrap schmal"><h2 class="t-h2">' + ("Häufige Fragen" if lang == "de" else "Frequently asked questions") + '</h2><div class="faq__l">' + "".join(f'<div class="faq__i rv"><h3 class="t-h3">{e(q)}</h3><p>{e(a)}</p></div>' for q, a in I.FAQ[d["pfad"]]) + "</div></div></section>"  # Fragen als Einheiten (Codex 13)
