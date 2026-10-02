@@ -3,7 +3,7 @@
 Bestandsseite in Sektionen), JSON-LD, Seitenrahmen. Alles statisch, kein Laufzeit-Include.
 Autor: Marketing Operations (Vega), 02.10.2026, Demonstrator Brasseler. VERSION bei CSS- oder JS-Änderung erhöhen."""
 import os, re, json, html
-VERSION = "26"
+VERSION = "27"
 # Bilder der Kartenreihen: im Bestand Hintergründe der Divi-CTA-Module (liegen in et-cache-CSS, nicht im HTML); hier die
 # bekannten Zuordnungen nach Stichwort im Kartentitel. Fehlt ein Stichwort, bleibt die Karte ohne Bild.
 KARTEN_BILDER = {"management": "https://www.brasseler.de/uploads/Brasseler-Hero-2024_GBL-Luftbild_sun-web.jpg",
@@ -17,6 +17,15 @@ video_map = json.load(open(os.path.join(HERE, "video-map.json"), encoding="utf-8
 masse_cache = {}
 
 def e(s): return html.escape(s or "", quote=True)
+def anker(s):
+    """Anker-Kennung aus einer Überschrift: Kleinbuchstaben, Umlaute aufgelöst, Rest Bindestrich (Kapitelkacheln springen dorthin)."""
+    s = (s or "").lower().replace("ä", "ae").replace("ö", "oe").replace("ü", "ue").replace("ß", "ss")
+    return re.sub(r"-+", "-", re.sub(r"[^a-z0-9]+", "-", s)).strip("-")[:60] or "abschnitt"
+def beschriftung(b):
+    """Lesbare Beschriftung eines Icons: alt-Text, sonst der Dateiname ohne „icon“, „brasseler“, Ziffern und Trenner (Faber F6: „Brasseler fitness 1“ sichtbar)."""
+    t = b.get("alt") or b["src"].split("/")[-1].rsplit(".", 1)[0]
+    t = re.sub(r"icon|brasseler|\d+", " ", t, flags=re.I); t = re.sub(r"[-_]+", " ", t).strip()
+    return t[:1].upper() + t[1:] if t else ""
 
 def root(pfad):
     """Relativer Präfix zum Wurzelverzeichnis für eine Seite mit Pfad wie /unternehmen/werte/ (-> ../../)."""
@@ -109,11 +118,11 @@ def bloecke_html(bl, r, pfade, lang, lightbox=True):
                 f'<figure class="gal__i"><button type="button" class="gal__b" data-lb data-full="{(r + "media/" + media_basis[x["src"]] + "-1600.webp") if media_basis.get(x["src"]) else e(x["src"])}" aria-label="{e(x["alt"] or ("Bild vergrößern" if lang == "de" else "Enlarge image"))}">{picture(x["src"], x["alt"], r, sizes="(max-width: 700px) 50vw, 400px")}</button></figure>' for x in gruppe) + "</div>")
             continue
         # Icon-Raster: mehrere Icons hintereinander
-        if b["t"] == "img" and ist_icon(b):
+        if b["t"] == "img" and ist_icon(b) and i + 1 < n and bl[i + 1]["t"] == "img" and ist_icon(bl[i + 1]):  # nur Reihen aus mindestens zwei Icons; Icon plus Überschrift gehört zum Extras-Raster unten
             j = i
             while j < n and bl[j]["t"] == "img" and ist_icon(bl[j]): j += 1
             gruppe = bl[i:j]; i = j
-            out.append('<ul class="icons">' + "".join(f'<li class="icons__i">{picture(x["src"], "", r, klasse="icons__img", sizes="96px")}<span>{e(x["alt"] or re.sub(r"[-_]", " ", x["src"].split("/")[-1].rsplit(".", 1)[0].replace("icon", "").strip("-_ ")).capitalize())}</span></li>' for x in gruppe) + "</ul>")
+            out.append('<ul class="icons">' + "".join(f'<li class="icons__i">{picture(x["src"], "", r, klasse="icons__img", sizes="96px")}<span>{e(beschriftung(x))}</span></li>' for x in gruppe) + "</ul>")
             continue
         # Bild mit Knopf: Kachel; mehrere davon ein Raster
         if b["t"] == "img" and i + 1 < n and bl[i + 1]["t"] == "button":
@@ -134,6 +143,57 @@ def bloecke_html(bl, r, pfade, lang, lightbox=True):
         # Kicker plus Leitzeile: kurzes p mit Punkt, dann kurzes p
         if ist_kurz(b) and i + 1 < n and bl[i + 1]["t"] == "p" and len(bl[i + 1]["x"].split()) <= 14 and "[" not in bl[i + 1]["x"]:
             out.append(f'<div class="sek"><p class="kicker">{e(b["x"])}</p><p class="lead">{inline_html(bl[i + 1]["x"])}</p></div>'); i += 2; continue
+        # ---- Muster der Unterseiten-Runde (Suat 02.10. spät: „Das wird heute noch umgesetzt“, Arbeitsliste Faber F6) ----
+        # Erfahrungsberichte: drei oder mehr Paare aus h3 (Name, Bereich) und Zitat-Absatz → Vollbreiten-Foto mit weißer Karte
+        if b["t"] == "h3" and i + 1 < n and bl[i + 1]["t"] == "p" and bl[i + 1]["x"].lstrip().startswith(("„", "\"", "“")):
+            paare = []; j = i
+            while j + 1 < n and bl[j]["t"] == "h3" and bl[j + 1]["t"] == "p" and bl[j + 1]["x"].lstrip().startswith(("„", "\"", "“")): paare.append((bl[j], bl[j + 1])); j += 2
+            if len(paare) >= 3:
+                i = j; hg = [u for u in KONTEXT.get("hg", []) if media_basis.get(u) and re.search(r"statement|portrait|portr", u, re.I)] or [u for u in KONTEXT.get("hg", []) if media_basis.get(u)]
+                teile = []
+                for k, (h, p) in enumerate(paare):
+                    vorname = re.split(r"[,\s]", h["x"].strip())[0].lower()
+                    bild = next((u for u in hg if vorname[:5] in u.lower()), hg[k % len(hg)] if hg else "")
+                    teile.append(f'<section class="bericht rv{" bericht--rechts" if k % 2 else ""}">{picture(bild, "", r, klasse="bericht__bg", sizes="100vw") if bild else ""}<div class="bericht__karte"><h3>{inline_html(h["x"])}</h3><p>{inline_html(p["x"])}</p></div></section>')
+                out.append('<div class="berichte">' + "".join(teile) + "</div>"); continue
+        # Ländergesellschaften: Karte (Bild mit „map“ im Namen), fetter Name, Text → zweispaltige Karten auf Blau
+        if b["t"] == "img" and "map" in b["src"].lower() and i + 2 < n and bl[i + 1]["t"] == "p" and bl[i + 1]["x"].startswith("**") and bl[i + 2]["t"] == "p":
+            laender = []; j = i
+            while j + 2 < n and bl[j]["t"] == "img" and "map" in bl[j]["src"].lower() and bl[j + 1]["t"] == "p" and bl[j + 1]["x"].startswith("**") and bl[j + 2]["t"] == "p":
+                laender.append((bl[j], bl[j + 1], bl[j + 2])); j += 3
+            if len(laender) >= 2:
+                i = j
+                out.append('<div class="laender">' + "".join(f'<div class="land rv">{picture(m["src"], m.get("alt") or "", r, klasse="land__karte", sizes="(max-width: 700px) 60vw, 260px")}<div class="land__t"><h3>{inline_html(t["x"].strip("*"))}</h3><p>{inline_html(x["x"])}</p></div></div>' for m, t, x in laender) + "</div>"); continue
+        # Berufe: drei oder mehr Paare aus h3 (Beruf) und „(m/w/d)“ → Kacheln mit Foto aus den Divi-Hintergründen, Link auf die Stellenangebote
+        if b["t"] == "h3" and i + 1 < n and bl[i + 1]["t"] == "p" and bl[i + 1]["x"].strip().lower().startswith("(m/w/d") :
+            berufe = []; j = i
+            while j + 1 < n and bl[j]["t"] == "h3" and bl[j + 1]["t"] == "p" and bl[j + 1]["x"].strip().lower().startswith("(m/w/d"): berufe.append(bl[j]["x"]); j += 2
+            if len(berufe) >= 3:
+                i = j; hg = [u for u in KONTEXT.get("hg", []) if media_basis.get(u)]
+                def beruf_bild(name):
+                    w = [t for t in re.split(r"[^a-zäöü]+", name.lower()) if len(t) > 5]
+                    for t in w:
+                        for u in hg:
+                            if t[:8] in u.lower().replace("-", "").replace("_", ""): return u
+                    return ""
+                karten = []
+                for name in berufe:
+                    bild = beruf_bild(name)
+                    karten.append(f'<a class="beruf rv{"" if bild else " beruf--ohne"}" href="https://karriere.brasseler.de/" target="_blank" rel="noopener">{picture(bild, "", r, klasse="beruf__bild", sizes="(max-width: 700px) 100vw, 400px") if bild else ""}<span class="beruf__t"><strong>{e(name)}</strong><span>(m/w/d)</span></span></a>')
+                out.append('<div class="berufe">' + "".join(karten) + "</div>"); continue
+        # Kapitelkacheln: h2 gefolgt von drei oder mehr h3 ohne Text dazwischen → Kacheln mit blauem Verlauf, die zu den Abschnitten springen
+        if b["t"] == "h2" and i + 3 < n and all(bl[i + k]["t"] == "h3" for k in (1, 2, 3)):
+            j = i + 1; kap = []
+            while j < n and bl[j]["t"] == "h3": kap.append(bl[j]["x"]); j += 1
+            i = j
+            out.append(f'<h2 class="t-h2">{inline_html(b["x"])}</h2><div class="kapitel">' + "".join(f'<a class="kapitel__i rv" href="#{anker(t)}"><span>{e(t)}</span></a>' for t in kap) + "</div>"); continue
+        # Icon mit Überschrift, drei oder mehr Paare → Raster aus Icon-Karten (statt senkrechter Liste)
+        if b["t"] == "img" and ist_icon(b) and i + 1 < n and bl[i + 1]["t"] in ("h3", "h4", "p"):
+            paare = []; j = i
+            while j + 1 < n and bl[j]["t"] == "img" and ist_icon(bl[j]) and bl[j + 1]["t"] in ("h3", "h4", "p") and len(bl[j + 1]["x"].split()) <= 9: paare.append((bl[j], bl[j + 1])); j += 2
+            if len(paare) >= 3:
+                i = j
+                out.append('<div class="extras">' + "".join(f'<div class="extras__i rv">{picture(ic["src"], "", r, klasse="extras__icon", sizes="72px")}<p>{inline_html(t["x"])}</p></div>' for ic, t in paare) + "</div>"); continue
         # Kartenreihe wie im Bestand (Divi-CTA mit Hintergrundbild): zwei oder mehr Paare aus kurzem Satz und Knopf (Suat 02.10.: auf /unternehmen/ fehlten die drei Karten)
         if ist_kurz(b, 4) and i + 1 < n and bl[i + 1]["t"] == "button":
             paare = []; j = i
@@ -157,7 +217,7 @@ def bloecke_html(bl, r, pfade, lang, lightbox=True):
             orig = int(b["t"][1])
             while hstapel and hstapel[-1][0] >= orig: hstapel.pop()
             ebene = min(max(orig, 2), (hstapel[-1][1] + 1) if hstapel else 2); hstapel.append((orig, ebene))
-            out.append(f'<h{ebene} class="t-{b["t"]}">{inline_html(b["x"])}</h{ebene}>')
+            out.append(f'<h{ebene} class="t-{b["t"]}" id="{anker(b["x"])}">{inline_html(b["x"])}</h{ebene}>')  # id für die Kapitelkacheln
         elif b["t"] == "p": out.append(p_html(b))
         elif b["t"] in ("ul", "ol"): out.append(f'<{b["t"]}>' + "".join(f"<li>{inline_html(x)}</li>" for x in b["items"]) + f'</{b["t"]}>')
         elif b["t"] == "zitat": out.append(f'<blockquote>{inline_html(b["x"])}</blockquote>')

@@ -45,6 +45,12 @@
       Array.prototype.forEach.call(rvs, function (el) { io.observe(el); });
     }
   }
+  /* 3a News blättern: zwölf je Klick */
+  var mehr = document.getElementById('newsMehr');
+  if (mehr) mehr.addEventListener('click', function () {
+    var rest = document.querySelectorAll('.news__i.weiter'); for (var i = 0; i < rest.length && i < 12; i++) { rest[i].classList.remove('weiter'); rest[i].classList.add('in'); }
+    if (document.querySelectorAll('.news__i.weiter').length === 0) mehr.parentNode.removeChild(mehr);
+  });
   /* 3b Zahlen zählen hoch, wie die Divi-Zähler des Bestands; nur Ziffern, Tausenderpunkt bleibt */
   var zahlen = document.querySelectorAll('.zahlen__z');
   if (zahlen.length && !reduce && 'IntersectionObserver' in window) {

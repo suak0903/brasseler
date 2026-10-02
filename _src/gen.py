@@ -119,6 +119,7 @@ def seite_generisch(d):
         kand = [u for u in kand if media_basis.get(u) and "hover" not in u.lower()]
         if kand: hero_bild = kand[0]
         elif d["typ"] == "page" and d["pfad"] not in RECHT: hero_bild = LUFTBILD if media_basis.get(LUFTBILD) else None
+    KONTEXT["hg"] = HINTERGRUENDE.get(d["pfad"], [])  # Divi-Hintergründe der Seite für Berichte und Berufe-Kacheln
     innen = hero_html(d, r, lang, titel, k, hat_badge, video, hero_bild)
     datum = f'<p class="datum">{I.UI[lang]["datum"]} {datum_fmt(d["published"], lang)}</p>' if d["typ"] == "post" and d["published"] else ""
     klasse = "chronik" if d["pfad"] in CHRONIK.values() else ""
@@ -212,7 +213,8 @@ def news_uebersicht(d):
         for b in p["bloecke"]:
             if b["t"] == "p" and len(b["x"].split()) > 10: return re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", b["x"]).replace("**", "")
         return ""
-    karten = "".join(f'<a class="news__i rv" href="{r}{p["pfad"].strip("/")}/">' + (picture(bild_fuer(p), "", r, sizes="(max-width: 860px) 100vw, 380px") if media_basis.get(bild_fuer(p)) else f'<img src="{r}media/start-poster-960.webp" alt="" loading="lazy" width="960" height="540">') + f'<p class="news__d">{datum_fmt(p["published"], lang)}</p><h2 class="news__h">{e(seitentitel(p))}</h2><p class="news__p">{e(teaser(p))}</p></a>' for p in posts)
+    karten = "".join(f'<a class="news__i rv{" weiter" if ni >= 12 else ""}" href="{r}{p["pfad"].strip("/")}/">' + (picture(bild_fuer(p), "", r, sizes="(max-width: 860px) 100vw, 380px") if media_basis.get(bild_fuer(p)) else f'<img src="{r}media/start-poster-960.webp" alt="" loading="lazy" width="960" height="540">') + f'<p class="news__d">{datum_fmt(p["published"], lang)}</p><h2 class="news__h">{e(seitentitel(p))}</h2><p class="news__p">{e(teaser(p))}</p></a>' for ni, p in enumerate(posts))
+    if len(posts) > 12: karten += f'<p class="news__mehr"><button class="btn" id="newsMehr" type="button">{"Mehr laden" if lang == "de" else "Load more"} ({len(posts) - 12})</button></p>'  # Blättern (Faber F6)
     bl = d["bloecke"]; j = next((i for i, b in enumerate(bl) if b["t"] == "p" and ("Pressekontakt" in b["x"] or "Press contact" in b["x"] or "press contact" in b["x"].lower())), None)
     presse = ""
     if j is not None:
