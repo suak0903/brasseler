@@ -55,8 +55,20 @@ blockquote{margin:1.5em 0;padding:.4em 0 .4em 1.2em;border-left:3px solid var(--
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 
 /* ---------- Kopfleiste ---------- */
-.nav{position:fixed;inset:0 0 auto 0;height:var(--nav);background:rgba(255,255,255,.96);backdrop-filter:saturate(1.2) blur(6px);border-bottom:1px solid transparent;z-index:100;transition:box-shadow .3s,border-color .3s}
-.nav.scrolled{box-shadow:0 2px 18px rgba(33,37,41,.08);border-color:var(--linie)}
+/* Oben transparent über dem Hero, beim Scrollen weiß (Suat 03.10.2026, gilt auf allen Seiten). .nav--hell: weiße Schrift über Bild oder Video. */
+.nav{position:fixed;inset:0 0 auto 0;height:var(--nav);background:rgba(255,255,255,0);border-bottom:1px solid transparent;z-index:100;color:var(--text);transition:background .45s var(--ease),box-shadow .45s var(--ease),border-color .45s,color .3s}
+.nav::before{content:"";position:absolute;inset:0 0 -40px 0;background:linear-gradient(180deg,rgba(20,24,28,.45),rgba(20,24,28,0));opacity:0;pointer-events:none;transition:opacity .45s var(--ease)}
+.nav--hell::before{opacity:1}
+.nav--hell{color:#fff}
+.nav--hell .nav__a,.nav--hell .nav__lang,.nav--hell .nav__claim{color:#fff}
+.nav--hell .nav__a:hover,.nav--hell .nav__a[aria-current="page"],.nav--hell .nav__a[data-zweig]{color:#fff;border-color:#fff}
+.nav--hell .burger span{background:#fff}
+.nav.scrolled,.nav.menu-open{background:rgba(255,255,255,.96);backdrop-filter:saturate(1.2) blur(6px);box-shadow:0 2px 18px rgba(33,37,41,.08);border-color:var(--linie);color:var(--text)}
+.nav.scrolled::before,.nav.menu-open::before{opacity:0}
+.nav.scrolled .nav__a,.nav.scrolled .nav__lang,.nav.scrolled .nav__claim,.nav.menu-open .nav__a,.nav.menu-open .nav__lang,.nav.menu-open .nav__claim{color:var(--text)}
+.nav.scrolled .nav__a:hover,.nav.scrolled .nav__a[aria-current="page"],.nav.scrolled .nav__a[data-zweig]{color:var(--blau-d);border-color:var(--blau)}
+.nav.scrolled .burger span,.nav.menu-open .burger span{background:var(--blau)}
+.nav.scrolled .nav__claim{color:var(--muted)}
 .nav__in{max-width:var(--wrap);margin:0 auto;padding:0 var(--pad);height:100%;display:flex;align-items:center;gap:24px}
 .nav__logo{display:flex;flex-direction:column;gap:2px;text-decoration:none;flex-shrink:0}
 .logo{width:150px;height:30px}
@@ -72,6 +84,9 @@ blockquote{margin:1.5em 0;padding:.4em 0 .4em 1.2em;border-left:3px solid var(--
 .nav__sub a{display:block;padding:9px 18px;color:var(--text);text-decoration:none;font-size:.95rem}
 .nav__sub a:hover,.nav__sub a[aria-current="page"]{color:var(--blau-d);background:var(--grau)}
 .nav__r{margin-left:auto;display:flex;align-items:center;gap:14px}
+.flag{width:22px;height:15px;border-radius:2px;box-shadow:0 0 0 1px rgba(0,0,0,.12);flex-shrink:0}
+.nav__lang{display:inline-flex;align-items:center;gap:8px}
+.mmenu__lang{display:flex;align-items:center;gap:10px}
 .nav__lang{font-size:.85rem;font-weight:600;letter-spacing:.06em;color:var(--text);text-decoration:none;border:1px solid var(--linie);border-radius:999px;padding:5px 11px}
 .nav__lang:hover{color:var(--blau);border-color:var(--blau)}
 .burger{width:42px;height:42px;border:0;background:none;display:flex;flex-direction:column;justify-content:center;gap:5px;padding:9px;cursor:pointer}
@@ -92,17 +107,28 @@ blockquote{margin:1.5em 0;padding:.4em 0 .4em 1.2em;border-left:3px solid var(--
 .mmenu .nav__sub{position:static;opacity:1;visibility:visible;transform:none;box-shadow:none;border:0;grid-column:1/-1;background:var(--grau);display:none;padding:4px 0 8px}
 .mmenu .nav__li--sub.auf .nav__sub{display:block}
 .mmenu .nav__sub a{padding:10px 34px}
-.mmenu__lang{display:block;margin:18px 22px;font-weight:600;color:var(--blau)}
+.mmenu__lang{display:flex;align-items:center;gap:10px;margin:18px 22px;font-weight:600;color:var(--blau)}
 @media(min-width:1024px){.nav__menu{display:block}.burger,.mmenu{display:none}.nav__r{margin-left:0}}
 @media(max-width:440px){.nav__claim{display:none}.logo{width:128px;height:26px}.nav__in{gap:12px}}
 .nav__in,.nav__logo{min-width:0}
 
 /* ---------- Hero Startseite ---------- */
-.hero{position:relative;width:100%;height:clamp(240px,43.75vw,640px);margin-top:var(--nav);overflow:hidden;background:#eef1f4}
+.hero{position:relative;width:100%;height:clamp(440px,74vh,780px);margin-top:0;overflow:hidden;background:#eef1f4;display:flex;align-items:flex-end}
 .hero__v,.hero__p{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .hero__p{z-index:0}.hero__v{z-index:1;opacity:0;transition:opacity .8s}
 .hero__v.an{opacity:1}
-@media(max-width:700px){.hero{height:75vw}}
+/* Das Startvideo des Bestands ist hell (weiße Gebäudeanimation mit Logo), darum dunkle Schrift auf weißem Verlauf statt Weiß auf Scrim */
+.hero::after{content:"";position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,rgba(255,255,255,0) 40%,rgba(255,255,255,.82) 78%,#fff 100%);pointer-events:none}
+.hero__in{position:relative;z-index:3;width:100%;max-width:var(--wrap);margin:0 auto;padding:0 var(--pad) clamp(28px,5vw,56px);text-align:left}
+.hero__h{color:var(--ink);font-size:clamp(2rem,5.2vw,4.4rem);font-weight:300;line-height:1.05;letter-spacing:-.015em;margin:0;max-width:16ch}
+.hero__k{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}  /* „Brasseler“ steht im Video selbst, im H1 bleibt es für Suchmaschinen */
+.hero__weiter{position:absolute;right:var(--pad);bottom:28px;width:28px;height:44px;border:2px solid var(--blau);border-radius:16px;display:none}
+.hero__weiter span{position:absolute;left:50%;top:8px;width:4px;height:8px;margin-left:-2px;border-radius:2px;background:var(--blau);animation:wink 1.8s var(--ease) infinite}
+@keyframes wink{0%{transform:translateY(0);opacity:1}70%{transform:translateY(16px);opacity:0}100%{opacity:0}}
+@media(min-width:1024px){.hero__weiter{display:block;right:auto;left:var(--pad)}}
+@media(prefers-reduced-motion:reduce){.hero__weiter span{animation:none}}
+/* Handy: das 16:9-Video nicht beschneiden, Titel darunter auf Weiß; der Kopfbalken ist transparent, das Video beginnt oben */
+@media(max-width:700px){.hero{height:auto;display:block}.hero__p,.hero__v{position:relative;inset:auto;height:auto;aspect-ratio:16/9}.hero__v{position:absolute;inset:0;height:100%}.hero::after{display:none}.hero__in{padding:18px var(--pad) 8px}.hero__h{font-size:clamp(1.8rem,8vw,2.4rem)}.hero__badge{bottom:auto;top:calc(var(--nav) + 4px);width:clamp(68px,20vw,96px)}}
 .bild--quadrat{max-width:400px}
 .hero__in{position:relative;z-index:3;text-align:center;padding:60px var(--pad)}
 .hero__logo{width:min(560px,80vw);height:auto;margin:0 auto}
@@ -111,14 +137,14 @@ blockquote{margin:1.5em 0;padding:.4em 0 .4em 1.2em;border-left:3px solid var(--
 .hero__badge img{width:100%;height:auto;filter:drop-shadow(0 10px 20px rgba(0,0,0,.18))}
 
 /* ---------- Hero Unterseiten ---------- */
-.subhero{position:relative;margin-top:var(--nav);background:var(--grau);overflow:hidden}
-.subhero--medium{min-height:min(52vh,520px);display:flex;align-items:flex-end}
+.subhero{position:relative;margin-top:0;padding-top:var(--nav);background:var(--grau);overflow:hidden}
+.subhero--medium{min-height:min(56vh,560px);display:flex;align-items:flex-end}
 .subhero__bg,.subhero__v{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .subhero__v{opacity:0;transition:opacity .8s}.subhero__v.an{opacity:1}
-.subhero--medium::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.15),rgba(255,255,255,.88) 70%,#fff)}
+.subhero--medium::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,0) 30%,rgba(255,255,255,.88) 72%,#fff)}
 .subhero__in{position:relative;z-index:2;width:100%;max-width:var(--wrap);margin:0 auto;padding:clamp(28px,5vw,56px) var(--pad) 8px}
 .subhero--text .subhero__in{padding-bottom:clamp(28px,5vw,56px)}
-.subhero__badge{position:absolute;right:var(--pad);top:24px;z-index:2;width:clamp(72px,10vw,140px)}
+.subhero__badge{position:absolute;right:var(--pad);top:calc(var(--nav) + 16px);z-index:2;width:clamp(72px,10vw,140px)}
 .subhero__badge img{filter:drop-shadow(0 8px 16px rgba(0,0,0,.18))}
 .crumbs{font-size:.82rem;color:var(--muted);margin:0 0 14px}
 .crumbs a{color:var(--blau-d);text-decoration:none}
@@ -190,22 +216,53 @@ main{display:block}
 .vid__c{font-size:.82rem;color:var(--muted);margin-top:6px}
 
 /* Startseite Sektionen */
-.teaser{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:8px}
-.teaser__i{text-decoration:none;color:inherit;display:block}
-.teaser__i img{width:100%;aspect-ratio:16/10;object-fit:cover;margin-top:14px;transition:transform .4s var(--ease)}
-.teaser__i:hover img{transform:scale(1.03)}
-.teaser__i .lead{font-size:clamp(1.2rem,1.8vw,1.5rem);margin:0}
+/* Intro: Editorial-Split, links der große Satz, rechts der Fließtext; darunter das Luftbild im Doppelrand */
+.intro__g{display:grid;grid-template-columns:5fr 6fr;gap:clamp(28px,6vw,96px);align-items:start;margin-bottom:clamp(32px,5vw,64px)}
+.intro__lead{font-size:clamp(1.5rem,2.6vw,2.3rem);font-weight:300;line-height:1.2;color:var(--ink);margin:0;letter-spacing:-.01em}
+.intro__r p{font-size:1.05rem;color:var(--text)}
+@media(max-width:860px){.intro__g{grid-template-columns:1fr;gap:20px}}
+.bezel{margin:0;padding:8px;background:var(--grau);border-radius:28px;box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 1px 0 rgba(33,37,41,.04)}
+.bezel__in{border-radius:20px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(33,37,41,.35)}
+.bezel__in img{width:100%;aspect-ratio:21/9;object-fit:cover}
+@media(max-width:700px){.bezel{padding:5px;border-radius:18px}.bezel__in{border-radius:13px}.bezel__in img{aspect-ratio:4/3}}
+/* Imagefilm auf Dunkel */
+.film{background:var(--ink);color:#fff}
+.film__g{display:grid;grid-template-columns:4fr 7fr;gap:clamp(28px,5vw,72px);align-items:center}
+.kicker--hell{color:#fff;border-top-color:#fff}
+.lead--hell{color:#fff}
+.film__c{font-size:.85rem;color:rgba(255,255,255,.6);margin:0}
+.film__v{margin:0;border-radius:18px;overflow:hidden;box-shadow:0 40px 80px -40px rgba(0,0,0,.8)}
+@media(max-width:860px){.film__g{grid-template-columns:1fr;gap:24px}}
+/* Drei Kacheln: Bild oben, Text unten, Unterkanten bündig (Suat 03.10.) */
+.teaser{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2.5vw,32px)}
+.teaser__i{text-decoration:none;color:inherit;display:flex;flex-direction:column;background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 1px 0 rgba(33,37,41,.06),0 24px 48px -28px rgba(33,37,41,.3);transition:transform .6s var(--ease),box-shadow .6s var(--ease)}
+.teaser__i:hover{transform:translateY(-6px);box-shadow:0 1px 0 rgba(33,37,41,.06),0 40px 60px -28px rgba(0,98,196,.35)}
+.teaser__b{display:block;overflow:hidden;aspect-ratio:16/10}
+.teaser__b img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease)}
+.teaser__i:hover .teaser__b img{transform:scale(1.05)}
+.teaser__t{display:flex;flex-direction:column;flex:1;padding:22px 24px 24px;position:relative}
+.teaser__t .kicker{padding-top:0;border-top:0;min-width:0;font-size:.95rem}
+.teaser__t .lead{font-size:clamp(1.15rem,1.6vw,1.4rem);margin:0 44px 0 0;max-width:none}
+.teaser__pfeil{position:absolute;right:20px;bottom:20px;width:36px;height:36px;border-radius:50%;background:var(--blau-h);color:var(--blau-d);display:grid;place-items:center;font-size:1.1rem;transition:transform .6s var(--ease),background .3s}
+.teaser__i:hover .teaser__pfeil{transform:translate(3px,-2px);background:var(--blau-d);color:#fff}
 @media(max-width:860px){.teaser{grid-template-columns:1fr}}
-.zahlen{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:8px}
-.zahlen__i{background:#fff;border-top:3px solid var(--blau);padding:22px 20px 20px;box-shadow:0 8px 24px rgba(33,37,41,.06)}
-.zahlen__z{font-size:clamp(2rem,3.4vw,2.8rem);font-weight:300;color:var(--blau);line-height:1;letter-spacing:-.02em}
-.zahlen__e{font-size:1.05rem;font-weight:500;color:var(--ink);margin:4px 0 10px}
-.zahlen__s{font-size:.9rem;color:var(--muted);margin:0;line-height:1.5}
-.karte{display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:center}
-.karte__svg{width:100%;height:auto}
-.karte__t .lead{font-size:clamp(1.6rem,3vw,2.4rem);color:var(--blau)}
-@media(max-width:860px){.karte{grid-template-columns:1fr}}
-.banner{display:grid;grid-template-columns:1fr 1fr;align-items:stretch;margin:var(--sec) 0 0}
+/* Zahlen als blaues Band */
+.zahlenband{padding:var(--sec) 0;background:linear-gradient(135deg,#0062c4,#007fff 70%,#2b94ff);color:#fff}
+.zahlen{display:grid;grid-template-columns:repeat(5,1fr);gap:clamp(14px,2vw,28px);margin-top:8px}
+.zahlen__i{padding:22px 0 0;border-top:1px solid rgba(255,255,255,.35)}
+.zahlen__z{font-size:clamp(2.2rem,4vw,3.6rem);font-weight:300;color:#fff;line-height:1;letter-spacing:-.03em}
+.zahlen__e{font-size:1.05rem;font-weight:500;color:#fff;margin:6px 0 10px}
+.zahlen__s{font-size:.9rem;color:rgba(255,255,255,.78);margin:0;line-height:1.5}
+@media(max-width:1000px){.zahlen{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:600px){.zahlen{grid-template-columns:1fr 1fr}}
+/* Weltkarte über die volle Breite (Suat 03.10.), Text als Glas-Karte darüber */
+.karte{position:relative;width:100%;overflow:hidden;background:#fff;padding:clamp(16px,3vw,48px) 0 0}
+.karte__svg{width:100%;height:auto;display:block}
+.karte__t{position:absolute;left:max(var(--pad),calc((100% - var(--wrap)) / 2 + var(--pad)));bottom:clamp(12px,5vw,72px);max-width:min(440px,60%);padding:clamp(18px,2.6vw,32px);background:rgba(255,255,255,.78);backdrop-filter:blur(10px) saturate(1.3);border-radius:22px;box-shadow:0 1px 0 rgba(255,255,255,.9) inset,0 30px 60px -30px rgba(33,37,41,.35)}
+.karte__t .lead{font-size:clamp(1.5rem,3vw,2.6rem);color:var(--blau);margin-bottom:.6em}
+@media(max-width:700px){.karte{padding:0 0 var(--sec)}.karte__t{position:static;max-width:none;margin:16px var(--pad) 0;background:#fff;backdrop-filter:none;box-shadow:none;padding:0}}
+/* Azubi-Banner */
+.banner{display:grid;grid-template-columns:1fr 1fr;align-items:stretch;border-radius:22px;overflow:hidden}
 .banner img{width:100%;height:100%;object-fit:cover;min-height:280px}
 .banner__t{background:var(--blau);color:#fff;padding:clamp(28px,5vw,56px);display:flex;flex-direction:column;justify-content:center}
 .banner__t .lead{color:#fff}
@@ -277,22 +334,47 @@ main{display:block}
 .ds__c{height:56px;border:1px solid var(--linie);margin-bottom:6px}
 
 /* Fußzeile */
-.fuss{background:var(--grau);margin-top:var(--sec);position:relative;overflow:hidden}
-.fuss__in{max-width:var(--wrap);margin:0 auto;padding:48px var(--pad) 28px;position:relative}
-.fuss__kurve{position:absolute;left:0;right:0;top:0;height:140px;border-top:2px solid var(--blau);border-radius:0 0 50% 50%/0 0 100% 100%;transform:translateY(-70px);opacity:.6;pointer-events:none}
-.fuss__social,.fuss__links{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px 22px}
-.fuss__social{margin-bottom:22px}
-.fuss__social a{font-weight:500;text-decoration:none}
+/* Fuß wie im Bestand: Social-Kacheln in Markenfarben, blaue Schwungkurve, Komet-Siegel rechts (Suat 03.10.2026) */
+.fuss{margin-top:var(--sec);position:relative}
+.fuss__oben{position:relative;max-width:var(--wrap);margin:0 auto;padding:12px var(--pad) 0;min-height:clamp(200px,24vw,300px)}
+.fuss__kurve{position:absolute;left:var(--pad);right:var(--pad);top:40px;width:calc(100% - 2*var(--pad));height:calc(100% - 40px);pointer-events:none}
+.fuss__social{list-style:none;margin:0;padding:0;display:flex;justify-content:center;gap:16px;position:relative;z-index:1}
+.fuss__s{display:grid;place-items:center;width:48px;height:48px;border-radius:9px;background:var(--f);color:#fff;transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.fuss__s svg{width:24px;height:24px;fill:currentColor}
+.fuss__s:hover{transform:translateY(-3px);box-shadow:0 14px 24px -12px var(--f);color:#fff}
+.fuss__komet{position:absolute;right:var(--pad);bottom:0;width:clamp(64px,9vw,112px);height:auto;filter:drop-shadow(0 8px 16px rgba(33,37,41,.18))}
+.fuss__in{max-width:var(--wrap);margin:0 auto;padding:32px var(--pad) 28px;position:relative}
+.fuss__links{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px 22px}
 .fuss__links a{color:var(--text);text-decoration:none;font-size:.92rem}
 .fuss__links a:hover{color:var(--blau)}
 .fuss__hinweis{font-size:.8rem;color:var(--muted);margin:22px 0 0}
 
 /* Demo-Leiste */
-.demobar{position:fixed;left:0;right:0;bottom:0;z-index:110;background:rgba(33,37,41,.94);color:#dfe3e7;font-size:.8rem;display:flex;align-items:center;gap:14px;padding:8px 14px;line-height:1.35}
-.demobar a{color:#fff;text-decoration:underline;text-underline-offset:2px;white-space:nowrap}
+/* Demo-Leiste in Orange, damit sie auffällt (Suat 03.10.2026); dunkle Schrift auf #ff7a1a: Kontrast 7,6:1 */
+.demobar{position:fixed;left:0;right:0;bottom:0;z-index:110;background:#ff7a1a;color:#1b1f23;font-size:.82rem;font-weight:500;display:flex;align-items:center;gap:14px;padding:9px 14px;line-height:1.35;box-shadow:0 -6px 24px rgba(0,0,0,.18)}
+.demobar a{color:#1b1f23;font-weight:700;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:2px;white-space:nowrap}
 .demobar__t{flex:1 1 auto;min-width:0}
 .demobar__l{min-width:0}
-.demobar__x{border:0;background:none;color:#fff;font-size:1.3rem;cursor:pointer;padding:0 6px;line-height:1}
+.demobar__x{border:0;background:none;color:#1b1f23;font-size:1.3rem;cursor:pointer;padding:0 6px;line-height:1}
+/* Hinweisseite, Executive Summary (Suat 03.10.2026): fünf Kacheln, die Zahl dick und fett, der Satz darunter */
+.exec{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:8px 0 2em}
+.exec__i{background:var(--grau);border-radius:18px;padding:22px 24px 18px;border-top:3px solid var(--blau)}
+.exec__i:first-child{grid-column:1/-1;background:linear-gradient(135deg,#0062c4,#007fff 70%,#2b94ff);color:#fff;border-top:0}
+.exec__i:first-child .exec__z,.exec__i:first-child strong{color:#fff}
+.exec__i:first-child .exec__z span{color:rgba(255,255,255,.8)}
+.exec__i:first-child p{color:#fff}
+.exec__z{font-size:clamp(2.2rem,4vw,3.4rem);font-weight:300;line-height:1;color:var(--blau);letter-spacing:-.03em;margin:0 0 12px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.exec__z span{font-size:1rem;font-weight:500;color:var(--muted);letter-spacing:0}
+.exec__i p:last-child{margin:0;font-size:.98rem}
+@media(max-width:700px){.exec{grid-template-columns:1fr}}
+.todo{padding-left:1.3em}.todo li{margin:.5em 0}
+/* Hinweisseite, Über mich: Screenshot von akyol.de, klickbar (Suat 03.10.2026) */
+.ueber{display:grid;grid-template-columns:200px 1fr;gap:28px;align-items:start;margin:8px 0 1.5em}
+.ueber__shot{display:block;position:relative;border-radius:18px;overflow:hidden;box-shadow:0 24px 48px -24px rgba(33,37,41,.45);transition:transform .6s var(--ease)}
+.ueber__shot:hover{transform:translateY(-4px)}
+.ueber__shot img{width:100%;height:auto}
+.ueber__l{position:absolute;left:10px;bottom:10px;background:rgba(255,255,255,.92);color:var(--blau-d);font-size:.8rem;font-weight:600;padding:4px 10px;border-radius:999px}
+@media(max-width:600px){.ueber{grid-template-columns:1fr}.ueber__shot{max-width:240px}}
 .demobar.hide{display:none}
 body:not(.demobar-zu){padding-bottom:58px}
 @media(max-width:700px){.demobar{flex-wrap:wrap;font-size:.75rem}.demobar__t{flex-basis:100%}.demobar__l{flex:1}}

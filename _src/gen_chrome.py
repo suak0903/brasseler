@@ -16,9 +16,14 @@ T = {
            "anders": "What is different?", "sitemap": "Sitemap", "original": "Original site", "zu": "Close",
            "social": "Brasseler on social networks", "entwurf": "About this draft", "impressum": "Legal notice", "fuss_hinweis": "Draft, content and images from brasseler.de, not indexed."},
 }
-SOCIAL = [("LinkedIn", "https://www.linkedin.com/company/gebr.-brasseler-gmbh-&-co.-kg/"), ("Xing", "https://www.xing.com/pages/gebr-brasseler"),
-          ("kununu", "https://www.kununu.com/de/gebr-brasseler"), ("Facebook", "https://www.facebook.com/Gebr.Brasseler"), ("Instagram", "https://www.instagram.com/vollbrasseler/")]
-LOGO = '<svg class="logo" viewBox="0 0 220 44" aria-hidden="true"><text x="0" y="33" font-family="Fira Sans, Arial, sans-serif" font-weight="300" font-size="40" fill="#3b4248">Brasseler<tspan fill="#007fff">.</tspan></text></svg>'
+# Social-Zeichen: dieselben SVG-Pfade wie im Fuß des Bestands (social_quelle.py), Kachelfarben wie dort (Suat 03.10.2026)
+SOCIAL = json.load(open(os.path.join(HERE, "social.json"), encoding="utf-8"))
+SOCIAL_FARBE = {s["name"]: s["farbe"] for s in SOCIAL}  # Farben aus den Original-SVGs
+KURVE = '<svg class="fuss__kurve" viewBox="0 0 1159 252" preserveAspectRatio="none" aria-hidden="true"><path d="M1 194.249c437.461 116.783 823.258 52.367 1157.391-193.249" stroke="#007fff" stroke-width="2" fill="none" vector-effect="non-scaling-stroke"/></svg>'
+LOGO = '<svg class="logo" viewBox="0 0 220 44" aria-hidden="true"><text x="0" y="33" font-family="Fira Sans, Arial, sans-serif" font-weight="300" font-size="40" fill="currentColor">Brasseler<tspan fill="#007fff">.</tspan></text></svg>'
+# Flaggen für den Sprachwechsel (Suat 03.10.2026): schlicht gezeichnet, 3:2
+FLAGGE = {"de": '<svg class="flag" viewBox="0 0 3 2" aria-hidden="true"><rect width="3" height="2" fill="#000"/><rect y=".667" width="3" height="1.333" fill="#d00"/><rect y="1.333" width="3" height=".667" fill="#ffce00"/></svg>',
+          "en": '<svg class="flag" viewBox="0 0 60 40" aria-hidden="true"><rect width="60" height="40" fill="#012169"/><path d="M0 0l60 40M60 0L0 40" stroke="#fff" stroke-width="8"/><path d="M0 0l60 40M60 0L0 40" stroke="#c8102e" stroke-width="3"/><path d="M30 0v40M0 20h60" stroke="#fff" stroke-width="12"/><path d="M30 0v40M0 20h60" stroke="#c8102e" stroke-width="7"/></svg>'}
 
 def head(seite, r, lang, titel, desc, canonical_pfad, partner_pfad, ld, og_bild=""):
     """Kopf mit noindex (Demo), hreflang-Paar, Open Graph, JSON-LD, vorgeladener Schrift und CSS."""
@@ -75,12 +80,14 @@ def kopfleiste(r, lang, aktiv_pfad, partner_pfad, hell=False):
     <a class="nav__logo" href="{href(start)}">{LOGO.replace('aria-hidden="true"', 'role="img" aria-label="Brasseler"')}<span class="nav__claim">{"Medizintechnik made in Lemgo" if lang == "de" else "Medical technology made in Lemgo"}</span></a>
     <nav class="nav__menu" aria-label="{"Hauptnavigation" if lang == "de" else "Main navigation"}"><ul class="nav__ul">{"".join(items)}</ul></nav>
     <div class="nav__r">
-      <a class="nav__lang" href="{sprache}" lang="{t["lang_other"]}" hreflang="{t["lang_other"]}"{sprach_titel}>{t["lang_other"].upper()}</a>
+      <a class="nav__lang" href="{sprache}" lang="{t["lang_other"]}" hreflang="{t["lang_other"]}"{sprach_titel}>{FLAGGE[t["lang_other"]]}<span>{t["lang_other"].upper()}</span></a>
       <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="mmenu" aria-label="{t["menu"]}"><span></span><span></span><span></span></button>
     </div>
   </div>
-  <nav class="mmenu" id="mmenu" hidden aria-label="{t["menu"]}"><ul class="mmenu__ul">{"".join(items)}</ul><a class="mmenu__lang" href="{sprache}">{t["lang_label"]}</a></nav>
-</header>'''
+</header>
+<nav class="mmenu" id="mmenu" hidden aria-label="{t["menu"]}"><ul class="mmenu__ul">{"".join(items)}</ul><a class="mmenu__lang" href="{sprache}">{FLAGGE[t["lang_other"]]}<span>{t["lang_label"]}</span></a></nav>'''
+# Das mobile Menü steht bewusst außerhalb des <header>: der Kopfbalken hat backdrop-filter, und der macht ihn zum
+# Bezugsrahmen für position:fixed, das Menü wäre dann 76 px hoch (Befund Suat 03.10.2026, Handy-Screenshot).
 
 def fuss(r, lang):
     t = T[lang]; links = chrome[lang]["fuss"]
@@ -88,10 +95,14 @@ def fuss(r, lang):
         if p in ("/impressum/", "/en/legal-notice/"): return r + ("impressum/" if lang == "de" else "en/legal-notice/")
         if p == "/gtcs/": p = "/en/gtcs/"
         return r + p.strip("/") + "/"
+    social = "".join(f'<li><a class="fuss__s" style="--f:{SOCIAL_FARBE.get(s["name"], "#3b4248")}" href="{s["href"]}" target="_blank" rel="noopener" aria-label="{e(s["name"])}">{s["svg"]}</a></li>' for s in SOCIAL)
     return f'''<footer class="fuss">
+  <div class="fuss__oben">
+    {KURVE}
+    <ul class="fuss__social" aria-label="{t["social"]}">{social}</ul>
+    <img class="fuss__komet" src="{r}media/logo-kometdental-3.svg" alt="Komet" width="96" height="96">
+  </div>
   <div class="fuss__in">
-    <div class="fuss__kurve" aria-hidden="true"></div>
-    <ul class="fuss__social" aria-label="{t["social"]}">{"".join(f'<li><a href="{u}" target="_blank" rel="noopener">{n}</a></li>' for n, u in SOCIAL)}</ul>
     <ul class="fuss__links">{"".join(f'<li><a href="{href(l["pfad"])}">{e(l["text"])}</a></li>' for l in links)}<li><a href="{r}ueber-diesen-entwurf/">{t["entwurf"]}</a></li></ul>
     <p class="fuss__hinweis">{t["fuss_hinweis"]} <a href="https://akyol.de/" target="_blank" rel="noopener">Dr.-Ing. Suat Akyol</a></p>
   </div>

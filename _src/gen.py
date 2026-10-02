@@ -120,7 +120,8 @@ def seite_generisch(d):
     elif d["typ"] == "timeline-eintrag": weiter = f'<nav class="weiter"><a href="{r}{CHRONIK[lang].strip("/")}/">‹ {I.UI[lang]["chronik"]}</a></nav>'
     innen += f'<section class="sektion{" sektion--lang" if d["woerter"] > 900 else ""}"><div class="wrap"><div class="prosa {klasse}">{datum}{lang_hinweis}{bloecke_html(bl, r, PFADE, lang)}{weiter}</div></div></section>{faq}'
     desc = beschreibung(d)
-    return rahmen(d["pfad"], lang, f"{titel} | Brasseler", desc, d["partner"], ld_seite(d, lang, titel, desc, k, r), innen, r, og=(DEMO + "media/" + media_basis[erstes_bild(d)] + "-1200.jpg") if media_basis.get(erstes_bild(d)) else "", mit_lb=("data-lb" in innen))
+    hell = False  # Kopfleiste oben transparent mit dunkler Schrift: die Bestandsbilder sind hell, weiße Schrift war darauf kaum lesbar (Sichtprüfung 03.10.)
+    return rahmen(d["pfad"], lang, f"{titel} | Brasseler", desc, d["partner"], ld_seite(d, lang, titel, desc, k, r), innen, r, og=(DEMO + "media/" + media_basis[erstes_bild(d)] + "-1200.jpg") if media_basis.get(erstes_bild(d)) else "", hell=hell, mit_lb=("data-lb" in innen))
 
 def startseite(d):
     lang = d["lang"]; r = root(d["pfad"]); bl = [b for b in d["bloecke"] if not (b["t"] == "img" and b["src"] == TROPHAEE) and not (b["t"] == "video" and b["bg"])]
@@ -151,29 +152,35 @@ def startseite(d):
         for n in chrome[lang]["nav"]:
             if n["tiefe"] == 0 and (n["text"].split()[-1].lower()[:5] in kick.lower()): ziel[kick] = n["pfad"]
     def pf(p): return r + p.strip("/") + ("/" if p.strip("/") else "")
+    # Startseite, zweite Fassung (Suat 03.10.2026: „alle Inhalte bleiben, sonst freie Hand“): Hero mit Titel im Bild,
+    # Intro als Editorial-Split, Film auf Dunkel, drei Kacheln mit Bild oben (Unterkanten bündig), Zahlen als blaues Band,
+    # Weltkarte über die volle Breite, Azubi-Banner, zwei Karten. Reihenfolge und Texte wie im Bestand.
+    marke, claim_t = (h1.split("–", 1) + [""])[:2] if "–" in h1 else (h1, "")
     hs = [f'<section class="hero"><picture><source type="image/webp" srcset="{r}media/start-poster-480.webp 480w, {r}media/start-poster-960.webp 960w, {r}media/start-poster-1600.webp 1600w" sizes="100vw"><img class="hero__p" src="{r}media/start-poster-1200.jpg" alt="" width="1600" height="900" fetchpriority="high"></picture><video class="hero__v" autoplay muted loop playsinline preload="none" {video_quellen("start_1920_12fr", r)} aria-hidden="true"></video>'
-          f'<h2 class="sr">{e(h1)}</h2>'
+          f'<div class="hero__in"><h1 class="hero__h"><span class="hero__k">{e(marke.strip())}</span>{e(claim_t.strip() or claim)}</h1><a class="hero__weiter" href="#intro" aria-label="{"Weiter zum Inhalt" if lang == "de" else "Continue to content"}"><span></span></a></div>'
           f'<div class="hero__badge">{picture(TROPHAEE, "TOP 100 Innovator 2026", r, sizes="180px", eager=True)}</div></section>']
-    hs.append(f'<section class="sektion"><div class="wrap schmal prosa rv"><h1 class="t-h2">{e(h1)}</h1>{"".join(f"<p>{inline_html(p[chr(120)])}</p>" for p in intro)}</div>' + (f'<div class="wrap rv"><figure class="bild">{picture(luft, "Brasseler in Lemgo, Luftbild" if lang == "de" else "Brasseler in Lemgo, aerial view", r)}</figure></div>' if luft else "") + "</section>")
+    intro_p = [inline_html(p["x"]) for p in intro]
+    hs.append(f'<section class="sektion intro" id="intro"><div class="wrap intro__g rv"><div class="intro__l"><p class="kicker">{"Familienunternehmen seit 1923" if lang == "de" else "Family business since 1923"}</p><p class="intro__lead">{intro_p[0] if intro_p else ""}</p></div><div class="intro__r prosa">{"".join(f"<p>{p}</p>" for p in intro_p[1:])}</div></div>'
+              + (f'<div class="wrap rv"><figure class="bezel"><div class="bezel__in">{picture(luft, "Brasseler in Lemgo, Luftbild" if lang == "de" else "Brasseler in Lemgo, aerial view", r, sizes="(max-width: 1180px) 100vw, 1180px")}</div></figure></div>' if luft else "") + "</section>")
     if film:
         kick, lead, m = film; poster = "https://www.brasseler.de/uploads/BRASSELER_23_2473_Imagefilm_1080p_thumbnail-2025.jpg"
-        hs.append(f'<section class="sektion sektion--grau"><div class="wrap rv"><div class="sek"><p class="kicker">{e(kick)}</p><p class="lead">{inline_html(lead)}</p></div><figure class="vid vid--klick"><video class="vid__v" controls preload="none" poster="{r}media/{media_basis.get(poster, "")}-1200.jpg">' + "".join(f'<source src="{e(s)}" type="video/{"webm" if s.endswith("webm") else "mp4"}">' for s in m["src"]) + f'</video><figcaption class="vid__c">{u["video_hinweis"]}</figcaption></figure></div></section>')
+        hs.append(f'<section class="sektion film"><div class="wrap film__g rv"><div class="film__t"><p class="kicker kicker--hell">{e(kick)}</p><p class="lead lead--hell">{inline_html(lead)}</p><p class="film__c">{u["video_hinweis"]}</p></div><figure class="vid vid--klick film__v"><video class="vid__v" controls preload="none" poster="{r}media/{media_basis.get(poster, "")}-1200.jpg">' + "".join(f'<source src="{e(s)}" type="video/{"webm" if s.endswith("webm") else "mp4"}">' for s in m["src"]) + '</video></figure></div></section>')
     if teaser:
-        hs.append('<section class="sektion"><div class="wrap"><div class="teaser">' + "".join(f'<a class="teaser__i rv" href="{pf(ziel.get(kick, START[lang]))}"><p class="kicker">{e(kick)}</p><p class="lead">{inline_html(lead)}</p>{picture(src, "", r, sizes="(max-width: 860px) 100vw, 380px")}</a>' for kick, lead, src in teaser) + "</div></div></section>")
+        hs.append('<section class="sektion"><div class="wrap"><div class="teaser">' + "".join(f'<a class="teaser__i rv" href="{pf(ziel.get(kick, START[lang]))}"><span class="teaser__b">{picture(src, "", r, sizes="(max-width: 860px) 100vw, 380px")}</span><span class="teaser__t"><span class="kicker">{e(kick)}</span><span class="lead">{inline_html(lead)}</span><span class="teaser__pfeil" aria-hidden="true">→</span></span></a>' for kick, lead, src in teaser) + "</div></div></section>")
     if zahlen:
         def teile(z):
             m = re.match(r"\s*([\d.,+]+)\s*(.*)", z["zahl"]); zahl = m.group(1) if m else z["zahl"]; einheit = z["einheit"] or (m.group(2) if m else "")
             return zahl, einheit
-        hs.append(f'<section class="sektion sektion--grau"><div class="wrap rv"><p class="kicker">{e(u["zahlen"])}</p><div class="zahlen">' + "".join(f'<div class="zahlen__i"><div class="zahlen__z">{e(teile(z)[0])}</div><div class="zahlen__e">{e(teile(z)[1])}</div><p class="zahlen__s">{e(z["x"][len(z["zahl"]) + len(z["einheit"]) + 2:].strip() if z["x"].startswith(z["zahl"]) else z["x"])}</p></div>' for z in zahlen) + "</div></div></section>")
+        hs.append(f'<section class="zahlenband"><div class="wrap rv"><p class="kicker kicker--hell">{e(u["zahlen"])}</p><div class="zahlen">' + "".join(f'<div class="zahlen__i"><div class="zahlen__z">{e(teile(z)[0])}</div><div class="zahlen__e">{e(teile(z)[1])}</div><p class="zahlen__s">{e(z["x"][len(z["zahl"]) + len(z["einheit"]) + 2:].strip() if z["x"].startswith(z["zahl"]) else z["x"])}</p></div>' for z in zahlen) + "</div></div></section>")
     if karte:
-        hs.append(f'<section class="sektion"><div class="wrap karte rv"><img class="karte__svg" src="{r}media/brasseler-world-map-2.svg" alt="{"Weltkarte mit den Standorten der Brasseler-Gruppe" if lang == "de" else "World map with the locations of the Brasseler group"}" width="1200" height="600" loading="lazy"><div class="karte__t"><p class="lead">{inline_html(karte[0])}</p><a class="btn" href="{link_lokal(karte[1]["href"], r, PFADE)}">{e(karte[1]["x"])}</a></div></div></section>')
+        hs.append(f'<section class="karte rv"><img class="karte__svg" src="{r}media/brasseler-world-map-2.svg" alt="{"Weltkarte mit den Standorten der Brasseler-Gruppe" if lang == "de" else "World map with the locations of the Brasseler group"}" width="1200" height="624" loading="lazy"><div class="karte__t"><p class="lead">{inline_html(karte[0])}</p><a class="btn" href="{link_lokal(karte[1]["href"], r, PFADE)}">{e(karte[1]["x"])}</a></div></section>')
     if azubi:
-        hs.append(f'<section class="banner rv">{picture("https://www.brasseler.de/uploads/brasseler-home-azubis.jpg", "", r, sizes="50vw")}<div class="banner__t"><p class="lead">{inline_html(azubi[0])}</p><a class="btn" href="{link_lokal(azubi[1]["href"], r, PFADE)}">{e(azubi[1]["x"])}</a></div></section>')
+        hs.append(f'<section class="sektion"><div class="wrap"><div class="banner rv">{picture("https://www.brasseler.de/uploads/brasseler-home-azubis.jpg", "", r, sizes="(max-width: 700px) 100vw, 590px")}<div class="banner__t"><p class="lead">{inline_html(azubi[0])}</p><a class="btn" href="{link_lokal(azubi[1]["href"], r, PFADE)}">{e(azubi[1]["x"])}</a></div></div></div></section>')
     if karten2:
         bilder = ["https://www.brasseler.de/uploads/IMAG_20190930_56_2Pers-Monitor-Besp_902.jpg", "https://www.brasseler.de/uploads/brasseler-home-nachhaltigkeit-2.jpg"]
         hs.append('<section class="sektion"><div class="wrap"><div class="karten2">' + "".join(f'<div class="karten2__i{" karten2__i--dunkel" if j == 0 else ""} rv"><div class="karten2__t"><h2>{inline_html(t)}</h2><a class="btn" href="{link_lokal(btn["href"], r, PFADE)}">{e(btn["x"])}</a></div>{picture(bilder[j % 2], "", r, sizes="(max-width: 1000px) 50vw, 300px")}</div>' for j, (t, btn) in enumerate(karten2)) + "</div></div></section>")
     k = []; desc = beschreibung(d)
-    return rahmen(d["pfad"], lang, titel, desc, d["partner"], ld_seite(d, lang, titel, desc, k, r), "\n".join(hs), r, og=DEMO + "media/start_1920_12fr-poster.jpg")
+    return rahmen(d["pfad"], lang, titel, desc, d["partner"], ld_seite(d, lang, titel, desc, k, r), "\n".join(hs), r, og=DEMO + "media/start_1920_12fr-poster.jpg", hell=False)
 
 def news_uebersicht(d):
     lang = d["lang"]; r = root(d["pfad"]); u = I.UI[lang]; titel = seitentitel(d); k = krumen(d, lang)
@@ -273,6 +280,14 @@ def hinweisseite():
 <section class="sektion"><div class="wrap schmal prosa">
 <p class="lead" style="max-width:none">{I.HINWEIS_INTRO}</p>
 <div class="kasten"><p><strong>Bitte beachten.</strong> {I.HINWEIS_BITTE}</p></div>
+<h2 class="t-h2">Das Wichtigste in fünf Sätzen</h2>
+<div class="exec">
+<div class="exec__i"><p class="exec__z">{m["neu"].get("perf", "–")} <span>statt {m["alt"].get("perf", "–")}</span></p><p><strong>Schneller, weil leichter.</strong> Leistung mobil {m["neu"].get("perf", "–")} von 100 statt {m["alt"].get("perf", "–")}, {m["neu"].get("bytes", "–")} statt {m["alt"].get("bytes", "–")} je Seitenaufruf, Hauptbild nach {m["neu"].get("lcp", "–")} statt {m["alt"].get("lcp", "–")}. Dieselben Inhalte, derselbe Auftritt, ohne Baukasten.</p></div>
+<div class="exec__i"><p class="exec__z">KI<span>-auffindbar</span></p><p><strong>Für KI-Suchen auffindbar.</strong> Organisation mit Anschrift, Gründungsjahr und Marke, Geschäftsbereiche als Leistungen, News als Artikel, FAQ, Breadcrumbs, llms.txt. Das sind die Angaben, aus denen ChatGPT, Perplexity und Google-KI zitieren.</p></div>
+<div class="exec__i"><p class="exec__z">80 %<span>fertig</span></p><p><strong>Rund 80 Prozent fertig.</strong> Alle {len([d for d in daten if not d["duplikat_von"]])} Seiten in beiden Sprachen stehen, geprüft auf tote Verweise, Barrierefreiheit und sechs Bildschirmbreiten. Was bis zum Produktivbetrieb fehlt, steht unten als Liste.</p></div>
+<div class="exec__i"><p class="exec__z">18 h<span>Bauzeit</span></p><p><strong>Gebaut in rund 18 Stunden.</strong> Vom Abend des 2. Oktober bis zum Mittag des 3. Oktober 2026, eine Person mit KI-Werkzeugen, inklusive Messung, Qualitätsprüfung und Livegang. Ein Agenturprojekt dieser Größe rechnet in Monaten.</p></div>
+<div class="exec__i"><p class="exec__z">1<span>Sprachbefehl</span></p><p><strong>Pflege ist ein Sprachbefehl.</strong> „Ändere auf der Karriereseite die Zahl der Ausbildungsplätze auf 40“ genügt: Die KI ändert den Inhalt, der Generator baut alle Seiten neu, die Prüfung läuft automatisch, und live ist es in zwei Minuten. Kein Redaktionssystem, kein Dienstleister, keine Wartezeit.</p></div>
+</div>
 <h2 class="t-h2">Was dieser Entwurf ist</h2>
 <p>Dieselben Inhalte wie brasseler.de, neu gebaut: alle 41 Seiten des Bestands, wo vorhanden in beiden Sprachen, alle 124 News, die Chronik mit 42 Einträgen, Videos, Bilder. Nichts ist weggelassen, nichts dazuerfunden. Die <a href="{r}sitemap/">Sitemap</a> zeigt jede Seite mit Link auf den Entwurf und auf das Original.</p>
 {mess}
@@ -281,13 +296,27 @@ def hinweisseite():
 <h2 class="t-h2">Was mir beim Bestand aufgefallen ist</h2>
 <p>Gemessen am {HEUTE[8:10]}.{HEUTE[5:7]}.{HEUTE[:4]} an der Live-Seite. Keine Geschmacksfragen, sondern Dinge, die sich nachprüfen lassen.</p>
 <div class="hin">{"".join(f'<div class="hin__i"><h3>{t}</h3><p>{x}</p></div>' for t, x in befunde)}</div>
+<h2 class="t-h2">Was bis zum Produktivbetrieb noch fehlt</h2>
+<p>Der Entwurf ist vorzeigbar und messbar, aber kein Livebetrieb. Diese Punkte kämen vor einem Umzug auf brasseler.de dazu, in dieser Reihenfolge:</p>
+<ol class="todo">
+<li><strong>Freigabe durch Brasseler.</strong> Texte, Bilder und Videos stammen vom Bestand und gehören dem Unternehmen; Marketing und Geschäftsführung geben Gestaltung und Inhalte frei.</li>
+<li><strong>Formulare mit Rückseite.</strong> Kontakt- und Bewerbungsformulare sind Attrappen. Sie brauchen einen Empfänger (Mail oder Bewerbermanagement), Spam-Schutz und eine Datenschutz-Einwilligung.</li>
+<li><strong>Pflegeweg festlegen.</strong> Heute baut ein Generator die Seiten aus einer Inhaltsdatei. Zu klären: Wer ändert Inhalte, wer gibt frei, und läuft das über die KI-Arbeitsweise oder über ein Redaktionssystem, das den Generator füttert.</li>
+<li><strong>Suche.</strong> Das Suchfeld des Bestands ist nicht übernommen; bei 200 Seiten reicht eine kleine clientseitige Suche über einen vorgebauten Index.</li>
+<li><strong>Rechtstexte und Cookies.</strong> Impressum, Datenschutz und AGB auf den Entwurf anpassen. Ohne Tracking entfällt der Cookie-Banner; soll gemessen werden, dann cookiefrei (zum Beispiel serverseitige Logauswertung).</li>
+<li><strong>Vier Seiten übersetzen.</strong> Ausbildung, Azubi-Infotag, Tag der Ausbildung und ein Interview gibt es im Bestand nur auf Deutsch.</li>
+<li><strong>Umzug.</strong> Hosting mit TLS, Weiterleitungen aller alten Adressen (301), Sitemap bei Google und Bing einreichen, hreflang live prüfen, den öffentlichen Azure-Host abschalten, die Chronik-Bilder vom Entwicklungs-Slot auf den eigenen Server holen.</li>
+<li><strong>Abnahme.</strong> Barrierefreiheit nach BFSG (gilt seit Juni 2025 für Online-Angebote an Verbraucher), Test auf echten Geräten, Freigabe des Imagefilms in der finalen Fassung.</li>
+</ol>
 <h2 class="t-h2">Gestaltung</h2>
 <p>Die Marke bleibt: das Brasseler-Blau, die Wortmarke mit dem Punkt, viel Weiß, die blaue Linie über jedem Abschnitt. Neu ist nur, dass alles aus einem Guss ist.</p>
 <div class="ds"><div class="ds__f"><div class="ds__c" style="background:#007fff"></div>Brasseler-Blau #007fff</div><div class="ds__f"><div class="ds__c" style="background:#0062c4"></div>Blau dunkel #0062c4</div><div class="ds__f"><div class="ds__c" style="background:#3b4248"></div>Anthrazit #3b4248</div><div class="ds__f"><div class="ds__c" style="background:#f2f3f4"></div>Hellgrau #f2f3f4</div></div>
 <p><strong>Schrift:</strong> Der Bestand nutzt Corporate S OT, eine Schrift, für die eine Lizenz nötig ist. Dieser Entwurf setzt Fira Sans, frei lizenziert und selbst gehostet. Sie hat denselben Charakter: schlicht, ohne Serifen, offen und gut lesbar, mit einem leichten Schnitt für die großen Überschriften.</p>
 <h2 class="t-h2">Über mich</h2>
-<p>Ich bin Dr.-Ing. Suat Akyol, Interim Manager für Transformation mit KI, mit 18 Jahren Linienverantwortung in einem Medizintechnik- und Industriekonzern. Diesen Entwurf habe ich an einem Abend mit KI-Werkzeugen gebaut, so wie ich im Betrieb arbeite: Bewährtes, mit KI viel schneller. Mehr auf <a href="https://akyol.de/" target="_blank" rel="noopener">akyol.de</a>.</p>
+<div class="ueber"><a class="ueber__shot" href="https://akyol.de/" target="_blank" rel="noopener" aria-label="akyol.de öffnen"><picture><source type="image/webp" srcset="../media/akyol-de-mobil.webp"><img src="../media/akyol-de-mobil.jpg" alt="Startseite akyol.de auf dem Handy: KI in Ihre Betriebs-DNA übersetzen" width="640" height="1224" loading="lazy"></picture><span class="ueber__l">akyol.de</span></a><div class="ueber__t">
+<p>Ich bin Dr.-Ing. Suat Akyol, Interim Manager für Transformation mit KI, mit 18 Jahren Linienverantwortung in einem Medizintechnik- und Industriekonzern. Diesen Entwurf habe ich in rund 18 Stunden mit KI-Werkzeugen gebaut, so wie ich im Betrieb arbeite: Bewährtes, mit KI viel schneller. Mehr auf <a href="https://akyol.de/" target="_blank" rel="noopener">akyol.de</a>.</p>
 <p><a class="btn" href="mailto:contact@akyol.de?subject=Brasseler-Entwurf">Anmerkungen an contact@akyol.de</a></p>
+</div></div>
 </div></section>'''
     return rahmen("/ueber-diesen-entwurf/", lang, I.HINWEIS_TITEL + " | Brasseler-Entwurf", I.HINWEIS_INTRO[:200], "", json_ld([ORG]), innen, r, mit_demobar=False)
 

@@ -42,7 +42,7 @@ FAQ = {
 }
 
 HINWEIS_TITEL = "Über diesen Entwurf"
-HINWEIS_INTRO = "Dieser Entwurf zeigt, wie die Website von Gebr. Brasseler mit denselben Inhalten neu gebaut aussehen kann: schneller, für Suchmaschinen und KI-Suche lesbar, auf jedem Gerät. Gebaut an einem Abend mit KI-Werkzeugen, als Demonstration meiner Arbeitsweise."
+HINWEIS_INTRO = "Dieser Entwurf zeigt, wie die Website von Gebr. Brasseler mit denselben Inhalten neu gebaut aussehen kann: schneller, für Suchmaschinen und KI-Suche lesbar, auf jedem Gerät. Gebaut in rund 18 Stunden mit KI-Werkzeugen, als Demonstration meiner Arbeitsweise."
 HINWEIS_BITTE = "Dies ist ein unverbindlicher Entwurf von Dr.-Ing. Suat Akyol und keine Website der Gebr. Brasseler GmbH & Co. KG. Alle Texte, Bilder und Videos stammen aus der öffentlich erreichbaren Bestandsseite brasseler.de und bleiben Eigentum ihrer Rechteinhaber. Der Entwurf ist für Suchmaschinen gesperrt, konkurriert nicht mit dem Original und wird auf Wunsch jederzeit entfernt. Anmerkungen an contact@akyol.de."
 IMPRESSUM = {
     "de": ("Impressum dieses Entwurfs", "Dieser Entwurf ist keine Website der Gebr. Brasseler GmbH & Co. KG. Verantwortlich für den Entwurf ist Dr.-Ing. Suat Akyol, Mönchengladbach. Das vollständige Impressum und die Datenschutzerklärung des Entwurfs stehen unter akyol.de. Das Impressum des Originals finden Sie auf brasseler.de."),
