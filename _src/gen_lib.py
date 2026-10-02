@@ -3,9 +3,13 @@
 Bestandsseite in Sektionen), JSON-LD, Seitenrahmen. Alles statisch, kein Laufzeit-Include.
 Autor: Marketing Operations (Vega), 02.10.2026, Demonstrator Brasseler. VERSION bei CSS- oder JS-Änderung erhöhen."""
 import os, re, json, html
-VERSION = "29"
+VERSION = "30"
 # Bilder der Kartenreihen: im Bestand Hintergründe der Divi-CTA-Module (liegen in et-cache-CSS, nicht im HTML); hier die
 # bekannten Zuordnungen nach Stichwort im Kartentitel. Fehlt ein Stichwort, bleibt die Karte ohne Bild.
+_BJ = os.path.join(os.path.dirname(os.path.abspath(__file__)), "berufe.json")  # steht vor HERE, darum eigener Pfad
+BERUFE = json.load(open(_BJ, encoding="utf-8")) if os.path.exists(_BJ) else {}
+# Erfahrungsberichte ohne Vornamen im Dateinamen: Frederik ist der Mann mit Bart auf brasseler-studierende-02 (Bild angesehen, Faber v27); Carina hat im Bestand keine eigene Datei
+BERICHT_BILDER = {"frederik": "studierende-02"}
 KARTEN_BILDER = {"management": "https://www.brasseler.de/uploads/Brasseler-Hero-2024_GBL-Luftbild_sun-web.jpg",
                  "werte": "https://www.brasseler.de/uploads/IMAG_20190930_56_2Pers-Monitor-Besp_902.jpg",
                  "verantwortung": "https://www.brasseler.de/uploads/brasseler-home-nachhaltigkeit-2.jpg"}
@@ -144,6 +148,30 @@ def bloecke_html(bl, r, pfade, lang, lightbox=True):
         if ist_kurz(b) and i + 1 < n and bl[i + 1]["t"] == "p" and len(bl[i + 1]["x"].split()) <= 14 and "[" not in bl[i + 1]["x"]:
             out.append(f'<div class="sek"><p class="kicker">{e(b["x"])}</p><p class="lead">{inline_html(bl[i + 1]["x"])}</p></div>'); i += 2; continue
         # ---- Muster der Unterseiten-Runde (Suat 02.10. spät: „Das wird heute noch umgesetzt“, Arbeitsliste Faber F6) ----
+        # „Think global, act Lemgo“ mit Knopf → Weltkarten-Abschnitt wie auf der Startseite (Faber 2.4)
+        if b["t"] == "p" and b["x"].lower().startswith("think global") and i + 1 < n and bl[i + 1]["t"] == "button":
+            kn = bl[i + 1]
+            out.append(f'<section class="karte karte--prosa rv"><picture><source media="(min-width: 701px)" srcset="{r}media/weltkarte.svg"><source type="image/webp" srcset="{r}media/weltkarte-960.webp 960w, {r}media/weltkarte-1920.webp 1920w" sizes="100vw"><img class="karte__svg" src="{r}media/weltkarte-1920.jpg" alt="" width="1920" height="1090" loading="lazy"></picture><div class="karte__t"><p class="lead">{inline_html(b["x"])}</p><a class="btn" href="{e(link_lokal(kn["href"], r, pfade))}">{e(kn["x"])}</a></div></section>'); i += 2; continue
+        # Aufforderung: kurze h3, ein Absatz, Knopf → blaues Band mit Überschrift (Faber 2.3 „Sind Sie interessiert?“)
+        if b["t"] == "h3" and len(b["x"].split()) <= 6 and i + 2 < n and bl[i + 1]["t"] == "p" and len(bl[i + 1]["x"].split()) <= 40 and bl[i + 2]["t"] == "button":
+            kn = bl[i + 2]; ext = kn["href"].startswith("http") and not kn["href"].startswith(BASE)
+            out.append(f'<div class="band band--kopf rv"><div><h3>{inline_html(b["x"])}</h3><p>{inline_html(bl[i + 1]["x"])}</p></div><a class="btn btn--hell" href="{e(link_lokal(kn["href"], r, pfade))}"{" target=_blank rel=noopener" if ext else ""}>{e(kn["x"])}</a></div>'); i += 3; continue
+        # Erfahrungsberichte mit Porträt (Karriere): h3 (Leitsatz), Absätze, Porträtbild, h4 (Name), drei oder mehr Gruppen → Foto mit weißer Karte (Faber 6.3, Codex 22/23)
+        def gruppe_ab(j):
+            if j >= n or bl[j]["t"] != "h3": return None
+            k = j + 1
+            while k < n and bl[k]["t"] == "p" and k - j <= 8: k += 1
+            if k - j >= 2 and k + 1 < n and bl[k]["t"] == "img" and bl[k + 1]["t"] == "h4": return (bl[j], bl[j + 1:k], bl[k], bl[k + 1], k + 2)
+            return None
+        if b["t"] == "h3" and gruppe_ab(i):
+            gruppen = []; j = i
+            while True:
+                g = gruppe_ab(j)
+                if not g: break
+                gruppen.append(g); j = g[4]
+            if len(gruppen) >= 3:
+                i = j
+                out.append('<div class="berichte">' + "".join(f'<section class="bericht bericht--lang rv{" bericht--rechts" if k % 2 else ""}">{picture(img["src"], name["x"], r, klasse="bericht__bg", sizes="100vw")}<div class="bericht__karte"><h3>{inline_html(h["x"])}</h3>{"".join(p_html(p) for p in ps)}<p class="bericht__name">{e(name["x"])}</p></div></section>' for k, (h, ps, img, name, _) in enumerate(gruppen)) + "</div>"); continue
         # Erfahrungsberichte: drei oder mehr Paare aus h3 (Name, Bereich) und Zitat-Absatz → Vollbreiten-Foto mit weißer Karte
         if b["t"] == "h3" and i + 1 < n and bl[i + 1]["t"] == "p" and bl[i + 1]["x"].lstrip().startswith(("„", "\"", "“")):
             paare = []; j = i
@@ -153,7 +181,8 @@ def bloecke_html(bl, r, pfade, lang, lightbox=True):
                 teile = []
                 for k, (h, p) in enumerate(paare):
                     vorname = re.split(r"[,\s]", h["x"].strip())[0].lower()
-                    bild = next((u for u in hg if vorname[:5] in u.lower()), "")  # nur das eigene Foto; ohne Treffer lieber keins als das einer anderen Person (Faber v27)
+                    merk = BERICHT_BILDER.get(vorname, vorname[:5])
+                    bild = next((u for u in KONTEXT.get("hg", []) if merk in u.lower() and media_basis.get(u)), "")  # nur das eigene Foto; ohne Treffer lieber keins als das einer anderen Person (Faber v27)
                     teile.append(f'<section class="bericht rv{" bericht--rechts" if k % 2 else ""}">{picture(bild, "", r, klasse="bericht__bg", sizes="100vw") if bild else ""}<div class="bericht__karte"><h3>{inline_html(h["x"])}</h3><p>{inline_html(p["x"])}</p></div></section>')
                 out.append('<div class="berichte">' + "".join(teile) + "</div>"); continue
         # Ländergesellschaften: Karte (Bild mit „map“ im Namen), fetter Name, Text → zweispaltige Karten auf Blau
@@ -171,7 +200,9 @@ def bloecke_html(bl, r, pfade, lang, lightbox=True):
             if len(berufe) >= 3:
                 i = j; hg = [u for u in KONTEXT.get("hg", []) if media_basis.get(u)]
                 def beruf_bild(name):
-                    # ganzes Wort im Dateinamen, nicht die ersten acht Buchstaben („industri…“ traf Industriekaufmann für Industriemechaniker, Faber v27)
+                    # zuerst die Zuordnung aus dem Original-Karussell (berufe.json), sonst ganzes Wort im Dateinamen (Faber v27)
+                    k = re.sub(r"\s+", " ", name.lower()).strip() + " (m/w/d)"
+                    if BERUFE.get(k) and media_basis.get(BERUFE[k]): return BERUFE[k]
                     w = [t for t in re.split(r"[^a-zäöü]+", name.lower()) if len(t) > 5]
                     for t in w:
                         for u in hg:
@@ -187,7 +218,9 @@ def bloecke_html(bl, r, pfade, lang, lightbox=True):
             j = i + 1; kap = []
             while j < n and bl[j]["t"] == "h3": kap.append(bl[j]["x"]); j += 1
             i = j
-            out.append(f'<h2 class="t-h2">{inline_html(b["x"])}</h2><div class="kapitel">' + "".join(f'<a class="kapitel__i rv" href="#{anker(t)}"><span>{e(t)}</span></a>' for t in kap) + "</div>"); continue
+            # Fotos der Kacheln: die Azubi-Hintergründe der Seite in Reihenfolge (Faber: „#Vollbrasseler im Original mit Foto“)
+            fotos = [u for u in KONTEXT.get("hg", []) if "azubi" in u.lower() and media_basis.get(u)]
+            out.append(f'<h2 class="t-h2">{inline_html(b["x"])}</h2><div class="kapitel">' + "".join(f'<a class="kapitel__i rv{" kapitel__i--foto" if k < len(fotos) else ""}" href="#{anker(t)}">{picture(fotos[k], "", r, klasse="kapitel__bild", sizes="(max-width: 700px) 50vw, 240px") if k < len(fotos) else ""}<span>{e(t)}</span></a>' for k, t in enumerate(kap)) + "</div>"); continue
         # Icon mit Überschrift, drei oder mehr Paare → Raster aus Icon-Karten (statt senkrechter Liste)
         if b["t"] == "img" and ist_icon(b) and i + 1 < n and bl[i + 1]["t"] in ("h3", "h4", "p"):
             paare = []; j = i

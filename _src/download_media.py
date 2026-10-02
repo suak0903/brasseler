@@ -15,6 +15,8 @@ for x in d:
 hg = os.path.join(HERE, "hintergruende.json")
 if os.path.exists(hg):
     for v in json.load(open(hg, encoding="utf-8")).values(): urls.update(v)
+bj = os.path.join(HERE, "berufe.json")  # Porträts des Berufe-Karussells (berufe_quelle.py), 03.10.2026
+if os.path.exists(bj): urls.update(json.load(open(bj, encoding="utf-8")).values())
 def name(u): return re.sub(r"[^A-Za-z0-9._-]", "_", u.split("/")[-1].split("?")[0])
 def hole(u):
     z = os.path.join(ZIEL, name(u))
