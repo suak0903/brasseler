@@ -130,7 +130,8 @@ blockquote{margin:1.5em 0;padding:.4em 0 .4em 1.2em;border-left:3px solid var(--
 @media(min-width:1024px){.hero__weiter{display:block;right:auto;left:var(--pad)}}
 @media(prefers-reduced-motion:reduce){.hero__weiter span{animation:none}}
 /* Handy: das 16:9-Video nicht beschneiden, Titel darunter auf Weiß; der Kopfbalken ist transparent, das Video beginnt oben */
-@media(max-width:700px){.hero{height:auto;display:block}.hero__p,.hero__v{position:relative;inset:auto;height:auto;aspect-ratio:16/9}.hero__v{position:absolute;inset:0;height:100%}.hero::after{display:none}.hero__in{padding:18px var(--pad) 8px}.hero__h{font-size:clamp(1.8rem,8vw,2.4rem)}.hero__badge{bottom:auto;top:calc(var(--nav) + 4px);width:clamp(68px,20vw,96px)}}
+/* Handy wie im Bestand (Suat 02.10. abends): Video hochkant beschnitten (84vw hoch, Mitte), Schriftzug bleibt sichtbar, Siegel rechts unten im Video unter dem Claim; Titel darunter auf Weiß */
+@media(max-width:700px){.hero{height:auto;display:block;background:#fff}.hero__p,.hero__v{position:relative;inset:auto;height:84vw;object-fit:cover;object-position:50% 45%}.hero__v{position:absolute;top:0;left:0;width:100%;height:84vw}.hero::after{display:none}.hero__in{padding:18px var(--pad) 8px}.hero__h{font-size:clamp(1.8rem,8vw,2.4rem)}}
 .bild--quadrat{max-width:400px}
 .hero__in{position:relative;z-index:3;text-align:center;padding:60px var(--pad)}
 .hero__logo{width:min(560px,80vw);height:auto;margin:0 auto}
@@ -138,7 +139,7 @@ blockquote{margin:1.5em 0;padding:.4em 0 .4em 1.2em;border-left:3px solid var(--
 .hero__badge{position:absolute;right:clamp(16px,5vw,80px);bottom:clamp(16px,5vw,60px);z-index:3;width:clamp(90px,14vw,180px)}
 .hero__badge img{width:100%;height:auto;filter:drop-shadow(0 10px 20px rgba(0,0,0,.18))}
 /* Handy: Siegel kleiner und in die rechte untere Ecke des 16:9-Videos, damit es den Schriftzug im Video nicht überdeckt (Suat 02.10.2026). Steht nach der Grundregel, sonst gewinnt deren bottom. */
-@media(max-width:700px){.hero__badge{top:calc(56.25vw + 6px);bottom:auto;right:var(--pad);width:58px}.hero__in{min-height:118px;padding-right:90px}}  /* Siegel unter dem Video rechts neben dem Titel: im Video selbst steht der Schriftzug mittig-rechts, da ist kein Platz */
+@media(max-width:700px){.hero__badge{bottom:auto;top:calc(84vw - 8px - clamp(72px,18vw,90px) * 1.75);right:12px;width:clamp(72px,18vw,90px)}}  /* Siegel hochkant (Höhe ≈ 1,75 × Breite), 8 px über der Videounterkante, rechts vom Claim im Video (der endet bei etwa 78 % der Breite) */
 
 /* ---------- Hero Unterseiten ---------- */
 .subhero{position:relative;margin-top:0;padding-top:var(--nav);background:var(--grau);overflow:hidden}
@@ -260,11 +261,12 @@ main{display:block}
 @media(max-width:1000px){.zahlen{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:600px){.zahlen{grid-template-columns:1fr 1fr}}
 /* Weltkarte über die volle Breite (Suat 03.10.), Text als Glas-Karte darüber */
-.karte{position:relative;width:100%;overflow:hidden;background:#fff;padding:clamp(16px,3vw,48px) 0 0}
+/* Weltkarte volle Breite, Text und Knopf mittig über der Karte wie im Bestand (Suat 02.10. abends) */
+.karte{position:relative;width:100%;overflow:hidden;background:#fff;padding:clamp(8px,2vw,32px) 0 0}
 .karte__svg{width:100%;height:auto;display:block}
-.karte__t{position:absolute;left:max(var(--pad),calc((100% - var(--wrap)) / 2 + var(--pad)));bottom:clamp(12px,5vw,72px);max-width:min(440px,60%);padding:clamp(18px,2.6vw,32px);background:rgba(255,255,255,.78);backdrop-filter:blur(10px) saturate(1.3);border-radius:22px;box-shadow:0 1px 0 rgba(255,255,255,.9) inset,0 30px 60px -30px rgba(33,37,41,.35)}
-.karte__t .lead{font-size:clamp(1.5rem,3vw,2.6rem);color:var(--blau);margin-bottom:.6em}
-@media(max-width:700px){.karte{padding:0 0 var(--sec)}.karte__t{position:static;max-width:none;margin:16px var(--pad) 0;background:#fff;backdrop-filter:none;box-shadow:none;padding:0}}
+.karte__t{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);width:min(92%,640px);text-align:center;padding:0}
+.karte__t .lead{font-size:clamp(1.7rem,4.2vw,3.2rem);color:var(--blau);margin:0 auto .6em;max-width:none;text-shadow:0 0 18px #fff,0 0 6px #fff}
+@media(max-width:700px){.karte{padding:0}.karte__svg{height:88vw;object-fit:cover;object-position:62% 50%}.karte__t .lead{font-size:clamp(1.7rem,8.5vw,2.4rem)}}
 /* Azubi-Banner */
 .banner{display:grid;grid-template-columns:1fr 1fr;align-items:stretch;border-radius:22px;overflow:hidden}
 .banner img{width:100%;height:100%;object-fit:cover;min-height:280px}
