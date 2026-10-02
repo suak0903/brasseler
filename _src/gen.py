@@ -79,7 +79,7 @@ def ld_seite(d, lang, titel, desc, k, r):
         g.append({"@type": "ItemList", "name": "Geschäftsbereiche" if lang == "de" else "Business areas", "itemListElement": [{"@type": "ListItem", "position": i + 1, "item": {"@type": "Service", "name": n, "provider": {"@id": BASE + "/#organization"}, "audience": {"@type": "Audience", "audienceType": a}}} for i, (n, a) in enumerate([("Komet Dental", "Zahnärzte, Zahntechniker, Kieferchirurgen" if lang == "de" else "dentists, dental technicians, oral surgeons"), ("Komet Medical", "Medizintechnikunternehmen, Chirurgie, Implantologie" if lang == "de" else "medical device companies, surgery, implantology"), ("Komet Jewellery", "Schmuckindustrie" if lang == "de" else "jewellery industry")])]})
     return json_ld(g)
 
-def rahmen(d_pfad, lang, titel, desc, partner, ld, innen, r, og="", hell=False, mit_lb=False, mit_demobar=True):
+def rahmen(d_pfad, lang, titel, desc, partner, ld, innen, r, og="", hell=False, mit_lb=False, mit_demobar=False):  # Demo-Leiste nur auf der Startseite (Suat 02.10. abends)
     return (head(None, r, lang, titel, desc, d_pfad, partner, ld, og) + "\n<body>\n" + kopfleiste(r, lang, d_pfad, partner, hell) + "\n<main id=\"inhalt\">\n" + innen + "\n</main>\n" + fuss(r, lang) + "\n" + (demobar(r, lang) if mit_demobar else '<script>document.body.classList.add("demobar-zu")</script>') + "\n" + (lightbox(lang) if mit_lb else "") + ende(r))
 
 def schreiben(pfad, inhalt_html):
@@ -181,12 +181,12 @@ def startseite(d):
         # Desktop: das SVG (scharf wie im Bestand, Suat 02.10. abends), Handy: WebP, weil das Rastern des SVG dort Hauptthread kostet
         hs.append(f'<section class="karte rv"><picture><source media="(min-width: 701px)" srcset="{r}media/weltkarte.svg"><source type="image/webp" srcset="{r}media/weltkarte-960.webp 960w, {r}media/weltkarte-1920.webp 1920w" sizes="100vw"><img class="karte__svg" src="{r}media/weltkarte-1920.jpg" alt="{"Weltkarte mit den Standorten der Brasseler-Gruppe" if lang == "de" else "World map with the locations of the Brasseler group"}" width="1920" height="1090" loading="lazy"></picture><div class="karte__t"><p class="lead">{inline_html(karte[0])}</p><a class="btn" href="{link_lokal(karte[1]["href"], r, PFADE)}">{e(karte[1]["x"])}</a></div></section>')
     if azubi:
-        hs.append(f'<section class="sektion"><div class="wrap"><div class="banner rv">{picture("https://www.brasseler.de/uploads/brasseler-home-azubis.jpg", "", r, sizes="(max-width: 700px) 100vw, 590px")}<div class="banner__t"><p class="lead">{inline_html(azubi[0])}</p><a class="btn" href="{link_lokal(azubi[1]["href"], r, PFADE)}">{e(azubi[1]["x"])}</a></div></div></div></section>')
+        hs.append(f'<section class="sektion"><div class="wrap"><div class="banner"><div class="banner__b rv rv--l">{picture("https://www.brasseler.de/uploads/brasseler-home-azubis.jpg", "", r, sizes="(max-width: 700px) 100vw, 590px")}</div><div class="banner__t rv rv--r"><p class="lead">{inline_html(azubi[0])}</p><a class="btn" href="{link_lokal(azubi[1]["href"], r, PFADE)}">{e(azubi[1]["x"])}</a></div></div></div></section>')  # Bild von links, Text von rechts wie im Bestand (Suat 02.10. abends)
     if karten2:
         bilder = ["https://www.brasseler.de/uploads/IMAG_20190930_56_2Pers-Monitor-Besp_902.jpg", "https://www.brasseler.de/uploads/brasseler-home-nachhaltigkeit-2.jpg"]
-        hs.append('<section class="sektion"><div class="wrap"><div class="karten2">' + "".join(f'<div class="karten2__i{" karten2__i--dunkel" if j == 0 else ""} rv"><div class="karten2__t"><h2>{inline_html(t)}</h2><a class="btn" href="{link_lokal(btn["href"], r, PFADE)}">{e(btn["x"])}</a></div>{picture(bilder[j % 2], "", r, sizes="(max-width: 1000px) 50vw, 300px")}</div>' for j, (t, btn) in enumerate(karten2)) + "</div></div></section>")
+        hs.append('<section class="sektion"><div class="wrap"><div class="karten2">' + "".join(f'<div class="karten2__i{" karten2__i--dunkel" if j == 0 else ""} rv {"rv--l" if j == 0 else "rv--r"}"><div class="karten2__t"><h2>{inline_html(t)}</h2><a class="btn" href="{link_lokal(btn["href"], r, PFADE)}">{e(btn["x"])}</a></div>{picture(bilder[j % 2], "", r, sizes="(max-width: 1000px) 50vw, 300px")}</div>' for j, (t, btn) in enumerate(karten2)) + "</div></div></section>")
     k = []; desc = beschreibung(d)
-    return rahmen(d["pfad"], lang, titel, desc, d["partner"], ld_seite(d, lang, titel, desc, k, r), "\n".join(hs), r, og=DEMO + "media/start_1920_12fr-poster.jpg", hell=False)
+    return rahmen(d["pfad"], lang, titel, desc, d["partner"], ld_seite(d, lang, titel, desc, k, r), "\n".join(hs), r, og=DEMO + "media/start_1920_12fr-poster.jpg", hell=False, mit_demobar=True)
 
 def news_uebersicht(d):
     lang = d["lang"]; r = root(d["pfad"]); u = I.UI[lang]; titel = seitentitel(d); k = krumen(d, lang)

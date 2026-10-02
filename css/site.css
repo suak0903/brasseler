@@ -63,7 +63,10 @@ blockquote{margin:1.5em 0;padding:.4em 0 .4em 1.2em;border-left:3px solid var(--
 .nav--hell .nav__a,.nav--hell .nav__lang,.nav--hell .nav__claim{color:#fff}
 .nav--hell .nav__a:hover,.nav--hell .nav__a[aria-current="page"],.nav--hell .nav__a[data-zweig]{color:#fff;border-color:#fff}
 .nav--hell .burger span{background:#fff}
-.nav.scrolled{background:rgba(255,255,255,.96);backdrop-filter:saturate(1.2) blur(6px);box-shadow:0 2px 18px rgba(33,37,41,.08);border-color:var(--linie);color:var(--text)}
+.nav.scrolled,.nav:has(.nav__li--sub:hover),.nav:has(.nav__li--sub:focus-within){background:rgba(255,255,255,.96);backdrop-filter:saturate(1.2) blur(6px);box-shadow:0 2px 18px rgba(33,37,41,.08);border-color:var(--linie);color:var(--text)}  /* Balken wird weiß, sobald ein Untermenü offen ist, sonst liegt Glas auf Glas (Suat 02.10.) */
+.nav__suche{width:40px;height:40px;border:0;background:none;color:inherit;display:grid;place-items:center;cursor:pointer;border-radius:50%;opacity:.85}
+.nav__suche:hover{background:var(--blau-h);color:var(--blau-d);opacity:1}
+.nav__suche svg{width:20px;height:20px}
 /* Menü offen: der Balken geht weg, egal wo man ist (Design-Kit, Suat 02.10.2026); Logo und X schweben über dem Glas-Panel */
 .nav.menu-open{background:transparent;backdrop-filter:none;box-shadow:none;border-color:transparent;color:var(--text)}
 .nav.scrolled::before,.nav.menu-open::before{opacity:0}
@@ -129,12 +132,12 @@ blockquote{margin:1.5em 0;padding:.4em 0 .4em 1.2em;border-left:3px solid var(--
 .hero__weiter span{position:absolute;left:50%;top:8px;width:4px;height:8px;margin-left:-2px;border-radius:2px;background:var(--blau);animation:wink 1.8s var(--ease) infinite}
 @keyframes wink{0%{transform:translateY(0);opacity:1}70%{transform:translateY(16px);opacity:0}100%{opacity:0}}
 /* Desktop: keine Überschrift im Video, das Video trägt den Schriftzug selbst; kein Scroll-Hinweis (Suat 02.10. abends: „überdeckt sich mit dem Video“, „dieser komische Kreis“). Die H1 bleibt im DOM für Suchmaschinen. */
-@media(min-width:701px){.hero__in{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);padding:0}}
+@media(min-width:701px){.hero__in{position:absolute;left:0;top:0;width:1px;height:1px;margin:0;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}.hero__h{font-size:1px;max-width:none}}
 .hero__weiter{display:none!important}
 @media(prefers-reduced-motion:reduce){.hero__weiter span{animation:none}}
 /* Handy: das 16:9-Video nicht beschneiden, Titel darunter auf Weiß; der Kopfbalken ist transparent, das Video beginnt oben */
 /* Handy wie im Bestand (Suat 02.10. abends): Video hochkant beschnitten (84vw hoch, Mitte), Schriftzug bleibt sichtbar, Siegel rechts unten im Video unter dem Claim; Titel darunter auf Weiß */
-@media(max-width:700px){.hero{height:auto;display:block;background:#fff}.hero__p,.hero__v{position:relative;inset:auto;height:84vw;object-fit:cover;object-position:50% 45%}.hero__v{position:absolute;top:0;left:0;width:100%;height:84vw}.hero::after{display:none}.hero__in{padding:18px var(--pad) 8px}.hero__h{font-size:clamp(1.8rem,8vw,2.4rem)}}
+@media(max-width:700px){.hero{height:auto;display:block;background:#fff}.hero__p,.hero__v{position:relative;inset:auto;height:84vw;object-fit:cover;object-position:50% 45%}.hero__v{position:absolute;top:0;left:0;width:100%;height:84vw}.hero::after{inset:auto 0 auto 0;top:0;height:84vw;background:linear-gradient(180deg,rgba(255,255,255,0) 55%,rgba(255,255,255,.85) 88%,#fff 100%)}.hero__in{padding:18px var(--pad) 8px}.hero__h{font-size:clamp(1.8rem,8vw,2.4rem)}}
 .bild--quadrat{max-width:400px}
 .hero__in{position:relative;z-index:3;text-align:center;padding:60px var(--pad)}
 .hero__logo{width:min(560px,80vw);height:auto;margin:0 auto}
@@ -157,7 +160,7 @@ blockquote{margin:1.5em 0;padding:.4em 0 .4em 1.2em;border-left:3px solid var(--
 .crumbs{font-size:.82rem;color:var(--muted);margin:0 0 14px}
 .crumbs a{color:var(--blau-d);text-decoration:none}
 .crumbs span{margin:0 6px}
-.subhero h1{margin:0;padding-top:16px;border-top:2px solid var(--blau);display:inline-block}
+.subhero h1{margin:0;display:block}  /* ohne blauen Strich darüber (Suat 02.10.: „sieht sehr unordentlich aus, überall“) */
 .datum{font-size:.9rem;color:var(--muted);margin:.4em 0 0}
 
 /* ---------- Inhalt ---------- */
@@ -172,11 +175,11 @@ main{display:block}
 .prosa>h3{margin-top:1.3em}
 .prosa .bild{margin:1.8em 0}
 .prosa .bild img{width:100%}
-.kicker{color:var(--blau-d);font-weight:500;font-size:1.02rem;margin:0 0 .3em;padding-top:18px;border-top:2px solid var(--blau);display:inline-block;min-width:min(100%,320px);max-width:100%}
+.kicker{color:var(--blau-d);font-weight:600;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;margin:0 0 .6em;display:block}  /* statt blauem Strich: kleine Versal-Zeile (Suat 02.10.) */
 .lead{font-size:clamp(1.35rem,2.3vw,1.9rem);font-weight:300;line-height:1.25;color:var(--ink);margin:0 0 1em;max-width:30ch}
 .sek{margin:2em 0 1em}
 .btn{display:inline-block;background:var(--blau-d);color:#fff;text-decoration:none;font-weight:500;font-size:.95rem;padding:10px 24px;border-radius:999px;transition:background .2s,transform .2s}
-.btn:hover{background:#004f9e;color:#fff;transform:translateY(-1px)}  /* Knöpfe dunkelblau: Weiß auf #007fff nur 3,83:1 (Faber F4) */
+.btn:hover{background:#004f9e;color:#fff}  /* kein Positionswechsel bei Hover (Suat 02.10., Grundsatz) */  /* Knöpfe dunkelblau: Weiß auf #007fff nur 3,83:1 (Faber F4) */
 .btn-zeile{margin:.4em 0 1.6em}
 .hinweis{font-size:.9rem;color:var(--muted)}
 
@@ -236,7 +239,7 @@ main{display:block}
 /* Imagefilm auf Dunkel */
 .film{background:var(--ink);color:#fff}
 .film__g{display:grid;grid-template-columns:4fr 7fr;gap:clamp(28px,5vw,72px);align-items:center}
-.kicker--hell{color:#fff;border-top-color:#fff}
+.kicker--hell{color:rgba(255,255,255,.85)}
 .lead--hell{color:#fff}
 .film__c{font-size:.85rem;color:rgba(255,255,255,.6);margin:0}
 .film__v{margin:0;border-radius:18px;overflow:hidden;box-shadow:0 40px 80px -40px rgba(0,0,0,.8)}
@@ -244,7 +247,7 @@ main{display:block}
 /* Drei Kacheln: Bild oben, Text unten, Unterkanten bündig (Suat 03.10.) */
 .teaser{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2.5vw,32px)}
 .teaser__i{text-decoration:none;color:inherit;display:flex;flex-direction:column;background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 1px 0 rgba(33,37,41,.06),0 24px 48px -28px rgba(33,37,41,.3);transition:transform .6s var(--ease),box-shadow .6s var(--ease)}
-.teaser__i:hover{transform:translateY(-6px);box-shadow:0 1px 0 rgba(33,37,41,.06),0 40px 60px -28px rgba(0,98,196,.35)}
+.teaser__i:hover{box-shadow:0 1px 0 rgba(33,37,41,.06),0 40px 60px -28px rgba(0,98,196,.35)}
 .teaser__b{display:block;overflow:hidden;aspect-ratio:16/10}
 .teaser__b img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease)}
 .teaser__i:hover .teaser__b img{transform:scale(1.05)}
@@ -252,7 +255,7 @@ main{display:block}
 .teaser__t .kicker{padding-top:0;border-top:0;min-width:0;font-size:.95rem}
 .teaser__t .lead{font-size:clamp(1.15rem,1.6vw,1.4rem);margin:0 44px 0 0;max-width:none}
 .teaser__pfeil{position:absolute;right:20px;bottom:20px;width:36px;height:36px;border-radius:50%;background:var(--blau-h);color:var(--blau-d);display:grid;place-items:center;font-size:1.1rem;transition:transform .6s var(--ease),background .3s}
-.teaser__i:hover .teaser__pfeil{transform:translate(3px,-2px);background:var(--blau-d);color:#fff}
+.teaser__i:hover .teaser__pfeil{background:var(--blau-d);color:#fff}
 @media(max-width:860px){.teaser{grid-template-columns:1fr}}
 /* Zahlen als blaues Band */
 .zahlenband{padding:var(--sec) 0;background:linear-gradient(135deg,#0062c4,#007fff 70%,#2b94ff);color:#fff}
@@ -272,6 +275,7 @@ main{display:block}
 @media(max-width:700px){.karte{padding:0}.karte__svg{height:88vw;object-fit:cover;object-position:62% 50%}.karte__t .lead{font-size:clamp(1.7rem,8.5vw,2.4rem)}}
 /* Azubi-Banner */
 .banner{display:grid;grid-template-columns:1fr 1fr;align-items:stretch;border-radius:22px;overflow:hidden}
+.banner__b{min-width:0}
 .banner img{width:100%;height:100%;object-fit:cover;min-height:280px}
 .banner__t{background:var(--blau);color:#fff;padding:clamp(28px,5vw,56px);display:flex;flex-direction:column;justify-content:center}
 .banner__t .lead{color:#fff}
@@ -355,7 +359,15 @@ main{display:block}
 .fuss__social{list-style:none;margin:0;padding:0;display:flex;justify-content:center;gap:16px;position:relative;z-index:1}
 .fuss__s{display:grid;place-items:center;width:48px;height:48px;border-radius:9px;background:var(--f);color:#fff;transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
 .fuss__s svg{width:24px;height:24px;fill:currentColor}
-.fuss__s:hover{transform:translateY(-3px);box-shadow:0 14px 24px -12px var(--f);color:#fff}
+.fuss__s:hover{box-shadow:0 14px 24px -12px var(--f);color:#fff;filter:brightness(1.08)}
+/* Pop-in der Social-Kacheln: kurz größer, dann einrasten, von links nach rechts gestaffelt (Suat 02.10.) */
+.has-js .fuss__social li{opacity:0;transform:scale(.4)}
+.has-js .fuss__social.in li{animation:pop .7s var(--ease) forwards}
+.fuss__social li:nth-child(2){animation-delay:.12s}.fuss__social li:nth-child(3){animation-delay:.24s}.fuss__social li:nth-child(4){animation-delay:.36s}.fuss__social li:nth-child(5){animation-delay:.48s}
+@keyframes pop{0%{opacity:0;transform:scale(.4)}60%{opacity:1;transform:scale(1.18)}100%{opacity:1;transform:scale(1)}}
+.has-js .fuss__komet{opacity:0;transform:scale(.6) rotate(-8deg);transition:opacity .9s var(--ease) .5s,transform .9s var(--ease) .5s}
+.has-js .fuss__social.in ~ .fuss__komet{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.has-js .fuss__social li,.has-js .fuss__komet{opacity:1;transform:none;animation:none}}
 .fuss__komet{position:absolute;right:var(--pad);bottom:0;width:clamp(64px,9vw,112px);height:auto;filter:drop-shadow(0 8px 16px rgba(33,37,41,.18))}
 .fuss__in{max-width:var(--wrap);margin:0 auto;padding:32px var(--pad) 28px;position:relative}
 .fuss__links{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px 22px}
@@ -373,7 +385,7 @@ main{display:block}
 .demobar__x{border:0;background:none;color:#1b1f23;font-size:1.3rem;cursor:pointer;padding:0 6px;line-height:1}
 /* Hinweisseite, Executive Summary (Suat 02.10.2026): fünf Kacheln, die Zahl dick und fett, der Satz darunter */
 .exec{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:8px 0 2em}
-.exec__i{background:var(--grau);border-radius:18px;padding:22px 24px 18px;border-top:3px solid var(--blau)}
+.exec__i{background:var(--grau);border-radius:18px;padding:22px 24px 18px}
 .exec__i:first-child{grid-column:1/-1;background:linear-gradient(135deg,#0062c4,#007fff 70%,#2b94ff);color:#fff;border-top:0}
 .exec__i:first-child .exec__z,.exec__i:first-child strong{color:#fff}
 .exec__i:first-child .exec__z span{color:rgba(255,255,255,.8)}
@@ -391,6 +403,8 @@ main{display:block}
 .ueber__l{position:absolute;left:10px;bottom:10px;background:rgba(255,255,255,.92);color:var(--blau-d);font-size:.8rem;font-weight:600;padding:4px 10px;border-radius:999px}
 @media(max-width:600px){.ueber{grid-template-columns:1fr}.ueber__shot{max-width:240px}}
 .demobar.hide{display:none}
+.has-js .demobar{opacity:0;transform:translate(-50%,16px);transition:opacity 1.6s var(--ease) 1.2s,transform 1.6s var(--ease) 1.2s}  /* fadet langsam ein (Suat 02.10.), nur auf der Startseite */
+.has-js .demobar.da{opacity:1;transform:translateX(-50%)}
 body:not(.demobar-zu){padding-bottom:58px}
 @media(max-width:700px){body:not(.demobar-zu){padding-bottom:96px}}  /* Leiste läuft dort zweizeilig, sonst deckt sie den Fuß ab (Faber F5) */
 @media(max-width:700px){.demobar{flex-wrap:wrap;font-size:.75rem}.demobar__t{flex-basis:100%}.demobar__l{flex:1}}
@@ -404,7 +418,9 @@ body:not(.demobar-zu){padding-bottom:58px}
 .lb__count{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);color:#fff;font-size:.85rem}
 
 /* Reveal */
-.has-js .rv{opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease),transform .8s var(--ease)}  /* Divi-Muster des Bestands: Sektionen gleiten ein; Raster-Kinder gestaffelt per transition-delay aus site.js */
+.has-js .rv{opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.has-js .rv--l{transform:translateX(-56px)}.has-js .rv--r{transform:translateX(56px)}  /* Einflug von links und rechts wie beim Bestand (Azubi-Banner, Karten) */
+.has-js .rv--pop{transform:scale(.92)}  /* Divi-Muster des Bestands: Sektionen gleiten ein; Raster-Kinder gestaffelt per transition-delay aus site.js */
 .has-js .rv.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.has-js .rv{opacity:1;transform:none;transition:none}}
 

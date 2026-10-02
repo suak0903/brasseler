@@ -82,6 +82,7 @@ def kopfleiste(r, lang, aktiv_pfad, partner_pfad, hell=False):
     <a class="nav__logo" href="{href(start)}">{LOGO.replace('aria-hidden="true"', 'role="img" aria-label="Brasseler"')}<span class="nav__claim">{"Medizintechnik made in Lemgo" if lang == "de" else "Medical technology made in Lemgo"}</span></a>
     <nav class="nav__menu" aria-label="{"Hauptnavigation" if lang == "de" else "Main navigation"}"><ul class="nav__ul">{"".join(items)}</ul></nav>
     <div class="nav__r">
+      <button class="nav__suche" type="button" aria-label="{t["suche"]}" title="{t["suche"]}{" (im Entwurf ohne Funktion)" if lang == "de" else " (no function in this draft)"}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.6-3.6"/></svg></button>
       <a class="nav__lang" href="{sprache}" lang="{t["lang_other"]}" hreflang="{t["lang_other"]}"{sprach_titel}>{FLAGGE[t["lang_other"]]}<span>{t["lang_other"].upper()}</span></a>
       <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="mmenu" aria-label="{t["menu"]}"><span></span><span></span><span></span></button>
     </div>
@@ -102,8 +103,8 @@ def fuss(r, lang):
     return f'''<footer class="fuss">
   <div class="fuss__oben">
     {KURVE}
-    <ul class="fuss__social" aria-label="{t["social"]}">{social}</ul>
-    <img class="fuss__komet" src="{r}media/logo-kometdental-3.svg" alt="Komet" width="96" height="96">
+    <ul class="fuss__social rv" aria-label="{t["social"]}">{social}</ul>
+    <a class="fuss__komet" href="{r}{"" if lang == "de" else "en/"}" aria-label="{"Zur Startseite" if lang == "de" else "To the start page"}"><img src="{r}media/logo-kometdental-3.svg" alt="Komet" width="96" height="96"></a>
   </div>
   <div class="fuss__in">
     <ul class="fuss__links">{"".join(f'<li><a href="{href(l["pfad"])}">{e(l["text"])}</a></li>' for l in links)}<li><a href="{r}ueber-diesen-entwurf/">{t["entwurf"]}</a></li></ul>

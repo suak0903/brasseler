@@ -84,6 +84,7 @@
   /* 5 */
   // Die Leiste kommt bei jedem Laden wieder (Suat 02.10.2026), kein Merken in der Sitzung
   var demobar = document.getElementById('demobar'), demoClose = document.getElementById('demoClose');
+  if (demobar) window.setTimeout(function () { demobar.classList.add('da'); }, 60);  // fadet langsam ein (CSS-Übergang mit Verzögerung)
   if (demoClose) demoClose.addEventListener('click', function () { demobar.classList.add('hide'); document.body.classList.add('demobar-zu'); });
 
   /* 6 */
