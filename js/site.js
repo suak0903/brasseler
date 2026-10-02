@@ -16,8 +16,9 @@
   var burger = document.getElementById('burger'), mmenu = document.getElementById('mmenu');
   if (burger && mmenu && nav) {
     mmenu.hidden = true; mmenu.setAttribute('inert', '');
-    var oeffnen = function () { mmenu.hidden = false; void mmenu.offsetWidth; mmenu.classList.add('open'); mmenu.removeAttribute('inert'); nav.classList.add('menu-open'); burger.setAttribute('aria-expanded', 'true'); document.body.style.overflow = 'hidden'; };
-    var schliessen = function () { mmenu.classList.remove('open'); mmenu.setAttribute('inert', ''); nav.classList.remove('menu-open'); burger.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; window.setTimeout(function () { if (!mmenu.classList.contains('open')) mmenu.hidden = true; }, 380); };
+    // Kein overflow-Lock auf body (Design-Kit): der Hintergrund darf weiterscrollen, das Panel hält sich per overscroll-behavior
+    var oeffnen = function () { mmenu.hidden = false; void mmenu.offsetWidth; mmenu.classList.add('open'); mmenu.removeAttribute('inert'); nav.classList.add('menu-open'); burger.setAttribute('aria-expanded', 'true'); };
+    var schliessen = function () { mmenu.classList.remove('open'); mmenu.setAttribute('inert', ''); nav.classList.remove('menu-open'); burger.setAttribute('aria-expanded', 'false'); window.setTimeout(function () { if (!mmenu.classList.contains('open')) mmenu.hidden = true; }, 420); };
     burger.addEventListener('click', function () { mmenu.classList.contains('open') ? schliessen() : oeffnen(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && mmenu.classList.contains('open')) schliessen(); });
     document.addEventListener('click', function (e) { if (mmenu.classList.contains('open') && !e.target.closest('#mmenu') && !e.target.closest('#burger')) schliessen(); });

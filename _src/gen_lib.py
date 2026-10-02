@@ -3,7 +3,7 @@
 Bestandsseite in Sektionen), JSON-LD, Seitenrahmen. Alles statisch, kein Laufzeit-Include.
 Autor: Marketing Operations (Vega), 02.10.2026, Demonstrator Brasseler. VERSION bei CSS- oder JS-Änderung erhöhen."""
 import os, re, json, html
-VERSION = "13"
+VERSION = "14"
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.abspath(os.path.join(HERE, ".."))
 BASE = "https://www.brasseler.de"
 DEMO = "https://suak0903.github.io/brasseler/"
