@@ -182,7 +182,8 @@ main{display:block;overflow-x:clip}  /* Einflug-Elemente (rv--l/rv--r) ragen vor
 .prosa .bild img{width:100%}
 /* Der blaue Strich des Bestands, feiner: kurz, mit Verlauf, wächst beim Einblenden von links (Suat 02.10.: „muss wiederkommen, aber fancier“) */
 .kicker{color:var(--blau-d);font-weight:600;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;margin:0 0 .6em;display:block}
-.kicker::before,.subhero h1::before,.t-h2::before,.sektion .prosa>h2::before{content:"";display:block;width:56px;height:3px;border-radius:2px;background:linear-gradient(90deg,var(--blau-d),var(--blau) 60%,rgba(0,127,255,.25));margin:0 0 14px;transform-origin:left;transform:scaleX(.25);opacity:.5;transition:transform .9s var(--ease) .15s,opacity .9s var(--ease) .15s}
+/* Nur Kicker und Seitentitel tragen den kurzen Strich; über Zwischenüberschriften nicht, dort gibt es schon die lange Linie (Suat 03.10.: „kleine untere weg, überall“) */
+.kicker::before,.subhero h1::before{content:"";display:block;width:56px;height:3px;border-radius:2px;background:linear-gradient(90deg,var(--blau-d),var(--blau) 60%,rgba(0,127,255,.25));margin:0 0 14px;transform-origin:left;transform:scaleX(.25);opacity:.5;transition:transform .9s var(--ease) .15s,opacity .9s var(--ease) .15s}
 .in .kicker::before,.in.kicker::before,.subhero h1::before,.in .t-h2::before,.in.t-h2::before,.in .prosa>h2::before,.no-js .kicker::before,.no-js .t-h2::before{transform:none;opacity:1}
 .subhero h1::before{animation:strich .9s var(--ease) .2s both}
 @keyframes strich{from{transform:scaleX(.25);opacity:.5}to{transform:none;opacity:1}}
