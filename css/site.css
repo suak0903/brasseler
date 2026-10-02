@@ -68,7 +68,7 @@ blockquote{margin:1.5em 0;padding:.4em 0 .4em 1.2em;border-left:3px solid var(--
 .nav__suche:hover{background:var(--blau-h);color:var(--blau-d);opacity:1}
 .nav__suche svg{width:20px;height:20px}
 /* Menü offen: der Balken geht weg, egal wo man ist (Design-Kit, Suat 02.10.2026); Logo und X schweben über dem Glas-Panel */
-.nav.menu-open{background:transparent;backdrop-filter:none;box-shadow:none;border-color:transparent;color:var(--text)}
+.nav.menu-open{background:transparent;backdrop-filter:none;box-shadow:none;border-color:transparent;color:var(--text);transition:none}  /* sofort, sonst bleibt der Streifen unten noch 0,45 s stehen (Suat 02.10.) */
 .nav.scrolled::before,.nav.menu-open::before{opacity:0}
 .nav.scrolled .nav__a,.nav.scrolled .nav__lang,.nav.scrolled .nav__claim,.nav.menu-open .nav__a,.nav.menu-open .nav__lang,.nav.menu-open .nav__claim{color:var(--text)}
 .nav.scrolled .nav__a:hover,.nav.scrolled .nav__a[aria-current="page"],.nav.scrolled .nav__a[data-zweig]{color:var(--blau-d);border-color:var(--blau)}
@@ -115,7 +115,7 @@ blockquote{margin:1.5em 0;padding:.4em 0 .4em 1.2em;border-left:3px solid var(--
 .mmenu .nav__sub a{padding:10px 34px}
 .mmenu__lang{display:flex;align-items:center;gap:10px;margin:18px 22px;font-weight:600;color:var(--blau)}
 @media(min-width:1024px){.nav__menu{display:block}.burger,.mmenu{display:none}.nav__r{margin-left:0}}
-@media(max-width:440px){.nav__claim{display:none}.logo{width:128px;height:26px}.nav__in{gap:12px}}
+@media(max-width:440px){.logo{width:128px;height:26px}.nav__in{gap:10px}.nav__claim{font-size:.6rem}}  /* Untertitel bleibt auch auf dem Handy (Suat 02.10.) */
 .nav__in,.nav__logo{min-width:0}
 
 /* ---------- Hero Startseite ---------- */
@@ -137,7 +137,7 @@ blockquote{margin:1.5em 0;padding:.4em 0 .4em 1.2em;border-left:3px solid var(--
 @media(prefers-reduced-motion:reduce){.hero__weiter span{animation:none}}
 /* Handy: das 16:9-Video nicht beschneiden, Titel darunter auf Weiß; der Kopfbalken ist transparent, das Video beginnt oben */
 /* Handy wie im Bestand (Suat 02.10. abends): Video hochkant beschnitten (84vw hoch, Mitte), Schriftzug bleibt sichtbar, Siegel rechts unten im Video unter dem Claim; Titel darunter auf Weiß */
-@media(max-width:700px){.hero{height:auto;display:block;background:#fff}.hero__p,.hero__v{position:relative;inset:auto;height:84vw;object-fit:cover;object-position:50% 45%}.hero__v{position:absolute;top:0;left:0;width:100%;height:84vw}.hero::after{inset:auto 0 auto 0;top:0;height:84vw;background:linear-gradient(180deg,rgba(255,255,255,0) 55%,rgba(255,255,255,.85) 88%,#fff 100%)}.hero__in{padding:18px var(--pad) 8px}.hero__h{font-size:clamp(1.8rem,8vw,2.4rem)}}
+@media(max-width:700px){.hero{height:auto;display:block;background:#fff}.hero__p,.hero__v{position:relative;inset:auto;height:84vw;object-fit:cover;object-position:50% 45%}.hero__v{position:absolute;top:0;left:0;width:100%;height:84vw}.hero::after{inset:auto 0 auto 0;top:0;height:84vw;background:linear-gradient(180deg,rgba(255,255,255,0) 55%,rgba(255,255,255,.85) 88%,#fff 100%)}.hero__in{padding:22px var(--pad) 10px;text-align:center}.hero__h{font-size:clamp(2.1rem,9.5vw,3rem);color:var(--blau);max-width:none;margin:0 auto;font-weight:300}}  /* Handy-Titel mittig, blau, größer (Suat 02.10.) */
 .bild--quadrat{max-width:400px}
 .hero__in{position:relative;z-index:3;text-align:center;padding:60px var(--pad)}
 .hero__logo{width:min(560px,80vw);height:auto;margin:0 auto}
