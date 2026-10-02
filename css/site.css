@@ -137,6 +137,8 @@ blockquote{margin:1.5em 0;padding:.4em 0 .4em 1.2em;border-left:3px solid var(--
 .hero__claim{font-size:clamp(1.15rem,2.4vw,1.8rem);font-weight:300;color:var(--text);margin:8px 0 0}
 .hero__badge{position:absolute;right:clamp(16px,5vw,80px);bottom:clamp(16px,5vw,60px);z-index:3;width:clamp(90px,14vw,180px)}
 .hero__badge img{width:100%;height:auto;filter:drop-shadow(0 10px 20px rgba(0,0,0,.18))}
+/* Handy: Siegel kleiner und in die rechte untere Ecke des 16:9-Videos, damit es den Schriftzug im Video nicht überdeckt (Suat 02.10.2026). Steht nach der Grundregel, sonst gewinnt deren bottom. */
+@media(max-width:700px){.hero__badge{top:calc(56.25vw + 6px);bottom:auto;right:var(--pad);width:58px}.hero__in{min-height:118px;padding-right:90px}}  /* Siegel unter dem Video rechts neben dem Titel: im Video selbst steht der Schriftzug mittig-rechts, da ist kein Platz */
 
 /* ---------- Hero Unterseiten ---------- */
 .subhero{position:relative;margin-top:0;padding-top:var(--nav);background:var(--grau);overflow:hidden}
@@ -352,8 +354,8 @@ main{display:block}
 .fuss__hinweis{font-size:.8rem;color:var(--muted);margin:22px 0 0}
 
 /* Demo-Leiste */
-/* Demo-Leiste in Orange, damit sie auffällt (Suat 02.10.2026); dunkle Schrift auf #ff7a1a: Kontrast 7,6:1 */
-.demobar{position:fixed;left:0;right:0;bottom:0;z-index:110;background:#ff7a1a;color:#1b1f23;font-size:.82rem;font-weight:500;display:flex;align-items:center;gap:14px;padding:9px 14px;line-height:1.35;box-shadow:0 -6px 24px rgba(0,0,0,.18)}
+/* Demo-Leiste in Suats CI-Orange #CF6C3F, halbtransparent (Suat 02.10.2026: „nicht so knallig, mein Orange, halb transparent“); dunkle Schrift, Kontrast auf Weiß darunter 5,2:1 */
+.demobar{position:fixed;left:0;right:0;bottom:0;z-index:110;background:rgba(207,108,63,.82);backdrop-filter:blur(10px) saturate(1.2);-webkit-backdrop-filter:blur(10px) saturate(1.2);color:#1b1f23;font-size:.82rem;font-weight:500;display:flex;align-items:center;gap:14px;padding:9px 14px;line-height:1.35;box-shadow:0 -6px 24px rgba(0,0,0,.18)}
 .demobar a{color:#1b1f23;font-weight:700;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:2px;white-space:nowrap}
 .demobar__t{flex:1 1 auto;min-width:0}
 .demobar__l{min-width:0}

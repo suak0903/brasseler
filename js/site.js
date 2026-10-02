@@ -87,16 +87,9 @@
       Array.prototype.forEach.call(videos, function (v) { vio.observe(v); });
     } else { Array.prototype.forEach.call(videos, starten); }
   };
-  // Auf Touch-Geräten erst bei der ersten Berührung oder dem ersten Scrollen: das Einfügen der Quellen löst Stil- und
-  // Layoutarbeit von mehreren hundert Millisekunden aus (Faber F5, styleLayout 1,3 s), die sonst in die Ladezeit fällt.
+  // Start direkt nach dem Laden, auch auf dem Handy (Suat 02.10.2026: „das Video sollte schon direkt anfangen“). Der Start
+  // kostet Stil- und Layoutarbeit (Faber F5), das nehmen wir für den sofortigen Start in Kauf; die Messung sagt es dazu.
   if (videos.length && !reduce) {
-    var gestartet = false;
-    var los = function () { if (gestartet) return; gestartet = true; videosAn(); };
-    var touch = window.matchMedia('(pointer: coarse)').matches;
-    var spaeter = function () {
-      if (!touch) { window.setTimeout(los, 400); return; }
-      ['touchstart', 'scroll', 'pointerdown', 'keydown'].forEach(function (ev) { window.addEventListener(ev, los, { once: true, passive: true }); });
-    };
-    if (document.readyState === 'complete') spaeter(); else window.addEventListener('load', spaeter, { once: true });
+    if (document.readyState === 'complete') videosAn(); else window.addEventListener('load', videosAn, { once: true });
   }
 })();
