@@ -65,12 +65,12 @@ blockquote{margin:1.5em 0;padding:.4em 0 .4em 1.2em;border-left:3px solid var(--
 .nav__ul{list-style:none;margin:0;padding:0;display:flex;gap:4px}
 .nav__li{position:relative}
 .nav__a{display:block;padding:10px 12px;color:var(--text);text-decoration:none;font-weight:400;font-size:.98rem;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
-.nav__a:hover,.nav__a[aria-current="page"],.nav__a[data-zweig]{color:var(--blau);border-color:var(--blau)}
+.nav__a:hover,.nav__a[aria-current="page"],.nav__a[data-zweig]{color:var(--blau-d);border-color:var(--blau)}  /* Text dunkelblau: #007fff auf Weiß nur 3,83:1 (Lighthouse live 02.10.) */
 .nav__plus{display:none}
 .nav__sub{list-style:none;margin:0;padding:8px 0;position:absolute;left:0;top:100%;min-width:260px;background:#fff;border:1px solid var(--linie);box-shadow:0 10px 30px rgba(33,37,41,.12);opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .2s,transform .2s,visibility 0s .2s}
 .nav__li--sub:hover .nav__sub,.nav__li--sub:focus-within .nav__sub{opacity:1;visibility:visible;transform:none;transition-delay:0s}
 .nav__sub a{display:block;padding:9px 18px;color:var(--text);text-decoration:none;font-size:.95rem}
-.nav__sub a:hover,.nav__sub a[aria-current="page"]{color:var(--blau);background:var(--grau)}
+.nav__sub a:hover,.nav__sub a[aria-current="page"]{color:var(--blau-d);background:var(--grau)}
 .nav__r{margin-left:auto;display:flex;align-items:center;gap:14px}
 .nav__lang{font-size:.85rem;font-weight:600;letter-spacing:.06em;color:var(--text);text-decoration:none;border:1px solid var(--linie);border-radius:999px;padding:5px 11px}
 .nav__lang:hover{color:var(--blau);border-color:var(--blau)}
