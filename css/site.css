@@ -132,7 +132,8 @@ blockquote{margin:1.5em 0;padding:.4em 0 .4em 1.2em;border-left:3px solid var(--
 .hero__weiter span{position:absolute;left:50%;top:8px;width:4px;height:8px;margin-left:-2px;border-radius:2px;background:var(--blau);animation:wink 1.8s var(--ease) infinite}
 @keyframes wink{0%{transform:translateY(0);opacity:1}70%{transform:translateY(16px);opacity:0}100%{opacity:0}}
 /* Desktop: keine Überschrift im Video, das Video trägt den Schriftzug selbst; kein Scroll-Hinweis (Suat 02.10. abends: „überdeckt sich mit dem Video“, „dieser komische Kreis“). Die H1 bleibt im DOM für Suchmaschinen. */
-@media(min-width:701px){.hero__in{position:absolute;left:0;top:0;width:1px;height:1px;margin:0;padding:0;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}.hero__h{font-size:1px;max-width:none}}
+/* Desktop wie Handy: Video oben, Claim mittig in Blau darunter (Suat 02.10.: „kann auch mittig im Desktop sein“) */
+@media(min-width:701px){.hero{height:auto;display:block;background:#fff}.hero__p,.hero__v{position:relative;inset:auto;height:clamp(420px,56vw,720px);object-fit:cover}.hero__v{position:absolute;top:0;left:0;width:100%;height:clamp(420px,56vw,720px)}.hero::after{inset:auto 0 auto 0;top:0;height:clamp(420px,56vw,720px);background:linear-gradient(180deg,rgba(255,255,255,0) 60%,rgba(255,255,255,.85) 90%,#fff 100%)}.hero__in{padding:28px var(--pad) 8px;text-align:center}.hero__h{font-size:clamp(2.4rem,4.6vw,4rem);color:var(--blau);max-width:none;margin:0 auto}.hero__badge{bottom:auto;top:calc(clamp(420px,56vw,720px) - 24px - clamp(110px,13vw,170px) * 1.75);right:clamp(16px,5vw,80px);width:clamp(110px,13vw,170px)}}
 .hero__weiter{display:none!important}
 @media(prefers-reduced-motion:reduce){.hero__weiter span{animation:none}}
 /* Handy: das 16:9-Video nicht beschneiden, Titel darunter auf Weiß; der Kopfbalken ist transparent, das Video beginnt oben */
@@ -175,7 +176,15 @@ main{display:block;overflow-x:clip}  /* Einflug-Elemente (rv--l/rv--r) ragen vor
 .prosa>h3{margin-top:1.3em}
 .prosa .bild{margin:1.8em 0}
 .prosa .bild img{width:100%}
-.kicker{color:var(--blau-d);font-weight:600;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;margin:0 0 .6em;display:block}  /* statt blauem Strich: kleine Versal-Zeile (Suat 02.10.) */
+/* Der blaue Strich des Bestands, feiner: kurz, mit Verlauf, wächst beim Einblenden von links (Suat 02.10.: „muss wiederkommen, aber fancier“) */
+.kicker{color:var(--blau-d);font-weight:600;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;margin:0 0 .6em;display:block}
+.kicker::before,.subhero h1::before,.t-h2::before,.sektion .prosa>h2::before{content:"";display:block;width:56px;height:3px;border-radius:2px;background:linear-gradient(90deg,var(--blau-d),var(--blau) 60%,rgba(0,127,255,.25));margin:0 0 14px;transform-origin:left;transform:scaleX(.25);opacity:.5;transition:transform .9s var(--ease) .15s,opacity .9s var(--ease) .15s}
+.in .kicker::before,.in.kicker::before,.subhero h1::before,.in .t-h2::before,.in.t-h2::before,.in .prosa>h2::before,.no-js .kicker::before,.no-js .t-h2::before{transform:none;opacity:1}
+.subhero h1::before{animation:strich .9s var(--ease) .2s both}
+@keyframes strich{from{transform:scaleX(.25);opacity:.5}to{transform:none;opacity:1}}
+.exec__i .t-h2::before,.teaser__t .kicker::before,.zahlenband .kicker::before{display:none}
+.kicker--hell::before{background:linear-gradient(90deg,#fff,rgba(255,255,255,.3))}
+h1.hero__h::before{display:none}
 .lead{font-size:clamp(1.35rem,2.3vw,1.9rem);font-weight:300;line-height:1.25;color:var(--ink);margin:0 0 1em;max-width:30ch}
 .sek{margin:2em 0 1em}
 .btn{display:inline-block;background:var(--blau-d);color:#fff;text-decoration:none;font-weight:500;font-size:.95rem;padding:10px 24px;border-radius:999px;transition:background .2s,transform .2s}
@@ -282,7 +291,14 @@ main{display:block;overflow-x:clip}  /* Einflug-Elemente (rv--l/rv--r) ragen vor
 .banner__t .btn{background:#fff;color:var(--blau-d);align-self:flex-start}
 .banner__t .btn:hover{background:var(--blau-h);color:var(--blau-d)}
 @media(max-width:700px){.banner{grid-template-columns:1fr}}
+/* Blaues Band mit Knopf, wie das CTA-Band des Bestands */
+.band{background:linear-gradient(135deg,#0062c4,#007fff 70%,#2b94ff);color:#fff;border-radius:18px;padding:clamp(22px,3vw,36px) clamp(22px,4vw,48px);display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:16px 32px;text-align:center;margin:2em 0}
+.band p{margin:0;font-size:1.1rem;font-weight:500;max-width:60ch}
+.band strong{color:#fff}
+.btn--hell{background:#fff;color:var(--blau-d)}
+.btn--hell:hover{background:var(--blau-h);color:var(--blau-d)}
 .karten2{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:8px}
+.prosa .karten2{margin:2.4em 0 1em}.karten2--3{grid-template-columns:1fr}.karten2--3 .karten2__i:nth-child(even){direction:rtl}.karten2--3 .karten2__i:nth-child(even) .karten2__t{direction:ltr}
 .karten2__i{display:grid;grid-template-columns:1fr 1fr;background:var(--grau);min-height:280px}
 .karten2__i--dunkel{background:var(--dunkel);color:#fff}
 .karten2__i--dunkel h2{color:#fff}

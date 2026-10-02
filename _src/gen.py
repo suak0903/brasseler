@@ -99,7 +99,7 @@ def seite_generisch(d):
     lang = d["lang"]; r = root(d["pfad"]); bl = list(d["bloecke"]); titel = seitentitel(d); k = krumen(d, lang)
     hat_badge = any(b["t"] == "img" and b["src"] == TROPHAEE for b in bl); bl = [b for b in bl if not (b["t"] == "img" and b["src"] == TROPHAEE)]
     video = next((b["src"][0] for b in bl[:3] if b["t"] == "video" and b["bg"]), None)
-    if video: bl = [b for b in bl if not (b["t"] == "video" and b["bg"] and b["src"][0] == video)]
+    if video: bl = [b for b in bl if not (b["t"] == "video" and b["bg"])]  # weitere Hintergrundvideos sind Abschnittshintergründe des Bestands, kein Klickvideo (Suat 02.10.: blauer Block auf /unternehmen/)
     # erste Überschrift wird H1 des Heros
     for i, b in enumerate(bl):
         if b["t"] in ("h1", "h2") and b["x"].replace("\n", " ") == titel: del bl[i]; break
@@ -279,7 +279,8 @@ def sitemap_seite(lang):
     # News: eine Spalte je Jahr, neueste zuerst
     posts = sorted([d for d in daten if d["typ"] == "post" and not d["duplikat_von"] and in_sprache(d)], key=lambda d: d["published"], reverse=True)
     jahre = {}
-    for d in posts: jahre.setdefault((d["published"] or "")[:4] or "–", []).append(eintrag(d, 1))
+    # News mit Datum statt Titel (Suat 02.10.: „damit es ordentlich aussieht“), der Titel steht im title-Attribut
+    for d in posts: jahre.setdefault((d["published"] or "")[:4] or "–", []).append(eintrag(d, 1, datum_fmt(d["published"], lang) if d["published"] else seitentitel(d)).replace('<a href=', f'<a title="{e(seitentitel(d))}" href=', 1))
     bloecke.append(abschnitt(f'{s["news"]} ({len(posts)})', [spalte(j, z) for j, z in jahre.items()]))
     # Chronik: drei Spalten, chronologisch
     chronik = sorted([d for d in daten if d["typ"] == "timeline-eintrag" and not d["duplikat_von"] and in_sprache(d)], key=lambda d: d["pos"])

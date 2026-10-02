@@ -3,7 +3,12 @@
 Bestandsseite in Sektionen), JSON-LD, Seitenrahmen. Alles statisch, kein Laufzeit-Include.
 Autor: Marketing Operations (Vega), 02.10.2026, Demonstrator Brasseler. VERSION bei CSS- oder JS-Änderung erhöhen."""
 import os, re, json, html
-VERSION = "23"
+VERSION = "25"
+# Bilder der Kartenreihen: im Bestand Hintergründe der Divi-CTA-Module (liegen in et-cache-CSS, nicht im HTML); hier die
+# bekannten Zuordnungen nach Stichwort im Kartentitel. Fehlt ein Stichwort, bleibt die Karte ohne Bild.
+KARTEN_BILDER = {"management": "https://www.brasseler.de/uploads/Brasseler-Hero-2024_GBL-Luftbild_sun-web.jpg",
+                 "werte": "https://www.brasseler.de/uploads/IMAG_20190930_56_2Pers-Monitor-Besp_902.jpg",
+                 "verantwortung": "https://www.brasseler.de/uploads/brasseler-home-nachhaltigkeit-2.jpg"}
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.abspath(os.path.join(HERE, ".."))
 BASE = "https://www.brasseler.de"
 DEMO = "https://suak0903.github.io/brasseler/"
@@ -128,8 +133,22 @@ def bloecke_html(bl, r, pfade, lang, lightbox=True):
         # Kicker plus Leitzeile: kurzes p mit Punkt, dann kurzes p
         if ist_kurz(b) and i + 1 < n and bl[i + 1]["t"] == "p" and len(bl[i + 1]["x"].split()) <= 14 and "[" not in bl[i + 1]["x"]:
             out.append(f'<div class="sek"><p class="kicker">{e(b["x"])}</p><p class="lead">{inline_html(bl[i + 1]["x"])}</p></div>'); i += 2; continue
+        # Kartenreihe wie im Bestand (Divi-CTA mit Hintergrundbild): zwei oder mehr Paare aus kurzem Satz und Knopf (Suat 02.10.: auf /unternehmen/ fehlten die drei Karten)
         if ist_kurz(b, 4) and i + 1 < n and bl[i + 1]["t"] == "button":
+            paare = []; j = i
+            while j + 1 < n and ist_kurz(bl[j], 4) and bl[j + 1]["t"] == "button": paare.append((bl[j], bl[j + 1])); j += 2
+            if len(paare) >= 2:
+                i = j; karten = []
+                for k, (t, kn) in enumerate(paare):
+                    bild = next((u for w, u in KARTEN_BILDER.items() if w in t["x"].lower()), "")
+                    ext = kn["href"].startswith("http") and not kn["href"].startswith(BASE)
+                    karten.append(f'<div class="karten2__i{" karten2__i--dunkel" if k % 2 == 0 else ""} rv {"rv--l" if k % 2 == 0 else "rv--r"}"><div class="karten2__t"><h2>{inline_html(t["x"])}</h2><a class="btn" href="{e(link_lokal(kn["href"], r, pfade))}"{" target=_blank rel=noopener" if ext else ""}>{e(kn["x"])}</a></div>{picture(bild, "", r, sizes="(max-width: 1000px) 50vw, 300px") if bild and media_basis.get(bild) else ""}</div>')
+                out.append(f'<div class="karten2 karten2--{min(3, len(karten))}">' + "".join(karten) + "</div>"); continue
             out.append(f'<div class="sek"><p class="lead">{inline_html(b["x"])}</p></div>'); i += 1; continue
+        # Blaues Band wie im Bestand: fetter Hinweissatz mit Knopf
+        if b["t"] == "p" and b["x"].startswith("**") and len(b["x"].split()) <= 24 and i + 1 < n and bl[i + 1]["t"] == "button":
+            kn = bl[i + 1]; ext = kn["href"].startswith("http") and not kn["href"].startswith(BASE)
+            out.append(f'<div class="band rv"><p>{inline_html(b["x"])}</p><a class="btn btn--hell" href="{e(link_lokal(kn["href"], r, pfade))}"{" target=_blank rel=noopener" if ext else ""}>{e(kn["x"])}</a></div>'); i += 2; continue
         # Jahresmarke der Chronik: h3 dann p mit Jahreszahl
         if b["t"] == "h3" and i + 1 < n and bl[i + 1]["t"] == "p" and re.fullmatch(r"(19|20)\d\d(\s*[-–/]\s*(19|20)?\d\d)?", bl[i + 1]["x"].strip()):
             out.append(f'<div class="jahr"><span class="jahr__z">{e(bl[i + 1]["x"].strip())}</span><h3 class="jahr__h">{e(b["x"])}</h3></div>'); i += 2; continue
