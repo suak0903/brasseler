@@ -127,7 +127,9 @@ blockquote{margin:1.5em 0;padding:.4em 0 .4em 1.2em;border-left:3px solid var(--
 .hero__weiter{position:absolute;right:var(--pad);bottom:28px;width:28px;height:44px;border:2px solid var(--blau);border-radius:16px;display:none}
 .hero__weiter span{position:absolute;left:50%;top:8px;width:4px;height:8px;margin-left:-2px;border-radius:2px;background:var(--blau);animation:wink 1.8s var(--ease) infinite}
 @keyframes wink{0%{transform:translateY(0);opacity:1}70%{transform:translateY(16px);opacity:0}100%{opacity:0}}
-@media(min-width:1024px){.hero__weiter{display:block;right:auto;left:var(--pad)}}
+/* Desktop: keine Überschrift im Video, das Video trägt den Schriftzug selbst; kein Scroll-Hinweis (Suat 02.10. abends: „überdeckt sich mit dem Video“, „dieser komische Kreis“). Die H1 bleibt im DOM für Suchmaschinen. */
+@media(min-width:701px){.hero__in{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);padding:0}}
+.hero__weiter{display:none!important}
 @media(prefers-reduced-motion:reduce){.hero__weiter span{animation:none}}
 /* Handy: das 16:9-Video nicht beschneiden, Titel darunter auf Weiß; der Kopfbalken ist transparent, das Video beginnt oben */
 /* Handy wie im Bestand (Suat 02.10. abends): Video hochkant beschnitten (84vw hoch, Mitte), Schriftzug bleibt sichtbar, Siegel rechts unten im Video unter dem Claim; Titel darunter auf Weiß */
