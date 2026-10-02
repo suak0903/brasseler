@@ -302,20 +302,25 @@ main{display:block}
 .weiter a{text-decoration:none}
 
 /* Sitemap-Seite */
-.sm{list-style:none;margin:0;padding:0}
-.sm__g{margin:2em 0 0}
-.sm__g>h2{font-size:1.3rem;font-weight:500;color:var(--ink);border-top:2px solid var(--blau);padding-top:14px}
-.sm__r{display:grid;grid-template-columns:18px 1fr 1fr 90px;gap:10px 14px;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--linie);font-size:.95rem}
-.sm__r--kopf{font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);border-bottom:2px solid var(--linie)}
-.sm__r a{text-decoration:none}
-.sm__o{font-size:.85rem;color:var(--muted)}
-.sm__o a{color:var(--muted)}
-.sm__o a:hover{color:var(--blau)}
-.sm__ebene-1{padding-left:18px}
-.amp{display:inline-block;width:12px;height:12px;border-radius:50%;vertical-align:middle}
-.amp--gruen{background:#2eaa5a}.amp--gelb{background:#f0b429}.amp--rot{background:#d9534f}
-.legende{display:flex;gap:18px;flex-wrap:wrap;font-size:.9rem;color:var(--muted);margin:1em 0 0}
-.legende span{display:inline-flex;align-items:center;gap:6px}
+/* Sitemap nach dem Muster KaTech (Suat 02.10.2026): Abschnitt mit Linie, Spalten mit Versal-Überschrift, fette Elternseiten, eingerückte Kinder, Pfeil zum Original, DE/EN-Marken */
+.sm__kopf{margin:clamp(28px,4vw,48px) 0 clamp(16px,2vw,26px);padding-bottom:12px;border-bottom:2px solid var(--blau)}
+.sm__kopf h2{margin:0;font-size:clamp(1.4rem,2.4vw,1.9rem);color:var(--ink)}
+.sm__raster{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:clamp(20px,2.5vw,34px);align-items:start}
+.sm__sp{min-width:0}
+.sm__sp h3{font-size:.8rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--blau-d);margin:0 0 10px;padding-bottom:8px;border-bottom:1px solid var(--linie)}
+.sm__l{list-style:none;margin:0;padding:0}
+.sm__l li{padding:3px 0;font-size:.95rem;line-height:1.45;margin:0}
+.sm__l a{color:var(--ink);text-decoration:none}
+.sm__l a:hover{color:var(--blau-d);text-decoration:underline;text-underline-offset:3px}
+.sm__k{font-weight:600;margin-top:12px!important;padding-top:8px!important;border-top:1px solid var(--linie)}
+.sm__k:first-child{margin-top:0!important;padding-top:0!important;border-top:0}
+.sm__i--1{padding-left:16px!important;font-size:.92rem!important}
+.sm__i--1::before{content:"";display:inline-block;width:7px;height:1px;background:var(--linie);vertical-align:middle;margin-right:8px}
+.sm__l a.sm__orig{display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;margin-left:6px;vertical-align:middle;color:#b8bec4;transition:color .2s}
+.sm__l a.sm__orig:hover{color:var(--blau);text-decoration:none}
+.ampel{display:inline-flex;gap:3px;margin-left:8px;vertical-align:middle}
+.amp{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:15px;padding:0 4px;border-radius:3px;font-size:.62rem;font-weight:700;font-style:normal;letter-spacing:.04em;color:#fff;line-height:1}
+.amp--gruen{background:#2e8b57}.amp--gelb{background:#c98a12}.amp--rot{background:#c0392b}
 @media(max-width:700px){.sm__r{grid-template-columns:18px 1fr;row-gap:2px}.sm__r>:nth-child(3),.sm__r>:nth-child(4){grid-column:2}.sm__r--kopf{display:none}}
 
 /* Hinweisseite */

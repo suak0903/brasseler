@@ -51,10 +51,11 @@ IMPRESSUM = {
 NICHT_GEFUNDEN = {"de": ("Seite nicht gefunden", "Diese Adresse gibt es im Entwurf nicht. Die Übersicht aller Seiten steht in der Sitemap."), "en": ("Page not found", "This address does not exist in the draft. All pages are listed in the sitemap.")}
 
 SITEMAP = {
-    "de": {"titel": "Sitemap des Entwurfs", "intro": "Jede Seite des Bestands, geordnet wie im Menü, mit Verweis auf den Entwurf und auf das Original. Die Ampel zeigt den Stand je Seite.",
-           "kopf": ("", "Entwurf", "Original", "Stand"), "legende": [("gruen", "Inhalt übernommen, Übersetzung vorhanden"), ("gelb", "Übersetzung fehlt oder deutlich kürzer als die deutsche Fassung"), ("rot", "Im Bestand leer, Duplikat oder nur weitergeleitet")],
-           "seiten": "Seiten", "news": "News", "chronik": "Chronik (Meilensteine)", "de": "Deutsch", "en": "Englisch", "fehlt": "fehlt im Bestand", "dup": "Duplikat im Bestand", "woerter": "Wörter"},
-    "en": {"titel": "Sitemap of the draft", "intro": "Every page of the original, ordered as in the menu, with links to the draft and to the original. The traffic light shows the status per page.",
-           "kopf": ("", "Draft", "Original", "Status"), "legende": [("gruen", "Content adopted, translation available"), ("gelb", "Translation missing or much shorter than the German version"), ("rot", "Empty on the original site, duplicate or redirect only")],
-           "seiten": "Pages", "news": "News", "chronik": "Timeline (milestones)", "de": "German", "en": "English", "fehlt": "missing on the original", "dup": "duplicate on the original", "woerter": "words"},
+    # Muster KaTech (Suat 02.10.2026): Struktur in Spalten, Pfeil zum Original, Sprachstand als DE/EN-Marke in Ampelfarben, kein Text bei Leerem
+    "de": {"titel": "Sitemap", "intro": "Alle Seiten des Entwurfs in der Struktur des Bestands. Der Pfeil öffnet dieselbe Seite im Original. Die Marken DE und EN zeigen den Stand je Sprache: Grün ist vorhanden, Gelb deutlich kürzer als die andere Sprache, Rot gibt es im Bestand nicht.",
+           "seiten": "Seiten", "news": "News", "chronik": "Chronik", "recht": "Rechtliches", "orig": "im Original öffnen",
+           "stand": {"gruen": "vorhanden", "gelb": "deutlich kürzer als die andere Sprache", "rot": "im Bestand nicht vorhanden"}},
+    "en": {"titel": "Sitemap", "intro": "All pages of the draft in the structure of the original site. The arrow opens the same page on the original. The DE and EN marks show the status per language: green exists, yellow is much shorter than the other language, red does not exist on the original site.",
+           "seiten": "Pages", "news": "News", "chronik": "Timeline", "recht": "Legal", "orig": "open on the original site",
+           "stand": {"gruen": "available", "gelb": "much shorter than the other language", "rot": "not available on the original site"}},
 }

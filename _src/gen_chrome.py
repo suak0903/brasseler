@@ -85,7 +85,8 @@ def kopfleiste(r, lang, aktiv_pfad, partner_pfad, hell=False):
     </div>
   </div>
 </header>
-<nav class="mmenu" id="mmenu" hidden aria-label="{t["menu"]}"><ul class="mmenu__ul">{"".join(items)}</ul><a class="mmenu__lang" href="{sprache}">{FLAGGE[t["lang_other"]]}<span>{t["lang_label"]}</span></a></nav>'''
+<nav class="mmenu" id="mmenu" hidden aria-label="{t["menu"]}"><ul class="mmenu__ul">{"".join(items)}</ul></nav>'''
+# Kein Sprachlink unten im Menü: der Umschalter mit Flagge bleibt oben im Kopf sichtbar (Suat 02.10.2026)
 # Das mobile Menü steht bewusst außerhalb des <header>: der Kopfbalken hat backdrop-filter, und der macht ihn zum
 # Bezugsrahmen für position:fixed, das Menü wäre dann 76 px hoch (Befund Suat 02.10.2026, Handy-Screenshot).
 

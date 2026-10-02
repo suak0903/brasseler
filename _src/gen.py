@@ -226,38 +226,66 @@ def ampel(a, b):
     return "gruen"
 
 def sitemap_seite(lang):
-    s = I.SITEMAP[lang]; r = root("/sitemap/" if lang == "de" else "/en/sitemap/"); u = I.UI[lang]
-    def zeile(a, b, ebene=0):
-        amp = ampel(a, b); de = a; en = b
-        def links(x, l):
-            if not x: return f'<span class="sm__o">{s["fehlt"]}</span>'
-            if x["duplikat_von"]: return f'<span class="sm__o">{s["dup"]} → {e(x["duplikat_von"])}</span>'
-            return f'<a href="{r}{x["pfad"].strip("/")}{"/" if x["pfad"].strip("/") else ""}">{e(seitentitel(x))}</a> <span class="sm__o">({x["woerter"]} {s["woerter"]})</span>'
-        def orig(x): return f'<a href="{e(x["url"])}" target="_blank" rel="noopener">{e(x["pfad"])}</a>' if x else "–"
-        return f'<li class="sm__r sm__ebene-{ebene}"><span class="amp amp--{amp}" title="{amp}"></span><span>{s["de"]}: {links(de, "de")}<br>{s["en"]}: {links(en, "en")}</span><span class="sm__o">{orig(de)}<br>{orig(en)}</span><span class="sm__o">{amp}</span></li>'
-    gruppen = []
-    # Seiten in Menüreihenfolge (deutsch), englische Partner daneben; danach englische ohne deutsches Pendant
-    seiten = []; gesehen = set()
-    for n in chrome["de"]["nav"]:
-        d = by.get(n["pfad"]);
+    """Sitemap nach dem Muster KaTech (Suat 02.10.2026): Struktur des Bestands in Spalten, je Eintrag Link auf den Entwurf,
+    Pfeil zum Original und zwei Marken DE/EN in Ampelfarben. Kein Text bei Leerem, keine Wortzahlen."""
+    s = I.SITEMAP[lang]; pfad = "/sitemap/" if lang == "de" else "/en/sitemap/"; r = root(pfad); u = I.UI[lang]; andere = "en" if lang == "de" else "de"
+    PFEIL = '<svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M4.2 2h5.8v5.8M10 2 2.4 9.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+    def stand(a, b):  # Farbe für Fassung a, verglichen mit Fassung b
+        if not a: return "rot"
+        if b and a["woerter"] < 0.6 * b["woerter"] and b["woerter"] - a["woerter"] > 40: return "gelb"
+        return "gruen"
+    def paar(d): return (d, by.get(d["partner"])) if d["lang"] == "de" else (by.get(d["partner"]), d)
+    def marken(d):
+        de, en = paar(d); out = []
+        for code, x, y in (("de", de, en), ("en", en, de)):
+            f = stand(x, y); out.append(f'<i class="amp amp--{f}" title="{code.upper()}: {s["stand"][f]}">{code.upper()}</i>')
+        return '<span class="ampel">' + "".join(out) + "</span>"
+    def href(p): return r + p.strip("/") + ("/" if p.strip("/") else "")
+    kurz = {n["pfad"]: n["text"] for n in chrome[lang]["nav"]} | {l["pfad"]: l["text"] for l in chrome[lang]["fuss"]}  # Menünamen statt langer H1 (Muster KaTech)
+    def eintrag(d, tiefe=0, titel=None):
+        name = titel or kurz.get(d["pfad"]) or seitentitel(d)
+        orig = f'<a class="sm__orig" href="{e(d["url"])}" target="_blank" rel="noopener" aria-label="{e(name)}: {s["orig"]}">{PFEIL}</a>'
+        kl = "sm__k" if tiefe == 0 else f"sm__i sm__i--{tiefe}"
+        return f'<li class="{kl}"><a href="{href(d["pfad"])}">{e(name)}</a>{orig}{marken(d)}</li>'
+    def spalte(titel, eintraege): return f'<div class="sm__sp">{f"<h3>{e(titel)}</h3>" if titel else ""}<ul class="sm__l">{"".join(eintraege)}</ul></div>'
+    def abschnitt(titel, spalten): return f'<div class="sm__kopf"><h2>{e(titel)}</h2></div><div class="sm__raster">{"".join(spalten)}</div>'
+    def in_sprache(d): return d["lang"] == lang or (d["lang"] == andere and not d["partner"])  # eigene Fassung, sonst die einzige
+    gesehen = set()
+    def merke(d):
+        gesehen.add(d["pfad"]); gesehen.add(d["partner"])
+    # Seiten: eine Spalte je Hauptpunkt des Menüs, Kinder aus dem Menü und aus dem Pfad
+    nav = chrome[lang]["nav"]; spalten = []
+    seiten = [d for d in daten if d["typ"] == "page" and not d["duplikat_von"] and in_sprache(d) and d["pfad"] not in START.values()]
+    hauptpunkte = [n for n in nav if n["tiefe"] == 0 and n["pfad"] not in START.values()]
+    for i, n in enumerate(hauptpunkte):
+        d = by.get(n["pfad"])
         if not d: continue
-        p = by.get(d["partner"]); seiten.append(zeile(d, p, n["tiefe"])); gesehen.update({d["pfad"], d["partner"]})
-    for d in daten:
-        if d["typ"] == "page" and d["pfad"] not in gesehen and not d["duplikat_von"] and d["pfad"] not in START.values():
-            a, b = (d, by.get(d["partner"])) if d["lang"] == "de" else (by.get(d["partner"]), d); seiten.append(zeile(a, b)); gesehen.update({d["pfad"], d["partner"]})
-    for d in daten:
-        if d["duplikat_von"]: seiten.append(zeile(None, d))
-    gruppen.append((s["seiten"], seiten))
-    for typ, name in (("post", s["news"]), ("timeline-eintrag", s["chronik"])):
-        zeilen = []; gesehen = set()
-        for d in sorted([x for x in daten if x["typ"] == typ], key=lambda x: (x["published"] or x["modified"]), reverse=True):
-            if d["pfad"] in gesehen or d["duplikat_von"]: continue  # Duplikate stehen gesammelt im Block oben
-            a, b = (d, by.get(d["partner"])) if d["lang"] == "de" else (by.get(d["partner"]), d); zeilen.append(zeile(a, b)); gesehen.update({d["pfad"], d["partner"]})
-        gruppen.append((name, zeilen))
-    kopf = f'<li class="sm__r sm__r--kopf"><span></span><span>{s["kopf"][1]}</span><span>{s["kopf"][2]}</span><span>{s["kopf"][3]}</span></li>'
-    innen = f'<section class="subhero subhero--text"><div class="subhero__in"><nav class="crumbs"><a href="{r}{START[lang].strip("/")}{"/" if START[lang].strip("/") else ""}">{u["start"]}</a><span aria-hidden="true">›</span><strong>{s["titel"]}</strong></nav><h1>{s["titel"]}</h1></div></section><section class="sektion"><div class="wrap"><p>{s["intro"]}</p><p class="legende">' + "".join(f'<span><span class="amp amp--{a}"></span>{t}</span>' for a, t in s["legende"]) + "</p>" + "".join(f'<div class="sm__g"><h2>{n} ({len(z)})</h2><ul class="sm">{kopf}{"".join(z)}</ul></div>' for n, z in gruppen) + "</div></section>"
-    pfad = "/sitemap/" if lang == "de" else "/en/sitemap/"
-    return rahmen(pfad, lang, s["titel"] + " | Brasseler", s["intro"], "/en/sitemap/" if lang == "de" else "/sitemap/", json_ld([ORG]), innen, r if lang == "de" else root(pfad))
+        eintraege = []
+        if i == 0: eintraege.append(eintrag(by[START[lang]], 0, u["start"])); merke(by[START[lang]])
+        eintraege.append(eintrag(d, 0)); merke(d)
+        kinder = sorted([k for k in seiten if k["pfad"] != d["pfad"] and (k["pfad"].startswith(d["pfad"]) or (k["partner"] and k["partner"].startswith(d["pfad"]))) and k["pfad"] not in gesehen], key=lambda k: k["pos"])
+        for k in kinder: eintraege.append(eintrag(k, 1)); merke(k)
+        spalten.append(spalte(n["text"], eintraege))
+    recht = [by[l["pfad"]] for l in chrome[lang]["fuss"] if l["pfad"] in by]
+    rest = [d for d in seiten if d["pfad"] not in gesehen and d not in recht]
+    if recht or rest:
+        eintraege = []
+        for d in recht + rest: eintraege.append(eintrag(d, 1)); merke(d)
+        # Seiten des Entwurfs selbst, ohne Original und ohne Marken
+        T = I.UI[lang]; eintraege.append(f'<li class="sm__i sm__i--1"><a href="{r}{"impressum/" if lang == "de" else "en/legal-notice/"}">{"Impressum" if lang == "de" else "Legal notice"}</a></li><li class="sm__i sm__i--1"><a href="{r}ueber-diesen-entwurf/">{"Über diesen Entwurf" if lang == "de" else "About this draft"}</a></li>')
+        spalten.append(spalte(s["recht"], eintraege))
+    bloecke = [abschnitt(s["seiten"], spalten)]
+    # News: eine Spalte je Jahr, neueste zuerst
+    posts = sorted([d for d in daten if d["typ"] == "post" and not d["duplikat_von"] and in_sprache(d)], key=lambda d: d["published"], reverse=True)
+    jahre = {}
+    for d in posts: jahre.setdefault((d["published"] or "")[:4] or "–", []).append(eintrag(d, 1))
+    bloecke.append(abschnitt(f'{s["news"]} ({len(posts)})', [spalte(j, z) for j, z in jahre.items()]))
+    # Chronik: drei Spalten, chronologisch
+    chronik = sorted([d for d in daten if d["typ"] == "timeline-eintrag" and not d["duplikat_von"] and in_sprache(d)], key=lambda d: d["pos"])
+    n3 = -(-len(chronik) // 3); teile = [chronik[i:i + n3] for i in range(0, len(chronik), n3)]
+    bloecke.append(abschnitt(f'{s["chronik"]} ({len(chronik)})', [spalte(None, [eintrag(d, 1) for d in t]) for t in teile]))
+    innen = f'<section class="subhero subhero--text"><div class="subhero__in"><nav class="crumbs"><a href="{href(START[lang])}">{u["start"]}</a><span aria-hidden="true">›</span><strong>{s["titel"]}</strong></nav><h1>{s["titel"]}</h1></div></section><section class="sektion"><div class="wrap"><p class="lead" style="max-width:none;font-size:1.05rem;font-weight:400">{s["intro"]}</p>{"".join(bloecke)}</div></section>'
+    return rahmen(pfad, lang, s["titel"] + " | Brasseler", s["intro"][:160], "/en/sitemap/" if lang == "de" else "/sitemap/", json_ld([ORG]), innen, r)
 
 def hinweisseite():
     r = root("/ueber-diesen-entwurf/"); lang = "de"; m = MESSUNG
