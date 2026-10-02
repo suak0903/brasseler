@@ -377,6 +377,7 @@ main{display:block}
 @media(max-width:600px){.ueber{grid-template-columns:1fr}.ueber__shot{max-width:240px}}
 .demobar.hide{display:none}
 body:not(.demobar-zu){padding-bottom:58px}
+@media(max-width:700px){body:not(.demobar-zu){padding-bottom:96px}}  /* Leiste läuft dort zweizeilig, sonst deckt sie den Fuß ab (Faber F5) */
 @media(max-width:700px){.demobar{flex-wrap:wrap;font-size:.75rem}.demobar__t{flex-basis:100%}.demobar__l{flex:1}}
 
 /* Lightbox */

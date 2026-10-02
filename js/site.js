@@ -86,8 +86,16 @@
       Array.prototype.forEach.call(videos, function (v) { vio.observe(v); });
     } else { Array.prototype.forEach.call(videos, starten); }
   };
+  // Auf Touch-Geräten erst bei der ersten Berührung oder dem ersten Scrollen: das Einfügen der Quellen löst Stil- und
+  // Layoutarbeit von mehreren hundert Millisekunden aus (Faber F5, styleLayout 1,3 s), die sonst in die Ladezeit fällt.
   if (videos.length && !reduce) {
-    var spaeter = function () { window.setTimeout(videosAn, 400); };
+    var gestartet = false;
+    var los = function () { if (gestartet) return; gestartet = true; videosAn(); };
+    var touch = window.matchMedia('(pointer: coarse)').matches;
+    var spaeter = function () {
+      if (!touch) { window.setTimeout(los, 400); return; }
+      ['touchstart', 'scroll', 'pointerdown', 'keydown'].forEach(function (ev) { window.addEventListener(ev, los, { once: true, passive: true }); });
+    };
     if (document.readyState === 'complete') spaeter(); else window.addEventListener('load', spaeter, { once: true });
   }
 })();
