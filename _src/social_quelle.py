@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Social-Icons des Bestands (inline SVG im Fuß von brasseler.de) aus raw/index.html ziehen und als social.json ablegen,
 damit der Fuß des Entwurfs dieselben Zeichen zeigt. Aufruf: python social_quelle.py
-Autor: Marketing Operations (Vega), 03.10.2026"""
+Autor: Marketing Operations (Vega), 02.10.2026"""
 import io, json, os, re
 HERE = os.path.dirname(os.path.abspath(__file__))
 h = io.open(os.path.join(HERE, "raw", "index.html"), encoding="utf-8").read()

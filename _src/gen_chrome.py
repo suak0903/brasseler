@@ -16,12 +16,12 @@ T = {
            "anders": "What is different?", "sitemap": "Sitemap", "original": "Original site", "zu": "Close",
            "social": "Brasseler on social networks", "entwurf": "About this draft", "impressum": "Legal notice", "fuss_hinweis": "Draft, content and images from brasseler.de, not indexed."},
 }
-# Social-Zeichen: dieselben SVG-Pfade wie im Fuß des Bestands (social_quelle.py), Kachelfarben wie dort (Suat 03.10.2026)
+# Social-Zeichen: dieselben SVG-Pfade wie im Fuß des Bestands (social_quelle.py), Kachelfarben wie dort (Suat 02.10.2026)
 SOCIAL = json.load(open(os.path.join(HERE, "social.json"), encoding="utf-8"))
 SOCIAL_FARBE = {s["name"]: s["farbe"] for s in SOCIAL}  # Farben aus den Original-SVGs
 KURVE = '<svg class="fuss__kurve" viewBox="0 0 1159 252" preserveAspectRatio="none" aria-hidden="true"><path d="M1 194.249c437.461 116.783 823.258 52.367 1157.391-193.249" stroke="#007fff" stroke-width="2" fill="none" vector-effect="non-scaling-stroke"/></svg>'
 LOGO = '<svg class="logo" viewBox="0 0 220 44" aria-hidden="true"><text x="0" y="33" font-family="Fira Sans, Arial, sans-serif" font-weight="300" font-size="40" fill="currentColor">Brasseler<tspan fill="#007fff">.</tspan></text></svg>'
-# Flaggen für den Sprachwechsel (Suat 03.10.2026): schlicht gezeichnet, 3:2
+# Flaggen für den Sprachwechsel (Suat 02.10.2026): schlicht gezeichnet, 3:2
 FLAGGE = {"de": '<svg class="flag" viewBox="0 0 3 2" aria-hidden="true"><rect width="3" height="2" fill="#000"/><rect y=".667" width="3" height="1.333" fill="#d00"/><rect y="1.333" width="3" height=".667" fill="#ffce00"/></svg>',
           "en": '<svg class="flag" viewBox="0 0 60 40" aria-hidden="true"><rect width="60" height="40" fill="#012169"/><path d="M0 0l60 40M60 0L0 40" stroke="#fff" stroke-width="8"/><path d="M0 0l60 40M60 0L0 40" stroke="#c8102e" stroke-width="3"/><path d="M30 0v40M0 20h60" stroke="#fff" stroke-width="12"/><path d="M30 0v40M0 20h60" stroke="#c8102e" stroke-width="7"/></svg>'}
 
@@ -87,7 +87,7 @@ def kopfleiste(r, lang, aktiv_pfad, partner_pfad, hell=False):
 </header>
 <nav class="mmenu" id="mmenu" hidden aria-label="{t["menu"]}"><ul class="mmenu__ul">{"".join(items)}</ul><a class="mmenu__lang" href="{sprache}">{FLAGGE[t["lang_other"]]}<span>{t["lang_label"]}</span></a></nav>'''
 # Das mobile Menü steht bewusst außerhalb des <header>: der Kopfbalken hat backdrop-filter, und der macht ihn zum
-# Bezugsrahmen für position:fixed, das Menü wäre dann 76 px hoch (Befund Suat 03.10.2026, Handy-Screenshot).
+# Bezugsrahmen für position:fixed, das Menü wäre dann 76 px hoch (Befund Suat 02.10.2026, Handy-Screenshot).
 
 def fuss(r, lang):
     t = T[lang]; links = chrome[lang]["fuss"]

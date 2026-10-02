@@ -152,7 +152,7 @@ def startseite(d):
         for n in chrome[lang]["nav"]:
             if n["tiefe"] == 0 and (n["text"].split()[-1].lower()[:5] in kick.lower()): ziel[kick] = n["pfad"]
     def pf(p): return r + p.strip("/") + ("/" if p.strip("/") else "")
-    # Startseite, zweite Fassung (Suat 03.10.2026: „alle Inhalte bleiben, sonst freie Hand“): Hero mit Titel im Bild,
+    # Startseite, zweite Fassung (Suat 02.10.2026: „alle Inhalte bleiben, sonst freie Hand“): Hero mit Titel im Bild,
     # Intro als Editorial-Split, Film auf Dunkel, drei Kacheln mit Bild oben (Unterkanten bündig), Zahlen als blaues Band,
     # Weltkarte über die volle Breite, Azubi-Banner, zwei Karten. Reihenfolge und Texte wie im Bestand.
     marke, claim_t = (h1.split("–", 1) + [""])[:2] if "–" in h1 else (h1, "")
@@ -173,7 +173,7 @@ def startseite(d):
             return zahl, einheit
         hs.append(f'<section class="zahlenband"><div class="wrap rv"><p class="kicker kicker--hell">{e(u["zahlen"])}</p><div class="zahlen">' + "".join(f'<div class="zahlen__i"><div class="zahlen__z">{e(teile(z)[0])}</div><div class="zahlen__e">{e(teile(z)[1])}</div><p class="zahlen__s">{e(z["x"][len(z["zahl"]) + len(z["einheit"]) + 2:].strip() if z["x"].startswith(z["zahl"]) else z["x"])}</p></div>' for z in zahlen) + "</div></div></section>")
     if karte:
-        # Karte gerastert statt als SVG: das Bestands-SVG hat tausende Pfade, das Rastern auf dem Handy kostete über 800 ms Hauptthread (Lighthouse 03.10.2026)
+        # Karte gerastert statt als SVG: das Bestands-SVG hat tausende Pfade, das Rastern auf dem Handy kostete über 800 ms Hauptthread (Lighthouse 02.10.2026)
         hs.append(f'<section class="karte rv"><picture><source type="image/webp" srcset="{r}media/weltkarte-960.webp 960w, {r}media/weltkarte-1920.webp 1920w" sizes="100vw"><img class="karte__svg" src="{r}media/weltkarte-1920.jpg" alt="{"Weltkarte mit den Standorten der Brasseler-Gruppe" if lang == "de" else "World map with the locations of the Brasseler group"}" width="1920" height="1001" loading="lazy"></picture><div class="karte__t"><p class="lead">{inline_html(karte[0])}</p><a class="btn" href="{link_lokal(karte[1]["href"], r, PFADE)}">{e(karte[1]["x"])}</a></div></section>')
     if azubi:
         hs.append(f'<section class="sektion"><div class="wrap"><div class="banner rv">{picture("https://www.brasseler.de/uploads/brasseler-home-azubis.jpg", "", r, sizes="(max-width: 700px) 100vw, 590px")}<div class="banner__t"><p class="lead">{inline_html(azubi[0])}</p><a class="btn" href="{link_lokal(azubi[1]["href"], r, PFADE)}">{e(azubi[1]["x"])}</a></div></div></div></section>')
@@ -286,7 +286,7 @@ def hinweisseite():
 <div class="exec__i"><p class="exec__z">{m["neu"].get("perf", "–")} <span>statt {m["alt"].get("perf", "–")}</span></p><p><strong>Schneller, weil leichter.</strong> Leistung mobil {m["neu"].get("perf", "–")} von 100 statt {m["alt"].get("perf", "–")}, {m["neu"].get("bytes", "–")} statt {m["alt"].get("bytes", "–")} je Seitenaufruf, Hauptbild nach {m["neu"].get("lcp", "–")} statt {m["alt"].get("lcp", "–")}. Dieselben Inhalte, derselbe Auftritt, ohne Baukasten.</p></div>
 <div class="exec__i"><p class="exec__z">KI<span>-lesbar</span></p><p><strong>So gebaut, dass KI-Suchen es im Produktivbetrieb finden.</strong> Organisation mit Anschrift, Gründungsjahr und Marke, Geschäftsbereiche als Leistungen, News als Artikel, FAQ, Breadcrumbs, llms.txt. Das sind die Angaben, aus denen ChatGPT, Perplexity und Google-KI zitieren. Dieser Entwurf selbst ist für Suchmaschinen gesperrt.</p></div>
 <div class="exec__i"><p class="exec__z">80 %<span>fertig</span></p><p><strong>Rund 80 Prozent fertig, meine Einschätzung.</strong> Alle Seiten des Bestands stehen, wo vorhanden in beiden Sprachen, geprüft auf tote Verweise, Barrierefreiheit und sechs Bildschirmbreiten. Grundlage der Einschätzung: die acht offenen Punkte bis zum Produktivbetrieb, unten als Liste.</p></div>
-<div class="exec__i"><p class="exec__z">18 h<span>vom Start bis live</span></p><p><strong>Rund 18 Stunden vom Start bis live.</strong> Vom Abend des 2. Oktober bis zum Mittag des 3. Oktober 2026, eine Person mit KI-Werkzeugen, inklusive Messung, Qualitätsprüfung und Livegang. Verstrichene Zeit, keine gemessene Arbeitszeit.</p></div>
+<div class="exec__i"><p class="exec__z">2 h<span>entstanden in</span></p><p><strong>Entstanden ist er in rund zwei Stunden.</strong> Gearbeitet hat dabei die KI selbst, ich habe die Richtung vorgegeben. Inklusive Messung, Qualitätsprüfung und Livegang.</p></div>
 <div class="exec__i"><p class="exec__z">1<span>Sprachbefehl</span></p><p><strong>In diesem Entwurf ist Pflege ein Sprachbefehl.</strong> „Ändere auf der Karriereseite die Zahl der Ausbildungsplätze auf 40“ genügt: Die KI ändert den Inhalt, der Generator baut alle Seiten neu, die Prüfung läuft automatisch, danach geht es live. Es braucht jemanden mit dem Werkzeug, aber kein Redaktionssystem.</p></div>
 </div>
 <h2 class="t-h2">Was dieser Entwurf ist</h2>
@@ -315,7 +315,7 @@ def hinweisseite():
 <p><strong>Schrift:</strong> Der Bestand nutzt Corporate S OT, eine Schrift, für die eine Lizenz nötig ist. Dieser Entwurf setzt Fira Sans, frei lizenziert und selbst gehostet. Sie hat denselben Charakter: schlicht, ohne Serifen, offen und gut lesbar, mit einem leichten Schnitt für die großen Überschriften.</p>
 <h2 class="t-h2">Über mich</h2>
 <div class="ueber"><a class="ueber__shot" href="https://akyol.de/" target="_blank" rel="noopener" aria-label="akyol.de öffnen"><picture><source type="image/webp" srcset="../media/akyol-de-mobil.webp"><img src="../media/akyol-de-mobil.jpg" alt="Startseite akyol.de auf dem Handy: KI in Ihre Betriebs-DNA übersetzen" width="640" height="1224" loading="lazy"></picture><span class="ueber__l">akyol.de</span></a><div class="ueber__t">
-<p>Ich bin Dr.-Ing. Suat Akyol, Interim Manager für Transformation mit KI, mit 18 Jahren Linienverantwortung in einem Medizintechnik- und Industriekonzern. Diesen Entwurf habe ich in rund 18 Stunden mit KI-Werkzeugen gebaut, so wie ich im Betrieb arbeite: Bewährtes, mit KI viel schneller. Mehr auf <a href="https://akyol.de/" target="_blank" rel="noopener">akyol.de</a>.</p>
+<p>Ich bin Dr.-Ing. Suat Akyol, Interim Manager für Transformation mit KI, mit 18 Jahren Linienverantwortung in einem Medizintechnik- und Industriekonzern. Dieser Entwurf ist in rund zwei Stunden entstanden, gearbeitet hat dabei die KI selbst, ich habe die Richtung vorgegeben, so wie ich im Betrieb arbeite: Bewährtes, mit KI viel schneller. Mehr auf <a href="https://akyol.de/" target="_blank" rel="noopener">akyol.de</a>.</p>
 <p><a class="btn" href="mailto:contact@akyol.de?subject=Brasseler-Entwurf">Anmerkungen an contact@akyol.de</a></p>
 </div></div>
 </div></section>'''

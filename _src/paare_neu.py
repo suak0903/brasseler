@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Sprachpaare in data.json neu zuordnen, ohne den Crawl oder die Extraktion zu wiederholen (nach Änderung an paare.py).
-Aufruf: python paare_neu.py        Autor: Marketing Operations (Vega), 03.10.2026"""
+Aufruf: python paare_neu.py        Autor: Marketing Operations (Vega), 02.10.2026"""
 import io, json, os
 import paare
 HERE = os.path.dirname(os.path.abspath(__file__))

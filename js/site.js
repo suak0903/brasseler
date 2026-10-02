@@ -80,7 +80,7 @@
     v.addEventListener('playing', function () { v.classList.add('an'); }, { once: true });
   };
   // Erst nach dem Laden der Seite und einer kurzen Pause: load() des Hero-Videos lag sonst im selben Task wie der Skriptstart
-  // und machte daraus 500 bis 750 ms Blockierzeit (Lighthouse live 03.10.2026). Das Poster steht so lange.
+  // und machte daraus 500 bis 750 ms Blockierzeit (Lighthouse live 02.10.2026). Das Poster steht so lange.
   var videosAn = function () {
     if ('IntersectionObserver' in window) {
       var vio = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { starten(e.target); vio.unobserve(e.target); } }); }, { rootMargin: '200px 0px' });

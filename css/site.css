@@ -55,7 +55,7 @@ blockquote{margin:1.5em 0;padding:.4em 0 .4em 1.2em;border-left:3px solid var(--
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 
 /* ---------- Kopfleiste ---------- */
-/* Oben transparent über dem Hero, beim Scrollen weiß (Suat 03.10.2026, gilt auf allen Seiten). .nav--hell: weiße Schrift über Bild oder Video. */
+/* Oben transparent über dem Hero, beim Scrollen weiß (Suat 02.10.2026, gilt auf allen Seiten). .nav--hell: weiße Schrift über Bild oder Video. */
 .nav{position:fixed;inset:0 0 auto 0;height:var(--nav);background:rgba(255,255,255,0);border-bottom:1px solid transparent;z-index:100;color:var(--text);transition:background .45s var(--ease),box-shadow .45s var(--ease),border-color .45s,color .3s}
 .nav::before{content:"";position:absolute;inset:0 0 -40px 0;background:linear-gradient(180deg,rgba(20,24,28,.45),rgba(20,24,28,0));opacity:0;pointer-events:none;transition:opacity .45s var(--ease)}
 .nav--hell::before{opacity:1}
@@ -64,7 +64,7 @@ blockquote{margin:1.5em 0;padding:.4em 0 .4em 1.2em;border-left:3px solid var(--
 .nav--hell .nav__a:hover,.nav--hell .nav__a[aria-current="page"],.nav--hell .nav__a[data-zweig]{color:#fff;border-color:#fff}
 .nav--hell .burger span{background:#fff}
 .nav.scrolled{background:rgba(255,255,255,.96);backdrop-filter:saturate(1.2) blur(6px);box-shadow:0 2px 18px rgba(33,37,41,.08);border-color:var(--linie);color:var(--text)}
-/* Menü offen: der Balken geht weg, egal wo man ist (Design-Kit, Suat 03.10.2026); Logo und X schweben über dem Glas-Panel */
+/* Menü offen: der Balken geht weg, egal wo man ist (Design-Kit, Suat 02.10.2026); Logo und X schweben über dem Glas-Panel */
 .nav.menu-open{background:transparent;backdrop-filter:none;box-shadow:none;border-color:transparent;color:var(--text)}
 .nav.scrolled::before,.nav.menu-open::before{opacity:0}
 .nav.scrolled .nav__a,.nav.scrolled .nav__lang,.nav.scrolled .nav__claim,.nav.menu-open .nav__a,.nav.menu-open .nav__lang,.nav.menu-open .nav__claim{color:var(--text)}
@@ -336,7 +336,7 @@ main{display:block}
 .ds__c{height:56px;border:1px solid var(--linie);margin-bottom:6px}
 
 /* Fußzeile */
-/* Fuß wie im Bestand: Social-Kacheln in Markenfarben, blaue Schwungkurve, Komet-Siegel rechts (Suat 03.10.2026) */
+/* Fuß wie im Bestand: Social-Kacheln in Markenfarben, blaue Schwungkurve, Komet-Siegel rechts (Suat 02.10.2026) */
 .fuss{margin-top:var(--sec);position:relative}
 .fuss__oben{position:relative;max-width:var(--wrap);margin:0 auto;padding:12px var(--pad) 0;min-height:clamp(200px,24vw,300px)}
 .fuss__kurve{position:absolute;left:var(--pad);right:var(--pad);top:40px;width:calc(100% - 2*var(--pad));height:calc(100% - 40px);pointer-events:none}
@@ -352,13 +352,13 @@ main{display:block}
 .fuss__hinweis{font-size:.8rem;color:var(--muted);margin:22px 0 0}
 
 /* Demo-Leiste */
-/* Demo-Leiste in Orange, damit sie auffällt (Suat 03.10.2026); dunkle Schrift auf #ff7a1a: Kontrast 7,6:1 */
+/* Demo-Leiste in Orange, damit sie auffällt (Suat 02.10.2026); dunkle Schrift auf #ff7a1a: Kontrast 7,6:1 */
 .demobar{position:fixed;left:0;right:0;bottom:0;z-index:110;background:#ff7a1a;color:#1b1f23;font-size:.82rem;font-weight:500;display:flex;align-items:center;gap:14px;padding:9px 14px;line-height:1.35;box-shadow:0 -6px 24px rgba(0,0,0,.18)}
 .demobar a{color:#1b1f23;font-weight:700;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:2px;white-space:nowrap}
 .demobar__t{flex:1 1 auto;min-width:0}
 .demobar__l{min-width:0}
 .demobar__x{border:0;background:none;color:#1b1f23;font-size:1.3rem;cursor:pointer;padding:0 6px;line-height:1}
-/* Hinweisseite, Executive Summary (Suat 03.10.2026): fünf Kacheln, die Zahl dick und fett, der Satz darunter */
+/* Hinweisseite, Executive Summary (Suat 02.10.2026): fünf Kacheln, die Zahl dick und fett, der Satz darunter */
 .exec{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:8px 0 2em}
 .exec__i{background:var(--grau);border-radius:18px;padding:22px 24px 18px;border-top:3px solid var(--blau)}
 .exec__i:first-child{grid-column:1/-1;background:linear-gradient(135deg,#0062c4,#007fff 70%,#2b94ff);color:#fff;border-top:0}
@@ -370,7 +370,7 @@ main{display:block}
 .exec__i p:last-child{margin:0;font-size:.98rem}
 @media(max-width:700px){.exec{grid-template-columns:1fr}}
 .todo{padding-left:1.3em}.todo li{margin:.5em 0}
-/* Hinweisseite, Über mich: Screenshot von akyol.de, klickbar (Suat 03.10.2026) */
+/* Hinweisseite, Über mich: Screenshot von akyol.de, klickbar (Suat 02.10.2026) */
 .ueber{display:grid;grid-template-columns:200px 1fr;gap:28px;align-items:start;margin:8px 0 1.5em}
 .ueber__shot{display:block;position:relative;border-radius:18px;overflow:hidden;box-shadow:0 24px 48px -24px rgba(33,37,41,.45);transition:transform .6s var(--ease)}
 .ueber__shot:hover{transform:translateY(-4px)}

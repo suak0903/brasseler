@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Die blaue Schwungkurve aus dem Fuß von brasseler.de (inline SVG 1159x252) aus raw/index.html ziehen und als
-media/fuss-kurve.svg ablegen. Aufruf: python kurve_quelle.py    Autor: Marketing Operations (Vega), 03.10.2026"""
+media/fuss-kurve.svg ablegen. Aufruf: python kurve_quelle.py    Autor: Marketing Operations (Vega), 02.10.2026"""
 import io, os, re
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE)
 h = io.open(os.path.join(HERE, "raw", "index.html"), encoding="utf-8").read()
