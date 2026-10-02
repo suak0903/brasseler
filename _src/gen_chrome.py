@@ -88,7 +88,8 @@ def kopfleiste(r, lang, aktiv_pfad, partner_pfad, hell=False):
     </div>
   </div>
 </header>
-<nav class="mmenu" id="mmenu" hidden aria-label="{t["menu"]}"><ul class="mmenu__ul">{"".join(items)}</ul></nav>'''
+<nav class="mmenu" id="mmenu" hidden aria-label="{t["menu"]}"><ul class="mmenu__ul">{"".join(items)}</ul><ul class="mmenu__social" aria-label="{t["social"]}">{"".join(f'<li><a class="fuss__s" style="--f:{SOCIAL_FARBE.get(s["name"], "#3b4248")}" href="{s["href"]}" target="_blank" rel="noopener" aria-label="{e(s["name"])}">{s["svg"]}</a></li>' for s in SOCIAL)}</ul></nav>'''
+# Social-Kacheln unten im mobilen Menü (Suat 03.10.2026, Skizze)
 # Kein Sprachlink unten im Menü: der Umschalter mit Flagge bleibt oben im Kopf sichtbar (Suat 02.10.2026)
 # Das mobile Menü steht bewusst außerhalb des <header>: der Kopfbalken hat backdrop-filter, und der macht ihn zum
 # Bezugsrahmen für position:fixed, das Menü wäre dann 76 px hoch (Befund Suat 02.10.2026, Handy-Screenshot).

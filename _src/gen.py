@@ -126,7 +126,7 @@ def seite_generisch(d):
     lang_hinweis = f'<p class="hinweis">{I.UI[lang]["nur_de"]}</p>' if lang == "de" and not d["partner"] and d["typ"] == "page" else ""
     faq = ""
     if d["pfad"] in I.FAQ:
-        faq = '<section class="sektion sektion--grau"><div class="wrap schmal"><h2 class="t-h2">' + ("Häufige Fragen" if lang == "de" else "Frequently asked questions") + "</h2>" + "".join(f'<h3 class="t-h3">{e(q)}</h3><p>{e(a)}</p>' for q, a in I.FAQ[d["pfad"]]) + "</div></section>"
+        faq = '<section class="sektion sektion--grau faq"><div class="wrap schmal"><h2 class="t-h2">' + ("Häufige Fragen" if lang == "de" else "Frequently asked questions") + '</h2><div class="faq__l">' + "".join(f'<div class="faq__i rv"><h3 class="t-h3">{e(q)}</h3><p>{e(a)}</p></div>' for q, a in I.FAQ[d["pfad"]]) + "</div></div></section>"  # Fragen als Einheiten (Codex 13)
     weiter = ""
     if d["typ"] == "post": weiter = f'<nav class="weiter"><a href="{r}{NEWS[lang].strip("/")}/">‹ {I.UI[lang]["zurueck"]}</a></nav>'
     elif d["typ"] == "timeline-eintrag": weiter = f'<nav class="weiter"><a href="{r}{CHRONIK[lang].strip("/")}/">‹ {I.UI[lang]["chronik"]}</a></nav>'
@@ -298,7 +298,11 @@ def sitemap_seite(lang):
     # Chronik: drei Spalten, chronologisch
     chronik = sorted([d for d in daten if d["typ"] == "timeline-eintrag" and not d["duplikat_von"] and in_sprache(d)], key=lambda d: d["pos"])
     n3 = -(-len(chronik) // 3); teile = [chronik[i:i + n3] for i in range(0, len(chronik), n3)]
-    bloecke.append(abschnitt(f'{s["chronik"]} ({len(chronik)})', [spalte(None, [eintrag(d, 1) for d in t]) for t in teile]))
+    # Chronik-Einträge auf höchstens drei Wörter gekürzt, voller Titel im title-Attribut (Suat 03.10.: „verkürzt auf 1-3 Wörter“)
+    def kurz3(t):
+        w = re.sub(r"\s+", " ", t.replace("–", " ").replace("-", " ")).strip(" .:").split(" ")
+        return " ".join(w[:3]) + ("…" if len(w) > 3 else "")
+    bloecke.append(abschnitt(f'{s["chronik"]} ({len(chronik)})', [spalte(None, [eintrag(d, 1, kurz3(seitentitel(d))).replace('<a href=', f'<a title="{e(seitentitel(d))}" href=', 1) for d in t]) for t in teile]))
     innen = f'<section class="subhero subhero--text"><div class="subhero__in"><nav class="crumbs"><a href="{href(START[lang])}">{u["start"]}</a><span aria-hidden="true">›</span><strong>{s["titel"]}</strong></nav><h1>{s["titel"]}</h1></div></section><section class="sektion"><div class="wrap"><p class="lead" style="max-width:none;font-size:1.05rem;font-weight:400">{s["intro"]}</p>{"".join(bloecke)}</div></section>'
     return rahmen(pfad, lang, s["titel"] + " | Brasseler", s["intro"][:160], "/en/sitemap/" if lang == "de" else "/sitemap/", json_ld([ORG]), innen, r)
 
