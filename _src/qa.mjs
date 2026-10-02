@@ -17,7 +17,7 @@ for (const [engine, name] of [[chromium, 'chromium'], [webkit, 'webkit']]) {
       try { await p.goto(BASIS + s, { waitUntil: 'networkidle', timeout: 60000 }); } catch (e) { befunde.push(`${name} ${w} ${s}: Laden ${e.message.slice(0, 80)}`); await p.close(); continue; }
       for (let y = 0; y < 6000; y += 800) { await p.evaluate(y => scrollTo(0, y), y); await p.waitForTimeout(60); }
       const r = await p.evaluate(() => ({ quer: document.documentElement.scrollWidth - document.documentElement.clientWidth, h1: document.querySelectorAll('h1').length, noindex: !!document.querySelector('meta[name=robots][content*=noindex]') }));
-      geprueft++;
+      geprueft++; if (geprueft % 16 === 0) console.error('Fortschritt', geprueft, name, w, s);  // Lebenszeichen, damit ein Hänger sichtbar wird
       if (r.quer > 1) befunde.push(`${name} ${w} ${s}: Überlauf ${r.quer} px`);
       if (konsole.length) befunde.push(`${name} ${w} ${s}: Konsole ${konsole.join(' | ')}`);
       if (fehlt.length) befunde.push(`${name} ${w} ${s}: fehlt ${fehlt.slice(0, 4).join(' | ')}`);
@@ -44,7 +44,12 @@ for (const [engine, name] of [[chromium, 'chromium'], [webkit, 'webkit']]) {
   if (await lbKnopf.count()) { await lbKnopf.scrollIntoViewIfNeeded(); await lbKnopf.click(); await p.waitForTimeout(600); const lbOk = await p.evaluate(() => !document.getElementById('lb').hidden && document.querySelector('#lb img').naturalWidth > 0); if (!lbOk) befunde.push(`${name}: Lightbox öffnet nicht oder Bild leer`); await p.keyboard.press('Escape'); }
   const vid = await p.evaluate(async () => { const v = document.querySelector('video[data-src-mp4]'); if (!v) return 'kein Video'; v.scrollIntoView(); await new Promise(r => setTimeout(r, 2500)); return v.querySelector('source') ? (v.paused ? 'geladen, pausiert' : 'läuft') : 'nicht geladen'; });
   if (vid !== 'läuft' && vid !== 'kein Video') befunde.push(`${name}: Hintergrundvideo ${vid}`);
-  await p.click('#demoClose'); const db = await p.evaluate(() => document.getElementById('demobar').classList.contains('hide')); if (!db) befunde.push(`${name}: Demo-Leiste schließt nicht`);
+  // Demo-Leiste nur auf der Startseite (Suat 02.10.): auf anderen Seiten darf sie nicht da sein
+  const hatLeiste = await p.evaluate(() => !!document.getElementById('demobar'));
+  const pn = new URL(p.url()).pathname.replace(/^\/brasseler(?=\/)/, ''); const istStart = pn === '/' || pn === '/en/';
+  if (hatLeiste && !istStart) befunde.push(`${name}: Demo-Leiste auf Unterseite`);
+  if (!hatLeiste && istStart) befunde.push(`${name}: Demo-Leiste fehlt auf der Startseite`);
+  if (hatLeiste) { await p.click('#demoClose'); const db = await p.evaluate(() => document.getElementById('demobar').classList.contains('hide')); if (!db) befunde.push(`${name}: Demo-Leiste schließt nicht`); }
   if (konsole.length) befunde.push(`${name} Bedienung: ${konsole.join(' | ')}`);
   await ctx.close(); await b.close();
 }

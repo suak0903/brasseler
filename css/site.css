@@ -164,7 +164,7 @@ blockquote{margin:1.5em 0;padding:.4em 0 .4em 1.2em;border-left:3px solid var(--
 .datum{font-size:.9rem;color:var(--muted);margin:.4em 0 0}
 
 /* ---------- Inhalt ---------- */
-main{display:block}
+main{display:block;overflow-x:clip}  /* Einflug-Elemente (rv--l/rv--r) ragen vor dem Einblenden seitlich hinaus; clip erzeugt keinen Scrollbereich */
 .sektion{padding:var(--sec) 0}
 .sektion--grau{background:var(--grau)}
 .sektion--lang{content-visibility:auto;contain-intrinsic-size:1px 1200px}
