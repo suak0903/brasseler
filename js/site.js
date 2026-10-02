@@ -78,10 +78,16 @@
     v.load(); var p = v.play(); if (p && p.catch) p.catch(function () { /* Autoplay verweigert, Poster bleibt */ });
     v.addEventListener('playing', function () { v.classList.add('an'); }, { once: true });
   };
-  if (videos.length && !reduce) {
+  // Erst nach dem Laden der Seite und einer kurzen Pause: load() des Hero-Videos lag sonst im selben Task wie der Skriptstart
+  // und machte daraus 500 bis 750 ms Blockierzeit (Lighthouse live 03.10.2026). Das Poster steht so lange.
+  var videosAn = function () {
     if ('IntersectionObserver' in window) {
       var vio = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { starten(e.target); vio.unobserve(e.target); } }); }, { rootMargin: '200px 0px' });
       Array.prototype.forEach.call(videos, function (v) { vio.observe(v); });
     } else { Array.prototype.forEach.call(videos, starten); }
+  };
+  if (videos.length && !reduce) {
+    var spaeter = function () { window.setTimeout(videosAn, 400); };
+    if (document.readyState === 'complete') spaeter(); else window.addEventListener('load', spaeter, { once: true });
   }
 })();
