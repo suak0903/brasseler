@@ -12,8 +12,16 @@ SEITEN = {  # de -> en
     "/international/": "/en/international/", "/karriere/": "/en/careers/", "/karriere/studierende/": "/en/careers/university-students/",
     "/karriere/studierende/abschlussarbeiten/": "/en/careers/university-students/thesis-projects/", "/news/": "/en/news/",
     "/zertifikate/": "/en/certificates/", "/agb/": "/en/gtcs/", "/datenschutz/": "/en/data-protection/", "/verhaltenskodex/": "/en/code-of-conduct/",
+    # Chronik und News, die die Heuristik nicht fand, weil der deutsche Slug im Bestand nicht zum Titel passt (03.10.2026, aus der Sitemap-Ampel):
+    "/timeline-eintrag/100-mio-euro-umsatz-gemeinsam-geschafft/": "/en/timeline-eintrag/cad-cam-alliance-computer-aided-design-and-manufacturing/",
+    "/timeline-eintrag/diamanten-und-der-trophagener-weg/": "/en/timeline-eintrag/brasseler-campus/",
+    "/timeline-eintrag/strategie-und-digitalisierung/": "/en/timeline-eintrag/strategy-and-digitization/",
+    "/timeline-eintrag/wir-koennen-auch-anders/": "/en/timeline-eintrag/komet-medical/",
+    "/unser-weg-zum-weltmarktfuehrer-in-der-dentalindustrie/": "/en/our-path-to-a-world-market-leader-in-the-dental-industry/",
+    "/spendenaktion-fuer-tuerkei-und-syrien/": "/en/100000-euros-in-emergency-aid-for-victims-of-earthquake-disaster/",
 }
-DUPLIKATE = {"/careers/": "/en/careers/", "/certificates/": "/en/certificates/", "/gtcs/": "/en/gtcs/", "/thesis-projects/": "/en/careers/university-students/thesis-projects/"}
+DUPLIKATE = {"/careers/": "/en/careers/", "/certificates/": "/en/certificates/", "/gtcs/": "/en/gtcs/", "/thesis-projects/": "/en/careers/university-students/thesis-projects/",
+             "/100000-euros-in-emergency-aid-for-victims-of-earthquake-disaster/": "/en/100000-euros-in-emergency-aid-for-victims-of-earthquake-disaster/"}  # englische News unter deutschem Pfad (03.10.2026)
 OHNE_PARTNER = {"/karriere/ausbildung/"}  # nur deutsch im Bestand
 
 def slug_tokens(p): return set(t for t in re.split(r"[/\-]+", p.replace("/en/", "/").replace("/timeline-eintrag/", "/")) if len(t) > 3 and not t.isdigit())

@@ -206,7 +206,8 @@ def ampel(a, b):
     """a deutsch, b englisch (eines darf fehlen). Rot nur für wirklich leer, Duplikat oder Weiterleitung;
     kurze Einträge sind grün, wenn beide Sprachen da sind (Hinweis Faber F3)."""
     for x in (a, b):
-        if x and (x["woerter"] < 15 or x["duplikat_von"]): return "rot"
+        leer = x and x["woerter"] < 15 and not any(b["t"] == "button" for b in x["bloecke"])  # Download-Seiten (AGB) sind nicht leer
+        if x and (leer or x["duplikat_von"]): return "rot"
     if not a or not b: return "gelb"
     lo, hi = min(a["woerter"], b["woerter"]), max(a["woerter"], b["woerter"])
     if lo < 0.6 * hi and hi - lo > 40: return "gelb"
@@ -238,7 +239,7 @@ def sitemap_seite(lang):
     for typ, name in (("post", s["news"]), ("timeline-eintrag", s["chronik"])):
         zeilen = []; gesehen = set()
         for d in sorted([x for x in daten if x["typ"] == typ], key=lambda x: (x["published"] or x["modified"]), reverse=True):
-            if d["pfad"] in gesehen: continue
+            if d["pfad"] in gesehen or d["duplikat_von"]: continue  # Duplikate stehen gesammelt im Block oben
             a, b = (d, by.get(d["partner"])) if d["lang"] == "de" else (by.get(d["partner"]), d); zeilen.append(zeile(a, b)); gesehen.update({d["pfad"], d["partner"]})
         gruppen.append((name, zeilen))
     kopf = f'<li class="sm__r sm__r--kopf"><span></span><span>{s["kopf"][1]}</span><span>{s["kopf"][2]}</span><span>{s["kopf"][3]}</span></li>'
@@ -252,10 +253,11 @@ def hinweisseite():
     mess = ""
     if m:
         mess = '<h2 class="t-h2">Gemessen, nicht geschätzt</h2><p>Lighthouse mobil, beide Seiten mit derselben Methode am selben Tag. Links der Wert der Bestandsseite, rechts der Entwurf.</p><div class="mess">' + "".join(kachel(l, m["alt"].get(k, "–"), m["neu"].get(k, "–")) for k, l in [("perf", "Leistung mobil (0 bis 100)"), ("lcp", "Hauptbild sichtbar"), ("tbt", "Blockierzeit"), ("cls", "Layoutsprünge"), ("bytes", "Datenmenge Startseite"), ("req", "Anfragen Startseite")]) + f'</div><p class="hinweis">Stand {m.get("datum", HEUTE)}. Bestand: {m["alt"].get("quelle", "")}. Entwurf: {m["neu"].get("quelle", "")}.</p>'
+    PAARE = sum(1 for d in daten if d["lang"] == "de" and d["partner"] and not d["duplikat_von"])  # gezählt, nicht getippt
     befunde = [
         ("Sitemap zeigt auf den falschen Server", "Die Seiten- und Chronik-Sitemap von brasseler.de nennt als Adresse brasselerhomepageprod.azurewebsites.net, einen Azure-Host, statt www.brasseler.de. Suchmaschinen bekommen so die falschen Adressen gemeldet."),
-        ("Die Seite existiert zweimal", "Der Azure-Host ist öffentlich erreichbar und liefert dieselben Seiten. Dazu liegen vier englische Seiten zusätzlich unter deutschem Pfad (zum Beispiel /careers/ und /en/careers/). Für Suchmaschinen ist das doppelter Inhalt."),
-        ("Kein Sprachwechsel je Seite", "Der Umschalter Deutsch/Englisch führt immer zur Startseite der anderen Sprache, und hreflang-Angaben fehlen. Dieser Entwurf verbindet 94 Seitenpaare direkt miteinander."),
+        ("Die Seite existiert zweimal", "Der Azure-Host ist öffentlich erreichbar und liefert dieselben Seiten. Dazu liegen fünf englische Seiten zusätzlich unter deutschem Pfad, vier Seiten und eine News (zum Beispiel /careers/ und /en/careers/). Für Suchmaschinen ist das doppelter Inhalt."),
+        ("Kein Sprachwechsel je Seite", f"Der Umschalter Deutsch/Englisch führt immer zur Startseite der anderen Sprache, und hreflang-Angaben fehlen. Dieser Entwurf verbindet {PAARE} Seitenpaare direkt miteinander."),
         ("Bilder vom Entwicklungs-Server", "Rund 70 Bilder (326 Verweise samt Größenvarianten auf 61 Seiten, vor allem der Chronik) werden von einem Azure-Entwicklungs-Slot geladen, nicht von brasseler.de."),
         ("PHP ohne Sicherheitsupdates", "Der Server meldet PHP 7.4.30. Diese Version bekommt seit November 2022 keine Sicherheitsupdates mehr."),
         ("Ladeleistung", "Ein Startseiten-Video mit 10 MB im Autoplay, Bilder in Originalgröße, Cookie-Banner und Tag Manager mit rund 400 KB Skripten und der Divi-Baukasten. Mobil Leistung 12 von 100, das Hauptbild erscheint nach über 10 Sekunden."),
