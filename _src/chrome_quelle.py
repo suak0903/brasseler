@@ -19,7 +19,8 @@ for lang, datei in (("de", "index.html"), ("en", "en.html")):
             pass
     # robust: alle Links im Kopf mit Pfad auf die eigene Domain, in Reihenfolge, mit Tiefe aus sub-menu-Verschachtelung
     tiefe = 0; items = []
-    for tok in re.finditer(r'<ul[^>]*class="[^"]*sub-menu[^"]*"[^>]*>|</ul>|<a[^>]+href="(https://www\.brasseler\.de[^"#?]*)"[^>]*>(.*?)</a>', kopf, re.S):
+    # auch karriere.brasseler.de: „Stellenangebote“ steht im Bestandsmenü als externer Link (Suat 02.10.2026, hatte gefehlt)
+    for tok in re.finditer(r'<ul[^>]*class="[^"]*sub-menu[^"]*"[^>]*>|</ul>|<a[^>]+href="(https://(?:www|karriere)\.brasseler\.de[^"#?]*)"[^>]*>(.*?)</a>', kopf, re.S):
         if tok.group(0).startswith("<ul"): tiefe += 1
         elif tok.group(0) == "</ul>": tiefe = max(0, tiefe - 1)
         else:

@@ -59,8 +59,10 @@ def kopfleiste(r, lang, aktiv_pfad, partner_pfad, hell=False):
     """Kopfleiste mit Hauptmenü (Untermenüs als Aufklapper), Sprachwechsel und mobilem Menü. Alles aus chrome.json."""
     t = T[lang]; nav = chrome[lang]["nav"]
     start = "/" if lang == "de" else "/en/"
-    def aktiv(p): return ' aria-current="page"' if p == aktiv_pfad else (' data-zweig="1"' if p != start and aktiv_pfad.startswith(p) else "")
-    def href(p): return r + p.strip("/") + ("/" if p.strip("/") else "")
+    def extern(p): return p.startswith("http")
+    def aktiv(p): return "" if extern(p) else (' aria-current="page"' if p == aktiv_pfad else (' data-zweig="1"' if p != start and aktiv_pfad.startswith(p) else ""))
+    def href(p): return p if extern(p) else r + p.strip("/") + ("/" if p.strip("/") else "")
+    def ziel(p): return ' target="_blank" rel="noopener"' if extern(p) else ""  # Stellenangebote: karriere.brasseler.de, wie im Bestand
     items = []; i = 0
     while i < len(nav):
         n = nav[i]
@@ -68,9 +70,9 @@ def kopfleiste(r, lang, aktiv_pfad, partner_pfad, hell=False):
         kinder = []; j = i + 1
         while j < len(nav) and nav[j]["tiefe"] == 1: kinder.append(nav[j]); j += 1
         if kinder:
-            items.append(f'<li class="nav__li nav__li--sub"><a class="nav__a" href="{href(n["pfad"])}"{aktiv(n["pfad"])}>{e(n["text"])}</a><button class="nav__plus" type="button" aria-expanded="false" aria-label="{e(n["text"])}: {t["menu"]}"><span></span></button><ul class="nav__sub">' + "".join(f'<li><a href="{href(k["pfad"])}"{aktiv(k["pfad"])}>{e(k["text"])}</a></li>' for k in kinder) + "</ul></li>")
+            items.append(f'<li class="nav__li nav__li--sub"><a class="nav__a" href="{href(n["pfad"])}"{aktiv(n["pfad"])}>{e(n["text"])}</a><button class="nav__plus" type="button" aria-expanded="false" aria-label="{e(n["text"])}: {t["menu"]}"><span></span></button><ul class="nav__sub">' + "".join(f'<li><a href="{href(k["pfad"])}"{aktiv(k["pfad"])}{ziel(k["pfad"])}>{e(k["text"])}</a></li>' for k in kinder) + "</ul></li>")
         else:
-            items.append(f'<li class="nav__li"><a class="nav__a" href="{href(n["pfad"])}"{aktiv(n["pfad"])}>{e(n["text"])}</a></li>')
+            items.append(f'<li class="nav__li"><a class="nav__a" href="{href(n["pfad"])}"{aktiv(n["pfad"])}{ziel(n["pfad"])}>{e(n["text"])}</a></li>')
         i = j
     sprache = href(partner_pfad) if partner_pfad else href("/en/" if lang == "de" else "/")
     sprach_titel = "" if partner_pfad else (' title="Diese Seite gibt es im Bestand nur auf Deutsch, der Wechsel führt zur englischen Startseite."' if lang == "de" else ' title="This page exists only in German on the original site; the switch leads to the German start page."')

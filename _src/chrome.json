@@ -67,6 +67,11 @@
     "pfad": "/karriere/studierende/"
    },
    {
+    "tiefe": 1,
+    "text": "Stellenangebote",
+    "pfad": "https://karriere.brasseler.de/"
+   },
+   {
     "tiefe": 0,
     "text": "News",
     "pfad": "/news/"
@@ -157,6 +162,11 @@
     "tiefe": 1,
     "text": "University students",
     "pfad": "/en/careers/university-students/"
+   },
+   {
+    "tiefe": 1,
+    "text": "Job Offers",
+    "pfad": "https://karriere.brasseler.de/"
    },
    {
     "tiefe": 0,

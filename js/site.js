@@ -33,14 +33,32 @@
     window.addEventListener('resize', function () { if (window.innerWidth >= 1024 && mmenu.classList.contains('open')) schliessen(); });
   }
 
-  /* 3 */
+  /* 3 Reveal; Kacheln und Karten innerhalb eines Rasters gestaffelt (Divi-Muster des Bestands: Sektionen gleiten ein) */
   var rvs = document.querySelectorAll('.rv');
+  Array.prototype.forEach.call(document.querySelectorAll('.teaser, .karten2, .zahlen, .news, .sm__raster'), function (r) {
+    Array.prototype.forEach.call(r.children, function (k, i) { if (k.classList.contains('rv')) k.style.transitionDelay = Math.min(i * 90, 540) + 'ms'; });
+  });
   if (rvs.length) {
     if (!('IntersectionObserver' in window) || reduce) { Array.prototype.forEach.call(rvs, function (el) { el.classList.add('in'); }); }
     else {
       var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }); }, { rootMargin: '0px 0px -6% 0px', threshold: 0.05 });
       Array.prototype.forEach.call(rvs, function (el) { io.observe(el); });
     }
+  }
+  /* 3b Zahlen zählen hoch, wie die Divi-Zähler des Bestands; nur Ziffern, Tausenderpunkt bleibt */
+  var zahlen = document.querySelectorAll('.zahlen__z');
+  if (zahlen.length && !reduce && 'IntersectionObserver' in window) {
+    var zio = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return; zio.unobserve(e.target);
+        var el = e.target, text = el.textContent.trim(), ziel = parseInt(text.replace(/\D/g, ''), 10);
+        if (!ziel) return;
+        var start = null, dauer = 1400, fmt = function (n) { var s = String(n); return text.indexOf('.') > -1 ? s.replace(/\B(?=(\d{3})+(?!\d))/g, '.') : s; };
+        var tick = function (ts) { if (!start) start = ts; var p = Math.min(1, (ts - start) / dauer); p = 1 - Math.pow(1 - p, 3); el.textContent = fmt(Math.round(ziel * p)); if (p < 1) window.requestAnimationFrame(tick); else el.textContent = text; };
+        window.requestAnimationFrame(tick);
+      });
+    }, { threshold: 0.4 });
+    Array.prototype.forEach.call(zahlen, function (z) { zio.observe(z); });
   }
 
   /* 4 */
@@ -64,10 +82,9 @@
   }
 
   /* 5 */
+  // Die Leiste kommt bei jedem Laden wieder (Suat 02.10.2026), kein Merken in der Sitzung
   var demobar = document.getElementById('demobar'), demoClose = document.getElementById('demoClose');
-  var zuMerken = false; try { zuMerken = window.sessionStorage.getItem('brasseler-demo-zu') === '1'; } catch (e) { zuMerken = false; }
-  if (demobar && zuMerken) { demobar.classList.add('hide'); document.body.classList.add('demobar-zu'); }
-  if (demoClose) demoClose.addEventListener('click', function () { demobar.classList.add('hide'); document.body.classList.add('demobar-zu'); try { window.sessionStorage.setItem('brasseler-demo-zu', '1'); } catch (e) { /* Privatmodus */ } });
+  if (demoClose) demoClose.addEventListener('click', function () { demobar.classList.add('hide'); document.body.classList.add('demobar-zu'); });
 
   /* 6 */
   var videos = document.querySelectorAll('video[data-src-mp4]');
