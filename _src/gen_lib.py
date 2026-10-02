@@ -3,7 +3,7 @@
 Bestandsseite in Sektionen), JSON-LD, Seitenrahmen. Alles statisch, kein Laufzeit-Include.
 Autor: Marketing Operations (Vega), 02.10.2026, Demonstrator Brasseler. VERSION bei CSS- oder JS-Änderung erhöhen."""
 import os, re, json, html
-VERSION = "34"
+VERSION = "35"
 # Bilder der Kartenreihen: im Bestand Hintergründe der Divi-CTA-Module (liegen in et-cache-CSS, nicht im HTML); hier die
 # bekannten Zuordnungen nach Stichwort im Kartentitel. Fehlt ein Stichwort, bleibt die Karte ohne Bild.
 _BJ = os.path.join(os.path.dirname(os.path.abspath(__file__)), "berufe.json")  # steht vor HERE, darum eigener Pfad
@@ -147,6 +147,9 @@ def bloecke_html(bl, r, pfade, lang, lightbox=True):
         # Kicker plus Leitzeile: kurzes p mit Punkt, dann kurzes p
         if ist_kurz(b) and i + 1 < n and bl[i + 1]["t"] == "p" and len(bl[i + 1]["x"].split()) <= 14 and "[" not in bl[i + 1]["x"]:
             out.append(f'<div class="sek"><p class="kicker">{e(b["x"])}</p><p class="lead">{inline_html(bl[i + 1]["x"])}</p></div>'); i += 2; continue
+        # Komet-Bereiche: drei aufeinanderfolgende Absätze, die mit einem Link auf Komet Dental/Medical/Jewellery beginnen → drei Karten (Suat 13)
+        if b["t"] == "p" and re.match(r"^(Im \[|\[)[^\]]*Komet", b["x"]) and i + 2 < n and all(bl[i + k]["t"] == "p" and "Komet" in bl[i + k]["x"][:40] for k in (1, 2)):
+            out.append('<div class="dreier">' + "".join(f'<div class="dreier__i rv">{p_html(bl[i + k])}</div>' for k in range(3)) + "</div>"); i += 3; continue
         # ---- Muster der Unterseiten-Runde (Suat 02.10. spät: „Das wird heute noch umgesetzt“, Arbeitsliste Faber F6) ----
         # „Think global, act Lemgo“ mit Knopf → Weltkarten-Abschnitt wie auf der Startseite (Faber 2.4)
         if b["t"] == "p" and b["x"].lower().startswith("think global") and i + 1 < n and bl[i + 1]["t"] == "button":
@@ -183,6 +186,7 @@ def bloecke_html(bl, r, pfade, lang, lightbox=True):
                     vorname = re.split(r"[,\s]", h["x"].strip())[0].lower()
                     merk = BERICHT_BILDER.get(vorname, vorname[:5])
                     bild = next((u for u in KONTEXT.get("hg", []) if merk in u.lower() and media_basis.get(u)), "")  # nur das eigene Foto; ohne Treffer lieber keins als das einer anderen Person (Faber v27)
+                    if not bild: bild = next((u for u in KONTEXT.get("hg", []) if media_basis.get(u) and "statement" not in u.lower() and "hero" not in u.lower()), "")  # Gruppenfoto der Seite, keine fremde Person (Suat 10: Carina)
                     teile.append(f'<section class="bericht rv{" bericht--rechts" if k % 2 else ""}">{picture(bild, "", r, klasse="bericht__bg", sizes="100vw") if bild else ""}<div class="bericht__karte"><h3>{inline_html(h["x"])}</h3><p>{inline_html(p["x"])}</p></div></section>')
                 out.append('<div class="berichte">' + "".join(teile) + "</div>"); continue
         # Ländergesellschaften: Karte (Bild mit „map“ im Namen), fetter Name, Text → zweispaltige Karten auf Blau

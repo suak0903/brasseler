@@ -103,7 +103,6 @@ def fuss(r, lang):
     social = "".join(f'<li><a class="fuss__s" style="--f:{SOCIAL_FARBE.get(s["name"], "#3b4248")}" href="{s["href"]}" target="_blank" rel="noopener" aria-label="{e(s["name"])}">{s["svg"]}</a></li>' for s in SOCIAL)
     return f'''<footer class="fuss">
   <div class="fuss__oben">
-    {KURVE}
     <ul class="fuss__social rv" aria-label="{t["social"]}">{social}</ul>
     <a class="fuss__komet" href="{r}{"" if lang == "de" else "en/"}" aria-label="{"Zur Startseite" if lang == "de" else "To the start page"}"><img src="{r}media/logo-kometdental-3.svg" alt="Komet" width="96" height="96"></a>
   </div>

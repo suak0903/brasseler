@@ -29,6 +29,9 @@
   --sec:clamp(48px,7vw,88px);
   --nav:76px;
   --ease:cubic-bezier(.22,1,.36,1);
+  /* Ein Formsystem für alle Seiten (Suat 03.10., letzter Lauf): große Boxen --r, kleine Elemente --r-s, Knöpfe Pille, ein Schatten */
+  --r:18px; --r-s:12px;
+  --schatten:0 1px 0 rgba(33,37,41,.05),0 24px 48px -28px rgba(0,98,196,.25);
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
@@ -84,7 +87,7 @@ blockquote{margin:1.5em 0;padding:.4em 0 .4em 1.2em;border-left:3px solid var(--
 .nav__a{display:block;padding:10px 12px;color:var(--text);text-decoration:none;font-weight:400;font-size:.98rem;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
 .nav__a:hover,.nav__a[aria-current="page"],.nav__a[data-zweig]{color:var(--blau-d);border-color:var(--blau)}  /* Text dunkelblau: #007fff auf Weiß nur 3,83:1 (Lighthouse live 02.10.) */
 .nav__plus{display:none}
-.nav__sub{backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);border-radius:0 0 12px 12px}  /* Untermenü leicht durchscheinend wie der Balken (Suat 02.10. abends); die Farbe setzt die Regel darunter */
+.nav__sub{backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);border-radius:0 0 var(--r-s) var(--r-s)}  /* Untermenü leicht durchscheinend wie der Balken (Suat 02.10. abends); die Farbe setzt die Regel darunter */
 .nav__sub{list-style:none;margin:0;padding:8px 0;position:absolute;left:0;top:100%;min-width:260px;background:rgba(255,255,255,.86);border:1px solid rgba(221,225,229,.7);box-shadow:0 10px 30px rgba(33,37,41,.12);opacity:0;visibility:hidden;transform:translateY(6px);transition:opacity .2s,transform .2s,visibility 0s .2s}
 .nav__li--sub:hover .nav__sub,.nav__li--sub:focus-within .nav__sub{opacity:1;visibility:visible;transform:none;transition-delay:0s}
 .nav__sub a{display:block;padding:9px 18px;color:var(--text);text-decoration:none;font-size:.95rem}
@@ -114,8 +117,8 @@ blockquote{margin:1.5em 0;padding:.4em 0 .4em 1.2em;border-left:3px solid var(--
 .mmenu .nav__li--sub.auf .nav__sub{display:block}
 .mmenu .nav__sub a{padding:10px 34px}
 .mmenu__lang{display:flex;align-items:center;gap:10px;margin:18px 22px;font-weight:600;color:var(--blau)}
-.mmenu__social{list-style:none;margin:0;padding:28px 22px 40px;display:flex;flex-wrap:wrap;gap:14px}  /* Social-Kacheln unten im Menü (Suat 03.10.) */
-.mmenu__social .fuss__s{width:54px;height:54px;border-radius:11px}.mmenu__social .fuss__s svg{width:28px;height:28px}
+.mmenu__social{list-style:none;margin:0;padding:28px 22px 40px;display:flex;flex-wrap:nowrap;gap:clamp(8px,2.5vw,14px)}  /* immer eine Zeile, schrumpft mit der Breite (Suat 03.10.) */
+.mmenu__social li{flex:0 1 54px;min-width:0}.mmenu__social .fuss__s{width:100%;aspect-ratio:1;height:auto;border-radius:var(--r-s)}.mmenu__social .fuss__s svg{width:52%;height:52%}
 @media(min-width:1024px){.nav__menu{display:block}.burger,.mmenu{display:none}.nav__r{margin-left:0}}
 @media(max-width:440px){.logo{width:128px;height:26px}.nav__in{gap:10px}.nav__claim{font-size:.6rem}}  /* Untertitel bleibt auch auf dem Handy (Suat 02.10.) */
 .nav__in,.nav__logo{min-width:0}
@@ -130,7 +133,7 @@ blockquote{margin:1.5em 0;padding:.4em 0 .4em 1.2em;border-left:3px solid var(--
 .hero__in{position:relative;z-index:3;width:100%;max-width:var(--wrap);margin:0 auto;padding:0 var(--pad) clamp(28px,5vw,56px);text-align:left}
 .hero__h{color:var(--ink);font-size:clamp(2rem,5.2vw,4.4rem);font-weight:300;line-height:1.05;letter-spacing:-.015em;margin:0;max-width:16ch}
 .hero__k{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}  /* „Brasseler“ steht im Video selbst, im H1 bleibt es für Suchmaschinen */
-.hero__weiter{position:absolute;right:var(--pad);bottom:28px;width:28px;height:44px;border:2px solid var(--blau);border-radius:16px;display:none}
+.hero__weiter{position:absolute;right:var(--pad);bottom:28px;width:28px;height:44px;border:2px solid var(--blau);border-radius:var(--r);display:none}
 .hero__weiter span{position:absolute;left:50%;top:8px;width:4px;height:8px;margin-left:-2px;border-radius:2px;background:var(--blau);animation:wink 1.8s var(--ease) infinite}
 @keyframes wink{0%{transform:translateY(0);opacity:1}70%{transform:translateY(16px);opacity:0}100%{opacity:0}}
 /* Desktop: keine Überschrift im Video, das Video trägt den Schriftzug selbst; kein Scroll-Hinweis (Suat 02.10. abends: „überdeckt sich mit dem Video“, „dieser komische Kreis“). Die H1 bleibt im DOM für Suchmaschinen. */
@@ -140,7 +143,7 @@ blockquote{margin:1.5em 0;padding:.4em 0 .4em 1.2em;border-left:3px solid var(--
 @media(prefers-reduced-motion:reduce){.hero__weiter span{animation:none}}
 /* Handy: das 16:9-Video nicht beschneiden, Titel darunter auf Weiß; der Kopfbalken ist transparent, das Video beginnt oben */
 /* Handy wie im Bestand (Suat 02.10. abends): Video hochkant beschnitten (84vw hoch, Mitte), Schriftzug bleibt sichtbar, Siegel rechts unten im Video unter dem Claim; Titel darunter auf Weiß */
-@media(max-width:700px){.hero{height:auto;display:block;background:#fff}.hero__p,.hero__v{position:relative;inset:auto;height:84vw;object-fit:cover;object-position:50% 45%}.hero__v{position:absolute;top:0;left:0;width:100%;height:84vw}.hero::after{inset:auto 0 auto 0;top:0;height:84vw;background:linear-gradient(180deg,rgba(255,255,255,0) 55%,rgba(255,255,255,.85) 88%,#fff 100%)}.hero__in{padding:22px var(--pad) 10px;text-align:center}.hero__h{font-size:clamp(1.9rem,8.6vw,2.8rem);color:var(--blau);max-width:none;margin:0 auto;font-weight:300}.hero__h .nz{white-space:nowrap}}  /* Handy-Titel mittig, blau, größer (Suat 02.10.) */
+@media(max-width:700px){.hero{height:auto;display:block;background:#fff}.hero__p,.hero__v{position:relative;inset:auto;height:84vw;object-fit:cover;object-position:50% 45%}.hero__v{position:absolute;top:0;left:0;width:100%;height:84vw}.hero::after{inset:auto 0 auto 0;top:0;height:84vw;background:linear-gradient(180deg,rgba(255,255,255,0) 55%,rgba(255,255,255,.85) 88%,#fff 100%)}.hero__in{padding:22px var(--pad) 10px;text-align:center}.hero__h{font-size:clamp(2.1rem,9.6vw,3.1rem);color:var(--blau);max-width:none;margin:0 auto;font-weight:300}.hero__h .nz{white-space:nowrap}}  /* einen Tick größer (Suat 03.10.) */  /* Handy-Titel mittig, blau, größer (Suat 02.10.) */
 .bild--quadrat{max-width:400px}
 .hero__in{position:relative;z-index:3;text-align:center;padding:60px var(--pad)}
 .hero__logo{width:min(560px,80vw);height:auto;margin:0 auto}
@@ -151,17 +154,18 @@ blockquote{margin:1.5em 0;padding:.4em 0 .4em 1.2em;border-left:3px solid var(--
 @media(max-width:700px){.hero__badge{bottom:auto;top:calc(84vw - 8px - clamp(72px,18vw,90px) * 1.75);right:12px;width:clamp(72px,18vw,90px)}}  /* Siegel hochkant (Höhe ≈ 1,75 × Breite), 8 px über der Videounterkante, rechts vom Claim im Video (der endet bei etwa 78 % der Breite) */
 
 /* ---------- Hero Unterseiten ---------- */
-.subhero{position:relative;margin-top:0;padding-top:var(--nav);background:var(--grau);overflow:hidden}
-.subhero--medium{min-height:min(56vh,560px);display:flex;align-items:flex-end}
+/* Ein Hero-Block für alle Unterseiten (Suat 03.10.): Medienfeld mit fester Höhe, darunter auf Weiß Breadcrumb und Titel mit festem Abstand. Maß: /geschaeftsbereiche/ */
+.subhero{position:relative;margin-top:0;padding-top:var(--nav);background:#fff}
+.subhero__medien{position:relative;height:clamp(240px,34vw,440px);overflow:hidden;background:var(--grau)}
 .subhero__bg,.subhero__v{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .subhero__v{opacity:0;transition:opacity .8s}.subhero__v.an{opacity:1}
-/* oben leichter Schleier für die Kopfleiste (Faber F6: Navigation lag auf dem Globus), unten weniger Aufhellung als vorher */
-.subhero--medium::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.88) 0,rgba(255,255,255,.4) 14%,rgba(255,255,255,0) 30%,rgba(255,255,255,0) 52%,rgba(255,255,255,.9) 82%,#fff)}  /* oben stärker, Navigation auf dem Globus (Faber v27) */
-@media(max-width:700px){.subhero--medium::after{background:linear-gradient(180deg,rgba(255,255,255,.72) 0,rgba(255,255,255,0) 22%,rgba(255,255,255,0) 40%,rgba(255,255,255,.94) 68%,#fff)}}  /* Handy: Titel und Brotkrumen auf Weiß, nicht auf dem Motiv (Codex 18) */
-.subhero__in{position:relative;z-index:2;width:100%;max-width:var(--wrap);margin:0 auto;padding:clamp(28px,5vw,56px) var(--pad) 8px}
-.subhero--text .subhero__in{padding-bottom:clamp(28px,5vw,56px)}
-.subhero__badge{position:absolute;right:var(--pad);top:calc(var(--nav) + 16px);z-index:2;width:clamp(72px,10vw,140px)}
+.subhero__medien::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.6) 0,rgba(255,255,255,0) 22%,rgba(255,255,255,0) 70%,rgba(255,255,255,.75) 100%)}  /* oben Schleier für die Kopfleiste, unten weicher Übergang zum Weiß */
+.subhero__in{position:relative;width:100%;max-width:var(--wrap);margin:0 auto;padding:clamp(22px,3vw,36px) var(--pad) 8px}
+.subhero--text .subhero__in{padding-top:clamp(28px,5vw,56px);padding-bottom:clamp(28px,5vw,56px)}
+.subhero--text{background:var(--grau)}
+.subhero__badge{position:absolute;right:var(--pad);bottom:clamp(14px,3vw,32px);z-index:2;width:clamp(72px,10vw,140px)}
 .subhero__badge img{filter:drop-shadow(0 8px 16px rgba(0,0,0,.18))}
+@media(max-width:700px){.subhero__medien{height:56vw}}
 .crumbs{font-size:.82rem;color:var(--muted);margin:0 0 14px}
 .crumbs a{color:var(--blau-d);text-decoration:none}
 .crumbs span{margin:0 6px}
@@ -208,7 +212,7 @@ h1.hero__h::before{display:none}
 
 /* Icon-Raster (Leistungen) */
 .icons{list-style:none;margin:1.6em 0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:18px 12px}
-.icons__i{text-align:center;font-size:.92rem;line-height:1.3;color:var(--ink);font-weight:500;background:var(--grau);border-radius:16px;padding:20px 14px}  /* Karten statt blasser Icons mit viel Abstand (Codex 24) */
+.icons__i{text-align:center;font-size:.92rem;line-height:1.3;color:var(--ink);font-weight:500;background:var(--grau);border-radius:var(--r);padding:20px 14px}  /* Karten statt blasser Icons mit viel Abstand (Codex 24) */
 .icons__img{width:60px;height:60px;margin:0 auto 10px;object-fit:contain}
 
 /* Kacheln mit Knopf */
@@ -246,22 +250,22 @@ h1.hero__h::before{display:none}
 .intro__lead{font-size:clamp(1.5rem,2.6vw,2.3rem);font-weight:300;line-height:1.2;color:var(--ink);margin:0;letter-spacing:-.01em}
 .intro__r p{font-size:1.05rem;color:var(--text)}
 @media(max-width:860px){.intro__g{grid-template-columns:1fr;gap:20px}}
-.bezel{margin:0;padding:8px;background:var(--grau);border-radius:28px;box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 1px 0 rgba(33,37,41,.04)}
-.bezel__in{border-radius:20px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(33,37,41,.35)}
+.bezel{margin:0;padding:8px;background:var(--grau);border-radius:var(--r);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 1px 0 rgba(33,37,41,.04)}
+.bezel__in{border-radius:var(--r);overflow:hidden;box-shadow:var(--schatten)}
 .bezel__in img{width:100%;aspect-ratio:21/9;object-fit:cover}
-@media(max-width:700px){.bezel{padding:5px;border-radius:18px}.bezel__in{border-radius:13px}.bezel__in img{aspect-ratio:4/3}}
+@media(max-width:700px){.bezel{padding:5px;border-radius:var(--r)}.bezel__in{border-radius:var(--r)}.bezel__in img{aspect-ratio:4/3}}
 /* Imagefilm auf Dunkel */
 .film{background:var(--ink);color:#fff}
 .film__g{display:grid;grid-template-columns:3fr 8fr;gap:clamp(28px,5vw,72px);align-items:center}  /* Video trägt die Bühne (Codex 7) */
 .kicker--hell{color:rgba(255,255,255,.85)}
 .lead--hell{color:#fff}
 .film__c{font-size:.85rem;color:rgba(255,255,255,.6);margin:0}
-.film__v{margin:0;border-radius:18px;overflow:hidden;box-shadow:0 40px 80px -40px rgba(0,0,0,.8)}
+.film__v{margin:0;border-radius:var(--r);overflow:hidden;box-shadow:0 40px 80px -40px rgba(0,0,0,.8)}
 @media(max-width:860px){.film__g{grid-template-columns:1fr;gap:24px}}
 /* Drei Kacheln: Bild oben, Text unten, Unterkanten bündig (Suat 03.10.) */
 .teaser{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,2.5vw,32px)}
-.teaser__i{text-decoration:none;color:inherit;display:flex;flex-direction:column;background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 1px 0 rgba(33,37,41,.06),0 24px 48px -28px rgba(33,37,41,.3);transition:transform .6s var(--ease),box-shadow .6s var(--ease)}
-.teaser__i:hover{box-shadow:0 1px 0 rgba(33,37,41,.06),0 40px 60px -28px rgba(0,98,196,.35)}
+.teaser__i{text-decoration:none;color:inherit;display:flex;flex-direction:column;background:#fff;border-radius:var(--r);overflow:hidden;box-shadow:var(--schatten);transition:transform .6s var(--ease),box-shadow .6s var(--ease)}
+.teaser__i:hover{box-shadow:var(--schatten)}
 .teaser__b{display:block;overflow:hidden;aspect-ratio:4/3}  /* größere Bildflächen (Faber F6) */
 .teaser__b img{width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease)}
 .teaser__i:hover .teaser__b img{transform:scale(1.05)}
@@ -288,7 +292,7 @@ h1.hero__h::before{display:none}
 .karte__t .lead{font-size:clamp(1.7rem,4.2vw,3.2rem);color:var(--blau);margin:0 auto .6em;max-width:none;text-shadow:0 0 18px #fff,0 0 6px #fff}
 @media(max-width:700px){.karte{padding:0}.karte__svg{height:88vw;object-fit:cover;object-position:62% 50%}.karte__t .lead{font-size:clamp(1.7rem,8.5vw,2.4rem)}}
 /* Azubi-Banner */
-.banner{display:grid;grid-template-columns:1fr 1fr;align-items:stretch;border-radius:22px;overflow:hidden}
+.banner{display:grid;grid-template-columns:1fr 1fr;align-items:stretch;border-radius:var(--r);overflow:hidden}
 .banner__b{min-width:0}
 .banner img{width:100%;height:100%;object-fit:cover;min-height:280px}
 .banner__t{background:var(--blau);color:#fff;padding:clamp(28px,5vw,56px);display:flex;flex-direction:column;justify-content:center}
@@ -297,8 +301,8 @@ h1.hero__h::before{display:none}
 .banner__t .btn:hover{background:var(--blau-h);color:var(--blau-d)}
 @media(max-width:700px){.banner{grid-template-columns:1fr}}
 /* Blaues Band mit Knopf, wie das CTA-Band des Bestands */
-.band{background:linear-gradient(135deg,#0062c4,#007fff 70%,#2b94ff);color:#fff;border-radius:18px;padding:clamp(22px,3vw,36px) clamp(22px,4vw,48px);display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:16px 32px;text-align:center;margin:2em 0}
-.prosa .band{width:min(100vw - 2*var(--pad),var(--wrap) - 2*var(--pad));margin-left:50%;transform:translateX(-50%);border-radius:18px}  /* im Textfluss über die Seitenbreite, wie das Band im Bestand (Faber 4.3) */
+.band{background:linear-gradient(135deg,#0062c4,#007fff 70%,#2b94ff);color:#fff;border-radius:var(--r);padding:clamp(22px,3vw,36px) clamp(22px,4vw,48px);display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:16px 32px;text-align:center;margin:2em 0}
+.prosa .band{width:min(100vw - 2*var(--pad),var(--wrap) - 2*var(--pad));margin-left:50%;transform:translateX(-50%);border-radius:var(--r)}  /* im Textfluss über die Seitenbreite, wie das Band im Bestand (Faber 4.3) */
 .has-js .prosa .band.rv{transform:translate(-50%,28px)}.has-js .prosa .band.rv.in{transform:translateX(-50%)}
 .band p{margin:0;font-size:1.1rem;font-weight:500;max-width:60ch}
 .band--kopf{text-align:left;justify-content:space-between}.band--kopf h3{color:#fff;margin:0 0 .3em;font-size:1.4rem}.band--kopf p{font-weight:400}
@@ -309,27 +313,27 @@ h1.hero__h::before{display:none}
 .btn--hell:hover{background:var(--blau-h);color:var(--blau-d)}
 /* FAQ als Karten (Codex 13) */
 .faq__l{display:grid;gap:14px}
-.faq__i{background:#fff;border-radius:16px;padding:20px 24px;box-shadow:0 1px 0 rgba(33,37,41,.05)}
+.faq__i{background:#fff;border-radius:var(--r);padding:20px 24px;box-shadow:0 1px 0 rgba(33,37,41,.05)}
 .faq__i h3{margin:0 0 .4em;font-size:1.1rem}.faq__i h3::before{display:none}.faq__i p{margin:0}
 /* ---- Muster der Unterseiten-Runde (Faber F6, Suat 02.10. spät) ---- */
 .berichte{margin:2em 0}
-.bericht{position:relative;min-height:min(70vh,560px);display:flex;align-items:center;margin:0 0 18px;border-radius:22px;overflow:hidden;background:var(--grau)}
+.bericht{position:relative;min-height:min(70vh,560px);display:flex;align-items:center;margin:0 0 18px;border-radius:var(--r);overflow:hidden;background:var(--grau)}
 .bericht__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 12%}  /* Gesichter oben im Bild (Faber v27: Stirn abgeschnitten) */
 .bericht:not(.bericht--rechts) .bericht__bg{object-position:72% 12%}.bericht--rechts .bericht__bg{object-position:28% 12%}  /* Gesicht neben der Karte, nicht darunter */
-.bericht__karte{position:relative;z-index:1;margin:clamp(20px,4vw,56px);max-width:min(560px,90%);background:rgba(255,255,255,.94);backdrop-filter:blur(6px);border-radius:18px;padding:clamp(22px,3vw,40px);box-shadow:0 30px 60px -30px rgba(33,37,41,.4)}
+.bericht__karte{position:relative;z-index:1;margin:clamp(20px,4vw,56px);max-width:min(560px,90%);background:rgba(255,255,255,.94);backdrop-filter:blur(6px);border-radius:var(--r);padding:clamp(22px,3vw,40px);box-shadow:var(--schatten)}
 .bericht--rechts{justify-content:flex-end}
 .bericht__karte h3{margin:0 0 .5em}.bericht__karte p{margin:0;font-size:1.05rem}
 .bericht--lang{min-height:min(80vh,680px)}.bericht--lang .bericht__karte{max-width:min(600px,92%)}.bericht--lang .bericht__karte p{font-size:.98rem;margin:0 0 .8em}
 .bericht__name{font-weight:600;color:var(--blau-d);margin-top:.4em!important}
 .bericht--lang .bericht__bg{object-position:70% 20%}.bericht--lang.bericht--rechts .bericht__bg{object-position:30% 20%}
-.laender{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:2em 0;padding:clamp(20px,3vw,40px);background:linear-gradient(135deg,#0062c4,#007fff 70%,#2b94ff);border-radius:22px}
-.land{display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:center;background:#fff;border-radius:16px;padding:18px 22px}
+.laender{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:2em 0;padding:clamp(20px,3vw,40px);background:linear-gradient(135deg,#0062c4,#007fff 70%,#2b94ff);border-radius:var(--r)}
+.land{display:grid;grid-template-columns:150px 1fr;gap:18px;align-items:center;background:#fff;border-radius:var(--r);padding:18px 22px}
 .land__karte{width:150px;height:auto;filter:saturate(1.1)}
 .land__t h3{margin:0 0 .3em;font-size:1.15rem;color:var(--blau-d)}.land__t p{margin:0;font-size:.95rem}
 @media(max-width:860px){.laender{grid-template-columns:1fr}}
 @media(max-width:480px){.land{grid-template-columns:1fr}.land__karte{width:60%}}
 .berufe{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:1.5em 0 2em}
-.beruf{position:relative;display:block;aspect-ratio:4/3;border-radius:16px;overflow:hidden;text-decoration:none;color:#fff;background:linear-gradient(135deg,#0062c4,#2b94ff)}
+.beruf{position:relative;display:block;aspect-ratio:4/3;border-radius:var(--r);overflow:hidden;text-decoration:none;color:#fff;background:linear-gradient(135deg,#0062c4,#2b94ff)}
 .beruf__bild{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease)}
 .beruf:hover .beruf__bild{transform:scale(1.05)}
 .beruf::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,40,90,0) 35%,rgba(0,40,90,.82))}
@@ -337,13 +341,13 @@ h1.hero__h::before{display:none}
 .beruf__t strong{font-size:1.05rem;font-weight:600;color:#fff}.beruf__t span{font-size:.8rem;opacity:.85}  /* strong erbt sonst Anthrazit aus .prosa (Codex 26: „schwarzer Kleinsttext auf Blau“) */
 @media(max-width:860px){.berufe{grid-template-columns:1fr 1fr}}@media(max-width:480px){.berufe{grid-template-columns:1fr}}
 .kapitel{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin:1em 0 2.5em}
-.kapitel__i{display:flex;align-items:flex-end;min-height:140px;padding:18px;border-radius:16px;color:#fff;text-decoration:none;font-weight:500;font-size:1.05rem;line-height:1.25;background:linear-gradient(160deg,#007fff,#0062c4 60%,#004f9e);transition:filter .3s}
+.kapitel__i{display:flex;align-items:flex-end;min-height:140px;padding:18px;border-radius:var(--r);color:#fff;text-decoration:none;font-weight:500;font-size:1.05rem;line-height:1.25;background:linear-gradient(160deg,#007fff,#0062c4 60%,#004f9e);transition:filter .3s}
 .kapitel__i:hover{filter:brightness(1.1);color:#fff}
 .kapitel__i{position:relative;overflow:hidden}.kapitel__i span{position:relative;z-index:1}
 .kapitel__bild{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .kapitel__i--foto::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,98,196,.05),rgba(0,79,158,.85))}  /* Foto mit blauem Verlauf wie im Bestand */
 .extras{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin:1.2em 0 2em}
-.extras__i{background:var(--grau);border-radius:16px;padding:22px 18px;text-align:center}
+.extras__i{background:var(--grau);border-radius:var(--r);padding:22px 18px;text-align:center}
 .extras__icon{width:56px;height:56px;margin:0 auto 12px;object-fit:contain}
 .extras__i p{margin:0;font-size:.95rem;font-weight:500;color:var(--ink)}
 .karten2__t .btn{align-self:flex-start}  /* schlanker Knopf statt Balken über die Kartenbreite (Faber F6) */
@@ -404,7 +408,23 @@ h1.hero__h::before{display:none}
 .hin__i h3{font-size:1.05rem;font-weight:600;color:var(--ink);margin:0 0 .4em}
 .hin__i p,.hin__i ul{font-size:.95rem;margin:0}
 .hin__i ul{padding-left:1.1em}
-.kasten{background:var(--blau-h);border-left:3px solid var(--blau);padding:16px 20px;margin:1.4em 0}
+.kasten{background:var(--blau-h);border-radius:var(--r-s);padding:16px 20px;margin:1.4em 0}
+/* Werte-Kreise wie im Bestand (Suat 03.10.): weiße Kreise mit farbigem Zeichen auf blaugrauem Grund */
+.werte{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;padding:clamp(28px,4vw,56px);background:#aebcc6;border-radius:var(--r);margin:2em 0}
+.wert{background:#fff;border-radius:50%;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12% 11%}
+.wert__z{width:56px;height:56px;border-radius:50%;background:var(--c);color:#fff;display:grid;place-items:center;font-size:1.6rem;font-weight:600;margin-bottom:10px}
+.wert h3{color:var(--c);margin:0 0 .4em;font-size:1.3rem;font-weight:600}.wert h3::before{display:none}
+.wert p{margin:0;font-size:.86rem;line-height:1.45;color:var(--text)}
+/* Komet-Bereiche als drei Karten auf Grau (Suat 13) */
+.dreier{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:1.5em 0 2em}
+.dreier__i{background:var(--grau);border-radius:var(--r);padding:22px 22px 20px}.dreier__i p{margin:0;font-size:.95rem}
+@media(max-width:860px){.dreier{grid-template-columns:1fr}}
+/* Vor/Zurück zwischen Beiträgen (Suat 14) */
+.nachbarn{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:var(--sec);padding-top:24px;border-top:1px solid var(--linie)}
+.nachbarn a{text-decoration:none;color:var(--ink);background:var(--grau);border-radius:var(--r-s);padding:14px 16px;font-size:.95rem}
+.nachbarn a span{display:block;font-size:.78rem;color:var(--blau-d);font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.nachbarn a:last-child{text-align:right}
+@media(max-width:560px){.nachbarn{grid-template-columns:1fr}.nachbarn a:last-child{text-align:left}}
 .kasten p{margin:0;font-size:.97rem}
 .mess{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:1em 0 2em}
 .mess__i{border-top:3px solid var(--blau);padding:14px 12px;background:#fff;box-shadow:0 6px 18px rgba(33,37,41,.06)}
@@ -421,11 +441,12 @@ h1.hero__h::before{display:none}
 
 /* Fußzeile */
 /* Fuß wie im Bestand: Social-Kacheln in Markenfarben, blaue Schwungkurve, Komet-Siegel rechts (Suat 02.10.2026) */
-.fuss{margin-top:var(--sec);position:relative}
-.fuss__oben{position:relative;max-width:var(--wrap);margin:0 auto;padding:12px var(--pad) 0;min-height:clamp(150px,17vw,220px)}  /* Kurve kleiner, weniger Leerraum (Codex 3) */
-.fuss__kurve{position:absolute;left:var(--pad);right:var(--pad);top:40px;width:calc(100% - 2*var(--pad));height:calc(100% - 40px);pointer-events:none}
-.fuss__social{list-style:none;margin:0;padding:0;display:flex;justify-content:center;gap:16px;position:relative;z-index:1}
-.fuss__s{display:grid;place-items:center;width:48px;height:48px;border-radius:9px;background:var(--f);color:#fff;transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+/* Fuß anthrazit, blaue Linie als Oberkante, keine Kurve (Suat 03.10.: „passt überhaupt nicht vom Design“); Social-Kacheln und Komet im dunklen Feld */
+.fuss{margin-top:var(--sec);position:relative;background:var(--dunkel);color:#fff;border-top:3px solid var(--blau)}
+.fuss__oben{position:relative;max-width:var(--wrap);margin:0 auto;padding:40px var(--pad) 0;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.fuss__kurve{display:none}
+.fuss__social{list-style:none;margin:0;padding:0;display:flex;gap:14px;position:relative;z-index:1}
+.fuss__s{display:grid;place-items:center;width:48px;height:48px;border-radius:var(--r-s);background:var(--f);color:#fff;transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
 .fuss__s svg{width:24px;height:24px;fill:currentColor}
 .fuss__s:hover{box-shadow:0 14px 24px -12px var(--f);color:#fff;filter:brightness(1.08)}
 /* Pop-in der Social-Kacheln: kurz größer, dann einrasten, von links nach rechts gestaffelt (Suat 02.10.) */
@@ -436,24 +457,26 @@ h1.hero__h::before{display:none}
 .has-js .fuss__komet{opacity:0;transform:scale(.6) rotate(-8deg);transition:opacity .9s var(--ease) .5s,transform .9s var(--ease) .5s}
 .has-js .fuss__social.in ~ .fuss__komet{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.has-js .fuss__social li,.has-js .fuss__komet{opacity:1;transform:none;animation:none}}
-.fuss__komet{position:absolute;right:var(--pad);bottom:0;width:clamp(64px,9vw,112px);height:auto;filter:drop-shadow(0 8px 16px rgba(33,37,41,.18))}
-.fuss__in{max-width:var(--wrap);margin:0 auto;padding:32px var(--pad) 28px;position:relative}
+.fuss__komet{position:static;width:clamp(64px,8vw,96px);height:auto;flex-shrink:0;filter:drop-shadow(0 8px 16px rgba(0,0,0,.35))}
+.fuss__komet img{width:100%;height:auto}
+.fuss__in{max-width:var(--wrap);margin:0 auto;padding:28px var(--pad) 28px;position:relative;border-top:1px solid rgba(255,255,255,.12);margin-top:28px}
 .fuss__links{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px 22px}
-.fuss__links a{color:var(--ink);text-decoration:none;font-size:1rem;font-weight:500}
-.fuss__links a:hover{color:var(--blau)}
-.fuss__hinweis{font-size:.8rem;color:var(--muted);margin:22px 0 0}
+.fuss__links a{color:#fff;text-decoration:none;font-size:1rem;font-weight:500}
+.fuss__links a:hover{color:#8ec4ff}
+.fuss__hinweis{font-size:.8rem;color:rgba(255,255,255,.6);margin:22px 0 0}.fuss__hinweis a{color:#8ec4ff}
+@media(max-width:600px){.fuss__oben{flex-direction:column;align-items:flex-start}}
 
 /* Demo-Leiste */
 /* Demo-Leiste in Suats CI-Orange #CF6C3F, halbtransparent (Suat 02.10.2026: „nicht so knallig, mein Orange, halb transparent“); dunkle Schrift, Kontrast auf Weiß darunter 5,2:1 */
 /* schwebend über dem Inhalt, nicht über die ganze Breite (Suat 02.10. abends); erscheint bei jedem Laden neu */
-.demobar{position:fixed;left:50%;transform:translateX(-50%);bottom:16px;width:min(960px,calc(100% - 24px));border-radius:14px;z-index:110;background:rgba(207,108,63,.86);backdrop-filter:blur(10px) saturate(1.2);-webkit-backdrop-filter:blur(10px) saturate(1.2);color:#1b1f23;font-size:.82rem;font-weight:500;display:flex;align-items:center;gap:14px;padding:9px 14px;line-height:1.35;box-shadow:0 -6px 24px rgba(0,0,0,.18)}
+.demobar{position:fixed;left:50%;transform:translateX(-50%);bottom:16px;width:min(960px,calc(100% - 24px));border-radius:var(--r);z-index:110;background:rgba(207,108,63,.86);backdrop-filter:blur(10px) saturate(1.2);-webkit-backdrop-filter:blur(10px) saturate(1.2);color:#1b1f23;font-size:.82rem;font-weight:500;display:flex;align-items:center;gap:14px;padding:9px 14px;line-height:1.35;box-shadow:0 -6px 24px rgba(0,0,0,.18)}
 .demobar a{color:#1b1f23;font-weight:700;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:2px;white-space:nowrap}
 .demobar__t{flex:1 1 auto;min-width:0}
 .demobar__l{min-width:0}
 .demobar__x{border:0;background:none;color:#1b1f23;font-size:1.3rem;cursor:pointer;padding:0 6px;line-height:1}
 /* Hinweisseite, Executive Summary (Suat 02.10.2026): fünf Kacheln, die Zahl dick und fett, der Satz darunter */
 .exec{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:8px 0 2em}
-.exec__i{background:var(--grau);border-radius:18px;padding:22px 24px 18px}
+.exec__i{background:var(--grau);border-radius:var(--r);padding:22px 24px 18px}
 .exec__i:first-child{grid-column:1/-1;background:linear-gradient(135deg,#0062c4,#007fff 70%,#2b94ff);color:#fff;border-top:0}
 .exec__i:first-child .exec__z,.exec__i:first-child strong{color:#fff}
 .exec__i:first-child .exec__z span{color:rgba(255,255,255,.8)}
@@ -465,7 +488,7 @@ h1.hero__h::before{display:none}
 .todo{padding-left:1.3em}.todo li{margin:.5em 0}
 /* Hinweisseite, Über mich: Screenshot von akyol.de, klickbar (Suat 02.10.2026) */
 .ueber{display:grid;grid-template-columns:200px 1fr;gap:28px;align-items:start;margin:8px 0 1.5em}
-.ueber__shot{display:block;position:relative;border-radius:18px;overflow:hidden;box-shadow:0 24px 48px -24px rgba(33,37,41,.45);transition:transform .6s var(--ease)}
+.ueber__shot{display:block;position:relative;border-radius:var(--r);overflow:hidden;box-shadow:0 24px 48px -24px rgba(33,37,41,.45);transition:transform .6s var(--ease)}
 .ueber__shot:hover{transform:translateY(-4px)}
 .ueber__shot img{width:100%;height:auto}
 .ueber__l{position:absolute;left:10px;bottom:10px;background:rgba(255,255,255,.92);color:var(--blau-d);font-size:.8rem;font-weight:600;padding:4px 10px;border-radius:999px}

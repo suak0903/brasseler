@@ -58,8 +58,16 @@ def erstes_bild(d):
         w, h = bild_masse(media_basis.get(src, ""))
         if w and h and w / h >= 1.25: return src
     return kandidaten[0] if kandidaten else ""
+KRUMEN = json.load(open(os.path.join(HERE, "krumen.json"), encoding="utf-8")) if os.path.exists(os.path.join(HERE, "krumen.json")) else {}
+WERTE = json.load(open(os.path.join(HERE, "werte.json"), encoding="utf-8")) if os.path.exists(os.path.join(HERE, "werte.json")) else {}
+def krumen_kurz(d):
+    """Kurzname der Seite für Breadcrumb und Sitemap: wie im Bestand („Unternehmen“, „Unsere Verantwortung“), nie der volle Titel (Suat 03.10.)."""
+    k = KRUMEN.get(d["pfad"]); return k["last"] if k and k.get("last") else seitentitel(d)
 def krumen(d, lang):
     p = d["pfad"]; k = [(T[lang]["skip"] and I.UI[lang]["start"], START[lang])]
+    q = KRUMEN.get(p)
+    if q and d["typ"] == "page":  # Zwischenstufen wie im Bestand, Ziele auf gebaute Pfade geprüft
+        return k + [(t, h) for t, h in q["kette"] if h in PFADE]
     if d["typ"] == "post": k.append((I.UI[lang]["news"], NEWS[lang]))
     elif d["typ"] == "timeline-eintrag": k += [(NAVTEXT.get("/unternehmen/" if lang == "de" else "/en/company/", ""), "/unternehmen/" if lang == "de" else "/en/company/"), (I.UI[lang]["chronik"], CHRONIK[lang])]
     else:
@@ -89,14 +97,18 @@ def schreiben(pfad, inhalt_html):
     z = ausgabe_pfad(pfad); os.makedirs(os.path.dirname(z), exist_ok=True); open(z, "w", encoding="utf-8").write(inhalt_html)
 
 def hero_html(d, r, lang, titel, k, hat_badge, video, bild):
-    kr = krumen_html(k, titel, r)
+    """Ein Hero-Block für alle Seiten (Suat 03.10., letzter Lauf): Medienfeld mit fester Höhe (Video, Bild oder Luftbild),
+    darunter auf Weiß Breadcrumb und Titel mit festem Abstand. Nie Text im Bild, nie schwankende Abstände."""
+    kr = krumen_html(k, krumen_kurz(d) if d["typ"] == "page" else titel, r)
     badge = f'<div class="subhero__badge">{picture(TROPHAEE, "TOP 100 Innovator 2026", r, sizes="140px")}</div>' if hat_badge else ""
+    medien = ""
     if video and video in video_map:
         n = video_map[video]
-        return f'<section class="subhero subhero--medium">{badge}<img class="subhero__bg" src="{r}media/{n}-poster.jpg" alt="" width="1600" height="900" fetchpriority="high"><video class="subhero__v" autoplay muted loop playsinline preload="none" {video_quellen(n, r)} aria-hidden="true"></video><div class="subhero__in">{kr}<h1>{e(titel)}</h1></div></section>'
-    if bild and media_basis.get(bild):
-        return f'<section class="subhero subhero--medium">{badge}{picture(bild, "", r, klasse="subhero__bg", eager=True, sizes="100vw")}<div class="subhero__in">{kr}<h1>{e(titel)}</h1></div></section>'
-    return f'<section class="subhero subhero--text">{badge}<div class="subhero__in">{kr}<h1>{e(titel)}</h1></div></section>'
+        medien = f'<img class="subhero__bg" src="{r}media/{n}-poster.jpg" alt="" width="1600" height="900" fetchpriority="high"><video class="subhero__v" autoplay muted loop playsinline preload="none" {video_quellen(n, r)} aria-hidden="true"></video>'
+    elif bild and media_basis.get(bild):
+        medien = picture(bild, "", r, klasse="subhero__bg", eager=True, sizes="100vw")
+    feld = f'<div class="subhero__medien">{medien}{badge}</div>' if medien else ""
+    return f'<section class="subhero{" subhero--medium" if medien else " subhero--text"}">{feld}<div class="subhero__in">{kr}<h1>{e(titel)}</h1></div></section>'
 
 def seite_generisch(d):
     lang = d["lang"]; r = root(d["pfad"]); bl = list(d["bloecke"]); titel = seitentitel(d); k = krumen(d, lang)
@@ -106,6 +118,19 @@ def seite_generisch(d):
     # erste Überschrift wird H1 des Heros
     for i, b in enumerate(bl):
         if b["t"] in ("h1", "h2") and b["x"].replace("\n", " ") == titel: del bl[i]; break
+    # Divi liefert manche Blöcke doppelt (Desktop- und Handy-Variante, etwa das Köhler-Zitat auf /unternehmen/unsere-werte/):
+    # eine Zwischenüberschrift, die auf der Seite schon stand, fliegt mitsamt ihren Absätzen raus (Sichtprüfung v35, 03.10.).
+    gesehen, i = set(), 0
+    while i < len(bl):
+        b = bl[i]
+        if b["t"] in ("h3", "h4"):
+            s = b["x"].replace("\n", " ").strip()
+            if s in gesehen:
+                j = i + 1
+                while j < len(bl) and bl[j]["t"] == "p": j += 1
+                del bl[i:j]; continue
+            gesehen.add(s)
+        i += 1
     bild = None
     if d["typ"] == "post": bild = erstes_bild(d)
     if bild:
@@ -114,23 +139,38 @@ def seite_generisch(d):
     # Hero-Bild für jede Seite (Suat 02.10.: „die ganzen Hero-Bereiche haben bei uns gar keine Bilder“): Hintergrund des
     # Divi-Abschnitts aus dem Bestand (hintergruende.json), sonst das des Elternpfads, sonst das Luftbild; Rechtstexte bleiben ohne
     hero_bild = bild if d["typ"] == "post" else None
-    if not video and not hero_bild:
-        kand = HINTERGRUENDE.get(d["pfad"]) or HINTERGRUENDE.get("/".join(d["pfad"].rstrip("/").split("/")[:-1]) + "/") or []
-        kand = [u for u in kand if media_basis.get(u) and "hover" not in u.lower()]
-        if kand: hero_bild = kand[0]
-        elif d["typ"] == "page" and d["pfad"] not in RECHT: hero_bild = LUFTBILD if media_basis.get(LUFTBILD) else None
+    if not video and not hero_bild and d["typ"] == "page" and d["pfad"] not in RECHT:
+        # Regel (Suat 03.10.): Video des Originals, sonst Hero des Originals, sonst erstes Inhaltsbild der Seite, sonst Luftbild.
+        # Personenbilder (Bild, dem eine Überschrift folgt: Köhler-Porträt, Management-Köpfe) sind nie Hero, sie bleiben im Inhalt.
+        personen = {b["src"] for i, b in enumerate(bl) if b["t"] == "img" and i + 1 < len(bl) and bl[i + 1]["t"] in ("h3", "h4")}
+        kand = [u for u in HINTERGRUENDE.get(d["pfad"], []) if media_basis.get(u) and "hover" not in u.lower() and u not in personen]
+        if not kand:
+            for i, b in enumerate(bl):
+                if b["t"] == "img" and media_basis.get(b["src"]) and not ist_icon(b) and b["src"] not in personen:
+                    w, h = bild_masse(media_basis[b["src"]])
+                    if w and h and w / h >= 1.3: kand = [b["src"]]; del bl[i]; break  # Querformat, und raus aus dem Inhalt, sonst steht es doppelt
+        hero_bild = kand[0] if kand else (LUFTBILD if media_basis.get(LUFTBILD) else None)
     KONTEXT["hg"] = HINTERGRUENDE.get(d["pfad"], [])  # Divi-Hintergründe der Seite für Berichte und Berufe-Kacheln
     innen = hero_html(d, r, lang, titel, k, hat_badge, video, hero_bild)
     datum = f'<p class="datum">{I.UI[lang]["datum"]} {datum_fmt(d["published"], lang)}</p>' if d["typ"] == "post" and d["published"] else ""
     klasse = "chronik" if d["pfad"] in CHRONIK.values() else ""
     lang_hinweis = f'<p class="hinweis">{I.UI[lang]["nur_de"]}</p>' if lang == "de" and not d["partner"] and d["typ"] == "page" else ""
+    werte = ""
+    if d["pfad"] in WERTE:  # die fünf Werte-Kreise des Bestands (standen dort als SVG-Text, Suat 03.10.)
+        farben = ["#d63a62", "#2b7fd1", "#2e9c6a", "#e08a2b", "#7a4fb3"]
+        werte = '<div class="werte">' + "".join(f'<div class="wert rv" style="--c:{farben[i % 5]}"><span class="wert__z" aria-hidden="true">{t[:1].upper()}</span><h3>{e(t)}</h3><p>{e(x)}</p></div>' for i, (t, x) in enumerate(WERTE[d["pfad"]])) + "</div>"
     faq = ""
     if d["pfad"] in I.FAQ:
         faq = '<section class="sektion sektion--grau faq"><div class="wrap schmal"><h2 class="t-h2">' + ("Häufige Fragen" if lang == "de" else "Frequently asked questions") + '</h2><div class="faq__l">' + "".join(f'<div class="faq__i rv"><h3 class="t-h3">{e(q)}</h3><p>{e(a)}</p></div>' for q, a in I.FAQ[d["pfad"]]) + "</div></div></section>"  # Fragen als Einheiten (Codex 13)
     weiter = ""
-    if d["typ"] == "post": weiter = f'<nav class="weiter"><a href="{r}{NEWS[lang].strip("/")}/">‹ {I.UI[lang]["zurueck"]}</a></nav>'
+    if d["typ"] == "post":  # Vor und Zurück zwischen Beiträgen derselben Sprache, nach Datum (Suat 14), plus Übersicht
+        reihe = sorted([p for p in daten if p["typ"] == "post" and p["lang"] == lang and not p["duplikat_von"]], key=lambda p: p["published"] or "")
+        ix = next((i for i, p in enumerate(reihe) if p["pfad"] == d["pfad"]), -1)
+        aelter = reihe[ix - 1] if ix > 0 else None; neuer = reihe[ix + 1] if 0 <= ix < len(reihe) - 1 else None
+        def nb(p, label): return f'<a href="{r}{p["pfad"].strip("/")}/"><span>{label}</span>{e(seitentitel(p))}</a>' if p else "<span></span>"
+        weiter = f'<nav class="nachbarn">{nb(aelter, "Älterer Beitrag" if lang == "de" else "Older post")}{nb(neuer, "Neuerer Beitrag" if lang == "de" else "Newer post")}</nav><nav class="weiter"><a href="{r}{NEWS[lang].strip("/")}/">‹ {I.UI[lang]["zurueck"]}</a></nav>'
     elif d["typ"] == "timeline-eintrag": weiter = f'<nav class="weiter"><a href="{r}{CHRONIK[lang].strip("/")}/">‹ {I.UI[lang]["chronik"]}</a></nav>'
-    innen += f'<section class="sektion{" sektion--lang" if d["woerter"] > 900 else ""}"><div class="wrap"><div class="prosa {klasse}">{datum}{lang_hinweis}{bloecke_html(bl, r, PFADE, lang)}{weiter}</div></div></section>{faq}'
+    innen += f'<section class="sektion{" sektion--lang" if d["woerter"] > 900 else ""}"><div class="wrap"><div class="prosa {klasse}">{datum}{lang_hinweis}{bloecke_html(bl, r, PFADE, lang)}{werte}{weiter}</div></div></section>{faq}'
     desc = beschreibung(d)
     hell = False  # Kopfleiste oben transparent mit dunkler Schrift: die Bestandsbilder sind hell, weiße Schrift war darauf kaum lesbar (Sichtprüfung 03.10.)
     return rahmen(d["pfad"], lang, f"{titel} | Brasseler", desc, d["partner"], ld_seite(d, lang, titel, desc, k, r), innen, r, og=(DEMO + "media/" + media_basis[erstes_bild(d)] + "-1200.jpg") if media_basis.get(erstes_bild(d)) else "", hell=hell, mit_lb=("data-lb" in innen))
@@ -257,7 +297,7 @@ def sitemap_seite(lang):
     def href(p): return r + p.strip("/") + ("/" if p.strip("/") else "")
     kurz = {n["pfad"]: n["text"] for n in chrome[lang]["nav"]} | {l["pfad"]: l["text"] for l in chrome[lang]["fuss"]}  # Menünamen statt langer H1 (Muster KaTech)
     def eintrag(d, tiefe=0, titel=None):
-        name = titel or kurz.get(d["pfad"]) or seitentitel(d)
+        name = titel or kurz.get(d["pfad"]) or (krumen_kurz(d) if d["typ"] == "page" else seitentitel(d))  # Kurzname wie im Bestand (Suat 03.10.)
         orig = f'<a class="sm__orig" href="{e(d["url"])}" target="_blank" rel="noopener" aria-label="{e(name)}: {s["orig"]}">{PFEIL}</a>'
         kl = "sm__k" if tiefe == 0 else f"sm__i sm__i--{tiefe}"
         return f'<li class="{kl}"><a href="{href(d["pfad"])}">{e(name)}</a>{orig}{marken(d)}</li>'
@@ -320,6 +360,7 @@ def hinweisseite():
         ("Bilder vom Entwicklungs-Server", "Rund 70 Bilder (326 Verweise samt Größenvarianten auf 61 Seiten, vor allem der Chronik) werden von einem Azure-Entwicklungs-Slot geladen, nicht von brasseler.de."),
         ("PHP ohne Sicherheitsupdates", "Der Server meldet PHP 7.4.30. Diese Version bekommt seit November 2022 keine Sicherheitsupdates mehr."),
         ("Ladeleistung", "Ein Startseiten-Video mit 10 MB im Autoplay, Bilder in Originalgröße, Cookie-Banner und Tag Manager mit rund 400 KB Skripten und der Divi-Baukasten. Mobil Leistung 12 von 100, das Hauptbild erscheint nach über 10 Sekunden."),
+        ("Kein einheitliches Erscheinungsbild", "Die Seiten sind über Jahre gewachsen: mal Video im Kopf, mal Bild, mal keins, einmal ein Porträt, das als Hero zu groß ist; Titel mal Stichwort, mal ganzer Satz; Breadcrumbs, die nicht zum Menü passen; drei Hero-Typen, drei Knopfstile. Dieser Entwurf baut alle 200 Seiten nach einer Regel: ein Hero-Block, ein Abstand, ein Formsystem."),
         ("Strukturierte Daten", "Das Schema nennt nur Seite, Website und Organisation ohne Anschrift, Kontakt, Gründungsjahr oder Marke; kein FAQ, keine Artikel, das Logo in der E-Mail-Variante. KI-Suchen finden so wenig zum Zitieren."),
     ]
     anders = [("Technik", "WordPress mit Divi-Baukasten, 25 Skripte, 5 bis 8 MB je Lauf", "Statisches HTML, ein Stylesheet, ein Skript, Bilder als WebP in drei Größen"),
