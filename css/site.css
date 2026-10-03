@@ -122,6 +122,8 @@ blockquote{margin:1.5em 0;padding:.4em 0 .4em 1.2em;border-left:3px solid var(--
 @media(min-width:1024px){.nav__menu{display:block}.burger,.mmenu{display:none}.nav__r{margin-left:0}}
 @media(max-width:440px){.logo{width:128px;height:26px}.nav__in{gap:10px}.nav__claim{font-size:.6rem}}  /* Untertitel bleibt auch auf dem Handy (Suat 02.10.) */
 .nav__in,.nav__logo{min-width:0}
+/* Handy: Suche, Sprache und Burger fest rechts, unabhängig von der Breite des Logos je Sprache (Suat 03.10.) */
+@media(max-width:1023px){.nav__in{position:relative}.nav__r{position:absolute;right:var(--pad);top:50%;transform:translateY(-50%);margin-left:0}.nav__logo{max-width:calc(100% - 200px)}.nav__claim{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
 
 /* ---------- Hero Startseite ---------- */
 .hero{position:relative;width:100%;height:clamp(440px,74vh,780px);margin-top:0;overflow:hidden;background:#eef1f4;display:flex;align-items:flex-end}
