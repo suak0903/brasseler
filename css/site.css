@@ -34,6 +34,9 @@
   --schatten:0 1px 0 rgba(33,37,41,.05),0 24px 48px -28px rgba(0,98,196,.25);
 }
 *{box-sizing:border-box}
+html,*{-webkit-tap-highlight-color:transparent}  /* Kit, Design-Checkliste: kein natives Tap-Overlay auf dem Handy, eigene :active-States sind die Rückmeldung (Suat 03.10.) */
+::selection{background:rgba(42,110,210,.22)}
+:focus-visible{outline:2px solid var(--blau);outline-offset:3px;border-radius:4px}  /* Kit A11y-Basics: sichtbarer Fokus-Ring nur bei Tastatur, nicht beim Tippen */
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{margin:0;font-family:var(--font);font-size:17px;line-height:1.6;color:var(--text);background:var(--weiss);-webkit-font-smoothing:antialiased}
