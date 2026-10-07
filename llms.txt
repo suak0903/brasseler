@@ -1,0 +1,6 @@
+# Brasseler, Redesign-Entwurf (nicht die offizielle Website)
+
+Unverbindlicher Entwurf von Dr.-Ing. Suat Akyol (https://akyol.de/), gebaut am 2026-10-06 aus den öffentlichen Inhalten von https://www.brasseler.de/. Für Suchmaschinen und KI-Suche gesperrt. Die offizielle Website ist https://www.brasseler.de/.
+
+- Über den Entwurf: https://suak0903.github.io/brasseler/ueber-diesen-entwurf/
+- Sitemap des Entwurfs: https://suak0903.github.io/brasseler/sitemap/

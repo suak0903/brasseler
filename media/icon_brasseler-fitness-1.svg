@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="83" height="83" viewBox="0 0 83 83">
+  <g id="icon_brasseler-Fitness" transform="translate(-0.1)">
+    <path id="Pfad_2775" data-name="Pfad 2775" d="M32.2,32.2a9.3,9.3,0,1,0,9.3-9.3,9.282,9.282,0,0,0-9.3,9.3" transform="translate(0.05)" fill="none" stroke="#3a80f6" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+    <path id="Pfad_2776" data-name="Pfad 2776" d="M12.2,30.8A37.371,37.371,0,0,0,21,53.6a26.65,26.65,0,0,0,9.8,6.8V81.5" fill="none" stroke="#3a80f6" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+    <path id="Pfad_2777" data-name="Pfad 2777" d="M63.2,20.7a5.183,5.183,0,0,0-2.907,5.2c0,.1.9,13-6.014,20.5a17.2,17.2,0,0,1-4.009,3.1H32.93a16.8,16.8,0,0,1-4.009-3C21.9,39,22.807,26.2,22.807,25.9A5.337,5.337,0,0,0,19.9,20.7" fill="none" stroke="#3a80f6" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+    <path id="Pfad_2778" data-name="Pfad 2778" d="M52.2,81.5V60.4A26.65,26.65,0,0,0,62,53.6a37.6,37.6,0,0,0,8.8-22.8" transform="translate(0.1)" fill="none" stroke="#3a80f6" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+    <path id="Pfad_2779" data-name="Pfad 2779" d="M70.9,12.2a161.417,161.417,0,0,0-58.8,0" fill="none" stroke="#3a80f6" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+    <path id="Pfad_2780" data-name="Pfad 2780" d="M81.5,17.5a5.3,5.3,0,0,1-10.6,0V6.8a5.3,5.3,0,0,1,10.6,0Z" transform="translate(0.1)" fill="none" stroke="#3a80f6" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+    <path id="Pfad_2781" data-name="Pfad 2781" d="M12.2,17.5a5.335,5.335,0,0,1-5.3,5.3,5.335,5.335,0,0,1-5.3-5.3V6.8A5.335,5.335,0,0,1,6.9,1.5a5.335,5.335,0,0,1,5.3,5.3Z" fill="none" stroke="#3a80f6" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+  </g>
+</svg>
